@@ -1,0 +1,166 @@
+<div class="content" ng-app="myApp" ng-controller="myCtr">
+    <div class="row gap"></div>
+    <div class="row">
+      <div class="col-3 sidebar-first">
+        <a class="sideNav list-group-item list-group-item-action py-2 ripple" aria-current="true">
+          <i class="fa fa-user icon" aria-hidden="true"></i><span>Tenzin</span>
+        </a>
+        <a class=" list-group-item list-group-item-action py-2 ripple" aria-current="true">
+          <i class="fa fa-file icon"></i><span>Pages</span>
+        </a>
+        <a class=" list-group-item list-group-item-action py-2 ripple" aria-current="true">
+          <i class="fa fa-users icon" aria-hidden="true"></i><span>Groups</span>
+        </a>
+        <a class=" list-group-item list-group-item-action py-2 ripple" aria-current="true">
+          <i class='fas fa-tv icon'></i><span>Watch</span>
+        </a> 
+      </div>
+      <div class="col-6 main">
+        <div class="row">
+          <div class="col-6 actionBlock" >
+            <div class="option"><a href="#!/question" class="menu" class="{red: hover}" ng-mouseenter="hover = true"
+              ng-mouseleave="hover = false">ASK QUESTION</a></div>
+          </div>
+          <div class="col-6 actionBlock hover" ng-class="{red: hover1}" ng-mouseenter="hover1 = true"
+            ng-mouseleave="hover1 = false" ng-click="show=true">
+            <div class="option">POST A UPDATE</div>
+          </div>
+        </div>
+        <div class="row" ng-show="show">
+          <form class="textBox">
+            <label for="exampleFormControlTextarea1"></label>
+            <textarea class="form-control textArea" id="exampleFormControlTextarea1" placeholder="Title"
+              ng-model="userName" rows="1"></textarea>
+            <textarea class="form-control textArea" id="exampleFormControlTextarea1" rows="3"
+              placeholder="what are you sharing today?" ng-model="story"></textarea>
+            <button type="button" class="btn btn-primary postBtn" 
+              ng-click="CancelFeed()">Cancel</button>
+            <button type="button" class="btn btn-primary postBtn"
+              ng-click="addToFeed()">Post</button>
+          </form>
+        </div>
+        <br />
+        <hr />
+        <ul ng-repeat="singlePost in allPosts | orderBy: 'created_at':true ">
+          <li>
+            <!-- component directive -->
+        <!-- <post-component data="singlePost" allpost="allPosts"></post-component> -->
+        <div class="row card mt-4 custom-card">
+          <div class="card-header row">
+          <div class="col-2"><img class="image" src="img/graduated.png" alt="not found" /></div>
+          <div class="col-7 name"><span ng-model="name">{{singlePost.name}}</span></div>
+          <div class="dropdown col-3">
+          <button class="btn dp dropdown-toggle" type="button" id="dropdownMenuButton"
+          data-bs-toggle="dropdown" aria-expanded="false">
+          </button>
+          <ul class="dropdown-menu drop" aria-labelledby="dropdownMenuButton">
+          <li ng-click="deleteFeed(singlePost)"><a class="dropdown-item hover"><i
+              class="fas fa-trash-alt"></i> Delete</a></li>
+          <li><a class="dropdown-item hover" data-bs-toggle="modal" data-bs-target="#editModal"
+            ng-Click="setId(singlePost)"><i class="fas fa-edit"></i> {{ editMode ? 'Save'
+            : 'Edit' }}</a></li>
+          </ul>
+          </div>
+          </div>
+          <!-- FEED CONTENT -->
+          <div class="card-body">
+          <p id="content" class="card-text" ng-show="!editMode">{{singlePost.messg }}</p>
+          <p class="posted">{{ singlePost | timeAgo }}</p>
+          <input id="contentInput" class="card-text" ng-show="editMode" ng-model="editedContent" type="text">
+          </div>
+          <!-- options LIKE DISLIKE COMMENT SHARE -->
+          <div class="row card-header">
+          <ul class="nav nav-tabs card-header-tabs">
+          <li class="nav-item nav" ng-click="incrementLike(singlePost)">
+          <a class="nav-link hover"><i class="fas fa-thumbs-up"></i> Like</a>
+          </li>
+          <li class="nav-item nav" ng-click="decrementLike(singlePost)">
+          <a class="nav-link hover" ><i class="fas fa-thumbs-down"></i> Dislike</a>
+          </li>
+          <li class="nav-item nav">
+          <a class="nav-link hover" ng-click="showCommentInput = true;"><i class="fas fa-comment"></i>
+            Comment</a>
+          </li>
+          <li class="nav-item nav sharebtn" style="float: right;">
+          <a class="nav-link hover"><i class="fas fa-share"></i> Share</a>
+          </li>
+          </ul>
+          </div>
+          <span class="btn-like" ng-show="singlePost.likes>0 || singlePost.dislike>0">
+          <span ng-show="singlePost.likes>0">{{singlePost.likes}} likes</span>&nbsp;
+          <span class="col-3" ng-show="singlePost.dislike>0">{{singlePost.dislike}} dislikes</span>
+      
+          </span>
+          <!-- comments section -->
+          <div class="row card-footer add-comment" ng-show="showCommentInput" ng-hide="!showCommentInput">
+          <div class="col-8">
+          <input class="form-control inp" ng-model="singlePost.val" rows="3" placeholder="Add comment" />
+          </div>
+          <div class="col-2">
+          <button class="btn btn-primary addCommentButton"
+          ng-click=" showCommentInput = false; addComment(singlePost)">Add</button>
+          </div>
+          <div class="col-2">
+          <button class="btn btn-primary addCommentButton" 
+          ng-click=" showCommentInput = false; cancelAddComment(singlePost)">X</button>
+          </div>
+          </div>
+          <!-- list of comments -->
+          <ul>
+          <li class="list-comment" ng-repeat="singleComment in singlePost.comments | orderBy: 'created_at':true">
+          <div class="row">
+          <div class="col-9">
+          <p class=commentList ng-show="!singleComment.editMode">{{singleComment.content }}</p>
+          <input class="commentInput" ng-show="singleComment.editMode" ng-model="singleComment.editedComment"
+            type="text">
+          </div>
+          <div class="dropdown col-3">
+          <button class="btn  dropdown-toggle dp" type="button"
+            id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+          </button>
+          <ul class="dropdown-menu drop" aria-labelledby="dropdownMenuButton">
+            <li><a class="dropdown-item hover" 
+                ng-click="deleteComment(allPosts.indexOf(singlePost),singleComment)"><i
+                  class="fas fa-trash-alt"></i> Delete</a></li>
+            <li><a class="dropdown-item hover" 
+                ng-click="singleComment.editMode=true; EditComment(singlePost,singleComment)"><i
+                  class="fas fa-edit"></i> {{ singleComment.editMode ? 'Save' : 'Edit' }}</a> </li>
+          </ul>
+          </div>
+          <div class="row comment-updation">
+          <div class="col-3"><a class="dropdown-item update hover" 
+              ng-click="Update(singleComment)" ng-click="singleComment.editMode=false"
+              ng-show="singleComment.editMode">Update</a> </div>
+          <div class="col-3"><a class="dropdown-item cancel hover" 
+              ng-click="Cancel(singleComment)" ng-show="singleComment.editMode"
+              ng-click="editMode=false">Cancel</a></div>
+          <div class="col-6"></div>
+          </div>
+          </li>
+          </ul>
+          </div>
+        </li>
+        </ul>
+        <!--Edit modal pop up  -->
+        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Edit Post</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <input class="form-control" ng-value="allPosts[id].messg" ng-model="editedContent" type="text">
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" ng-click="saveChanges()" data-bs-dismiss="modal">Save
+                  changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-3 sidebar-second"></div>
+    </div>
+  </div>

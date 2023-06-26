@@ -1,0 +1,221 @@
+* {
+    margin: 0;
+  }
+    .content {
+      color: #000; 
+    }
+    .content1{
+      position:fixed;
+      width: 100%;
+      z-index: 100;
+    }
+    .navbar-brand {
+      padding-top: 0.3125rem;
+      padding-bottom: 0.3125rem;
+      margin-right: 1rem;
+      font-size: 1.25rem;
+      text-decoration: none;
+      white-space: nowrap;
+      font-weight: 700;
+      color: #666 !important;
+  }
+    .navbar {
+      background: white;
+      padding-left: 1rem;
+      height: 4rem;
+      width: 100%;
+    }
+    .navbar-brand{
+      font-size: large;
+    }
+    .gap {
+      height: 1.5rem;
+      background: #ddd;
+    }
+    .nav-brand{
+        font-weight: bold;
+        font-size:2rem;
+        /* margin-top: 2rem; */
+        color: #666;
+        padding-left: 1rem;
+    }
+    .logoImg {
+      width:4rem;
+      height:3rem;
+      border-radius: 100%;
+      
+    }
+    .actionBlock{
+        
+      box-shadow: #666;
+      text-align: center ;
+      align-items: center;
+    }
+    .option {
+      width: 100%;
+      height: 4rem; 
+      padding-top: 1rem;
+      border-radius: 5px;
+      background-color: #666;
+      border: 1px solid #bab0b0;
+    }
+    .postBtn {
+      margin-top: 0.2rem;
+      float: right;
+      width: 15%;
+      margin-left: 1rem;
+    }
+    .textBox {
+      width:100%;
+      margin-top: 1rem !important;
+      box-shadow: none;
+    }
+    .card-header{
+      width:100%;
+      margin-left: 0.1px !important;
+    }
+    .text-center{
+      text-align: left;
+      margin-left: 10px;
+    }
+    ul{
+      list-style: none;
+    }
+    .columns{
+      display: flex;
+      flex:1;
+    }
+    .red {
+      color: red; 
+  
+    }
+   
+    .main{
+      padding-top: 1rem;
+      background: #eee;
+      margin-top: 2.5rem !important;
+    }
+    .menu {
+      text-decoration: none;
+      color: #000;
+    }
+    .sideNav {
+      margin-top: 2rem !important;
+    }
+    .sidebar-first{
+      background:#ddd;
+      margin-top: 2.5rem !important;
+    }
+    .sidebar-second{ 
+      background: #ddd;
+    }
+  .list-group-item {
+    background-color: #ddd !important;
+    border: none !important;
+    height: 4rem;
+  }
+  .icon {
+    height:3rem;
+    width:3rem;
+  }
+  .content2 {
+    padding-top: 5rem;
+  }
+  .image{
+    height:3rem;
+    width:3rem;
+  }
+  .image1{
+    height:3rem;
+    width:3rem;
+    border-radius: 100%;
+  }
+  .card-header{
+    margin-left: 2px; 
+  }
+  .name {
+    font-size:larger;
+    font-weight: bold;
+    padding-top: 0.5rem;
+  }
+  .custom-card{
+      width:100%;
+  }
+  .sharebtn {
+    float: right !important;
+  }
+  .dp{
+     float: right;
+      width: 3rem;
+      height: 3rem;
+      text-align: center;
+      box-shadow: none !important;
+  }
+  .card-footer {
+    margin-left: 0.1px !important;
+  }
+  .list-comment{
+    list-style-type:none;
+    font-size:15px;
+  }
+  .inp{
+      width:100%;
+  }
+  .commentInput {
+    width: 100% !important;
+  }
+  .add-comment{
+    margin-left:0.01rem ;
+  }
+  .addCommentButton{
+    width: 100% !important;
+  }
+  .commentList {
+    padding-top:10px !important;
+  }
+  .btn-comment{
+    margin-left:10px;
+    margin-bottom:4px;
+  }
+  .comment-drop{
+    margin-left:-100px;
+    margin-bottom:50px;
+    margin-top:-12px;
+  }
+  .dropdown-menu {
+    width: 3rem !important;
+  }
+  .drop {
+    width: 3rem !important;
+  }
+  .dropdown-item{
+    font-size: medium;
+  }
+  .nav-link {
+    box-shadow: none;
+  }
+  .nav-tabs .nav-link{
+    border: none;
+  }
+  .dropdown-item{
+    box-shadow: none;
+    background-color: white;
+  }
+  .hover{
+    cursor:pointer;
+    border:none;
+  }
+  .posted{
+    font-size:0.8rem;
+  }
+  .nav-tabs .nav-link {
+    margin-bottom: -1px;
+    background: 0 0;
+    border: 1px solid transparent;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    border: none !important;
+  }
+  .btn-like{
+    font-size:0.8rem;
+  }
