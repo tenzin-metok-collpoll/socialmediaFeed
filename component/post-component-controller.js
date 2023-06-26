@@ -4,13 +4,18 @@ angular.module("myApp").directive("postComponent", function () {
       restrict: "E",
       scope: {
         data: "=",
+        allPosts: "=",
         // Two-way binding for the data attribute
       },
       templateUrl: "/component/postComponent.html",
       controller: [
         "$scope",
         function ($scope) {
-          console.log("--------");
+          $scope.id=0;
+          $scope.setId = (singlePost) => {
+            let id = $scope.allPosts.indexOf(singlePost);
+            $scope.id = id;
+          };
           // like post
           $scope.incrementLike = (singlePost) => {
             console.log("after adding like singlePost: ", singlePost);
@@ -32,23 +37,21 @@ angular.module("myApp").directive("postComponent", function () {
               singlePost.val = "";
             }
           };
+         
           //save changes to edit content feed
-          $scope.saveChanges = () => {
-            if ($scope.editedContent === undefined) {
-              console.log('$scope.editedContent: ', $scope.editedContent);
-              $scope.data.messg = $scope.data.messg;
-            } else {
-              onsole.log('$scope.editedContent: ', $scope.editedContent);
-              $scope.data.messg = $scope.editedContent;
-            }
-            $scope.editMode = false;
+          $scope.saveChanges =  ()=> {
+            if($scope.editedContent===undefined){
+                $scope.allPosts[$scope.id].messg = $scope.allPosts[$scope.id].messg;
+              }
+              else{
+                $scope.allPosts[$scope.id].messg=$scope.editedContent;
+              }
+              $scope.editMode = false;
+           
           };
           // delete a feed
           $scope.deleteFeed = (singlePost) => {
-            console.log("singlePost: ", singlePost);
-            $scope.data.splice($scope.allPost.findIndex(a => a.name === singlePost.name) , 1)
-            console.log('$scope.data: ', $scope.data);
-            console.log("------after deleting feed", $scope.allPosts);
+            $scope.allPosts.splice($scope.allPosts.indexOf($scope.data) , 1)
           };
           //edit comments
           $scope.EditComment = (singlePost, singleComment) => {

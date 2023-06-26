@@ -111,12 +111,7 @@ angular.module("myApp").controller("myCtr", function ($scope, $filter, $interval
   // Update the time every second
   // $interval(updateTime, 1000);
 
-  $scope.setId = (singlePost) => {
-    console.log("====singlePost: ", singlePost);
-    let id = $scope.allPosts.indexOf(singlePost);
-    console.log("singlePost: ", singlePost);
-    $scope.id = id;
-  };
+
   // adding a new content in feed
   $scope.addToFeed = () => {
     $scope.show = false;
@@ -132,11 +127,5 @@ angular.module("myApp").controller("myCtr", function ($scope, $filter, $interval
     $scope.userName = "";
     console.log("===after adding post to feed, allpost :", $scope.allPosts);
   };
-  $scope.deleteFeed = (singlePost) => {
-    console.log("singlePost: ", singlePost);
-    console.log("++++++",$scope.allPosts);
-    // $scope.data.splice($scope.data.findIndex(a => a.name === singlePost.name) , 1)
-    console.log('$scope.data: ', $scope.data);
-    console.log("------after deleting feed", $scope.allPosts);
-  };
+
 });
