@@ -18,7 +18,7 @@
     <!-- FEED CONTENT -->
     <div class="card-body">
     <p id="content" class="card-text" ng-show="!editMode">{{data.messg }}</p>
-    <p class="posted">{{ data | timeAgo }}</p>
+    <p class="posted">{{ data.posted | timeAgo }}</p>
     <input id="contentInput" class="card-text" ng-show="editMode" ng-model="editedContent" type="text">
     </div>
     <!-- options LIKE DISLIKE COMMENT SHARE -->
@@ -89,6 +89,7 @@
         ng-click="editMode=false">Cancel</a></div>
     <div class="col-6"></div>
     </div>
+    </div>
     </li>
     </ul>
      <!--Edit modal pop up  -->
@@ -100,7 +101,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <input class="form-control" ng-model="editedContent" ng-value="allPosts[allPosts.id].messg" type="text">{{allPosts.id}}
+            <input class="form-control" ng-model="editedContent" ng-value="allPosts[allPosts.id].messg" type="text">
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

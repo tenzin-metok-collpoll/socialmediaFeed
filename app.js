@@ -1,3 +1,4 @@
+
 angular.module("myApp", ["ngRoute"]).config([
   "$routeProvider",
   function ($routeProvider) {
@@ -13,7 +14,7 @@ angular.module("myApp", ["ngRoute"]).config([
       })
       .when("/feed", {
         templateUrl: "views/feed.html",
-        styleUrls: "/css/index.css",
+        styleUrls: ["/css/index.css"],
         controller: "myCtr",
       })
       .otherwise({
@@ -30,7 +31,7 @@ angular.module("myApp").controller("myCtr", function ($scope, $filter, $interval
       name: "Priya Agarwal",
       messg:
         "PM Modi meets Elon Musk, discuss Tesla, Starlink India plans: All you need to know",
-      posted: new Date(),
+      posted: new Date('2023-04-04'),
       likes: 56,
       dislike: 4,
 
@@ -49,7 +50,7 @@ angular.module("myApp").controller("myCtr", function ($scope, $filter, $interval
       name: "Dhoni Singh",
       messg:
         "India slams China for blocking proposal to designate 26/11 planner",
-      posted: new Date(),
+      posted: new Date('2023-05-01'),
       likes: 3,
       dislike: 43,
 
@@ -73,7 +74,7 @@ angular.module("myApp").controller("myCtr", function ($scope, $filter, $interval
       messg:
         "submarine carrying five crew members disappeared on Sunday, American media is reporting. Internal US Department",
       likes: 10000,
-      posted: new Date(),
+      posted: new Date('2022-01-02'),
       dislike: 122,
       comments: [
         {

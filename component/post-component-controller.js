@@ -77,29 +77,59 @@ angular.module("myApp").directive("postComponent", function () {
             if (index > -1) {
               $scope.data.comments.splice(index, 1); // Remove the comment from the comments array
             }
-          };
-          $scope.cancelAddComment = (singlePost) => {
-            showCommentInput = false;
-            singlePost.val = "";
-          };
-          //cancel feed
-          $scope.CancelFeed = () => {
-            $scope.show = false;
-            $scope.story = "";
-            $scope.userName = "";
-          };
-  
-          //save comments
-          $scope.Update = (singleComment) => {
-            singleComment.editMode = false;
-            singleComment.content = singleComment.editedComment;
-          };
-          $scope.Cancel = (singleComment) => {
-            singleComment.editMode = false;
-            $scope.story = "";
-            $scope.userName = "";
-          };
-        },
-      ],
-    };
-  });
+            $scope.editMode = false;
+         
+        };
+        // delete a feed
+        $scope.deleteFeed = (singlePost) => {
+          $scope.allPosts.splice($scope.allPosts.indexOf($scope.data) , 1)
+        };
+        //edit comments
+        $scope.EditComment = (singlePost, singleComment) => {
+          singleComment.editMode = true;
+          singleComment.editedComment = singleComment.content;
+        };
+        //save comments
+        $scope.saveComment = (singlePost, singleComment) => {
+          singleComment.editMode = false;
+          singleComment.content = singleComment.editedComment;
+        };
+
+        //cancel comments
+        $scope.cancelComment = () => {
+          singleComment.editMode = false;
+        };
+        //delete comment
+        $scope.deleteComment = (singlePost, singleComment) => {
+          var index = $scope.data.comments.indexOf(singleComment);
+          console.log("$scope.data.comments: ", $scope.data.comments);
+          console.log("index: ", index);
+          if (index > -1) {
+            $scope.data.comments.splice(index, 1); // Remove the comment from the comments array
+          }
+        };
+        $scope.cancelAddComment = (singlePost) => {
+          showCommentInput = false;
+          singlePost.val = "";
+        };
+        //cancel feed
+        $scope.CancelFeed = () => {
+          $scope.show = false;
+          $scope.story = "";
+          $scope.userName = "";
+        };
+
+        //save comments
+        $scope.Update = (singleComment) => {
+          singleComment.editMode = false;
+          singleComment.content = singleComment.editedComment;
+        };
+        $scope.Cancel = (singleComment) => {
+          singleComment.editMode = false;
+          $scope.story = "";
+          $scope.userName = "";
+        };
+      },
+    ],
+  };
+});
