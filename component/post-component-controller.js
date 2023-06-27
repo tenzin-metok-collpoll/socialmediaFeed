@@ -11,10 +11,11 @@ angular.module("myApp").directive("postComponent", function () {
       controller: [
         "$scope",
         function ($scope) {
-          $scope.id=0;
-          $scope.setId = (singlePost) => {
-            let id = $scope.allPosts.indexOf(singlePost);
-            $scope.id = id;
+          $scope.setId = function (singlePost) {
+            var id = $scope.allPosts.indexOf(singlePost);
+            $scope.allPosts.id = id;
+            // console.log(=);
+            
           };
           // like post
           $scope.incrementLike = (singlePost) => {
@@ -41,10 +42,10 @@ angular.module("myApp").directive("postComponent", function () {
           //save changes to edit content feed
           $scope.saveChanges =  ()=> {
             if($scope.editedContent===undefined){
-                $scope.allPosts[$scope.id].messg = $scope.allPosts[$scope.id].messg;
+                $scope.allPosts[$scope.allPosts.id].messg = $scope.allPosts[$scope.allPosts.id].messg;
               }
               else{
-                $scope.allPosts[$scope.id].messg=$scope.editedContent;
+                $scope.allPosts[$scope.allPosts.id].messg=$scope.editedContent;
               }
               $scope.editMode = false;
            
