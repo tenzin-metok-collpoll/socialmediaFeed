@@ -1,6 +1,6 @@
 angular.module("myApp").filter("timeAgo", () => {
-    return function (singlePost) {
-      let postTime = singlePost.posted;
+    return function (posted) {
+      let postTime = posted;
       let current = new Date();
       let elapsed = current - postTime;
       let seconds = Math.floor(elapsed / 1000);
