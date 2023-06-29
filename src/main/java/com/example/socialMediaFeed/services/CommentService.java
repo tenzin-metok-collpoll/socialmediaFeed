@@ -1,6 +1,7 @@
 package com.example.socialMediaFeed.services;
 
 import com.example.socialMediaFeed.models.Comment;
+
 import com.example.socialMediaFeed.repositories.CommentRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -20,9 +21,22 @@ public class CommentService {
         return list;
     }
 
-    public Optional<Comment> getCommentById(Long id) {
-        return commentRepository.findById(id);
+    public class CommentNotFoundException extends RuntimeException {
+    public CommentNotFoundException(String message) {
+        super(message);
     }
+}
+
+    public Optional<Comment> getCommentById(Long id) {
+    Optional<Comment> commentOptional = commentRepository.findById(id);
+
+    if (commentOptional.isPresent()) {
+        return commentOptional;
+    } else {
+        throw new CommentNotFoundException("Comment not found with ID: " + id);
+    }
+}
+
 
     public Comment createComment(Comment comment) {
         Comment new_comment= commentRepository.save(comment);

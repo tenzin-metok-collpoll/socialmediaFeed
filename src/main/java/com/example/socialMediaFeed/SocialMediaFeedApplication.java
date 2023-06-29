@@ -9,6 +9,6 @@ public class SocialMediaFeedApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SocialMediaFeedApplication.class, args);
 		System.out.println("fsdfdfsdf!!!!!!!!!!!!!!!!!");
-	}
-
+	}                   
+                 
 }

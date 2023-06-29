@@ -19,10 +19,22 @@ public class PostService {
         List<Post> list = (List<Post>) this.postRepository.findAll();
         return list;
     }
+    public class PostNotFoundException extends RuntimeException {
+    public PostNotFoundException(String message) {
+        super(message);
+    }
+}
 
     public Optional<Post> getPostById(Long id) {
-        return postRepository.findById(id);
+    Optional<Post> postOptional = postRepository.findById(id);
+
+    if (postOptional.isPresent()) {
+        return postOptional;
+    } else {
+        throw new PostNotFoundException("Post not found with ID: " + id);
     }
+}
+
 
     public Post createPost(Post post) {
         Post post_new= postRepository.save(post);

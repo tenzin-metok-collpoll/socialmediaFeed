@@ -1,5 +1,5 @@
 package com.example.socialMediaFeed.models;
-import com.example.socialMediaFeed.models.Type;
+
 import java.time.Instant;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;

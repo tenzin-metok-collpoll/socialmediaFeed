@@ -1,6 +1,8 @@
 package com.example.socialMediaFeed.controllers;
 import com.example.socialMediaFeed.models.Post;
 import com.example.socialMediaFeed.services.PostService;
+import com.example.socialMediaFeed.services.PostService.PostNotFoundException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,9 +30,22 @@ public class PostController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Post> getPostById(@PathVariable Long id) {
-        return postService.getPostById(id);
+    public ResponseEntity<Post> getPostById(@PathVariable Long id) {
+  
+    
+   try {
+        Optional<Post> postOptional = postService.getPostById(id);
+        
+        if (postOptional.isPresent()) {
+            Post post = postOptional.get();
+            return ResponseEntity.ok(post);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    } catch (PostNotFoundException ex) {
+        return ResponseEntity.notFound().build();
     }
+}
 
     @PostMapping("/")
       public ResponseEntity<Post>createPost(@RequestBody Post post){

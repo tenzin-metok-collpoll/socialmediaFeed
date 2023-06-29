@@ -1,6 +1,9 @@
 package com.example.socialMediaFeed.controllers;
 import com.example.socialMediaFeed.models.Comment;
+import com.example.socialMediaFeed.models.Post;
 import com.example.socialMediaFeed.services.CommentService;
+import com.example.socialMediaFeed.services.CommentService.CommentNotFoundException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,8 +31,20 @@ public class CommentController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Comment> getCommentById(@PathVariable Long id) {
-        return commentService.getCommentById(id);
+    public  ResponseEntity<Comment> getCommentById(@PathVariable Long id) {
+         
+   try {
+    Optional<Comment> commentOptional = commentService.getCommentById(id);
+    
+    if (commentOptional.isPresent()) {
+        Comment  comment = commentOptional.get();
+        return ResponseEntity.ok(comment);
+    } else {
+        return ResponseEntity.notFound().build();
+    }
+} catch (CommentNotFoundException ex) {
+    return ResponseEntity.notFound().build();
+}
     }
 
     @PostMapping("/")
