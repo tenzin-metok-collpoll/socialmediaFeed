@@ -1,9 +1,6 @@
 package com.example.socialMediaFeed.controllers;
 import com.example.socialMediaFeed.models.Comment;
-import com.example.socialMediaFeed.models.Post;
 import com.example.socialMediaFeed.services.CommentService;
-import com.example.socialMediaFeed.services.CommentService.CommentNotFoundException;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,72 +12,57 @@ import java.util.Optional;
 @RequestMapping("/comment")
 public class CommentController {
 
-    private final CommentService commentService;
+  private final CommentService commentService;
 
-    public CommentController(CommentService commentService) {
-        this.commentService = commentService;
-    }
+  public CommentController(CommentService commentService) {
+    this.commentService = commentService;
+  }
 
-    @GetMapping("/")
-  public ResponseEntity<List<Comment>>getAllComment(){
-        List<Comment>list=commentService.getAllComment();
-        if(list.size()<=0){
-          return  ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        return ResponseEntity.of(Optional.of(list));
+  @GetMapping("/")
+  public ResponseEntity<List<Comment>> getAllComment() {
+    List<Comment> list = commentService.getAllComment();
+    if (list.size() <= 0) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
+    return ResponseEntity.of(Optional.of(list));
+  }
 
-    @GetMapping("/{id}")
-    public  ResponseEntity<Comment> getCommentById(@PathVariable Long id) {
-         
-   try {
-    Optional<Comment> commentOptional = commentService.getCommentById(id);
-    
-    if (commentOptional.isPresent()) {
-        Comment  comment = commentOptional.get();
-        return ResponseEntity.ok(comment);
-    } else {
-        return ResponseEntity.notFound().build();
+  @GetMapping("/{id}")
+  public Comment getCommentById(@PathVariable int id) {
+    return commentService.getCommentById(id);
+  }
+  @PostMapping("/")
+  public ResponseEntity<Comment> createComment(@RequestBody Comment comment) {
+    Comment new_comment = null;
+    try {
+      new_comment = this.commentService.createComment(comment);
+      return ResponseEntity.of(Optional.of(new_comment));
+    } catch (Exception e) {
+      e.printStackTrace();
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
-} catch (CommentNotFoundException ex) {
-    return ResponseEntity.notFound().build();
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> deleteComment(@PathVariable("id") int id) {
+    try {
+      commentService.deleteComment(id);
+      return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    } catch (Exception e) {
+      e.printStackTrace();
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+  }
+
+  @PutMapping("/{id}")
+  public ResponseEntity<Comment> updateComment(@RequestBody Comment comment, @PathVariable("id") int id) {
+    try {
+      comment.setId(id);
+      this.commentService.updateComment(comment);
+      return ResponseEntity.ok().body(comment);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+  }
 }
-    }
-
-    @PostMapping("/")
-      public ResponseEntity<Comment>createComment(@RequestBody Comment comment){
-        Comment new_comment=null;
-        try{
-          new_comment=this.commentService.createComment(comment);
-          return ResponseEntity.of(Optional.of(new_comment));
-        }
-        catch(Exception e){
-          e.printStackTrace();
-return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-      }
-
-     @DeleteMapping("/{id}")
-      public ResponseEntity<Void>deleteComment(@PathVariable("id") int id){
-       try{
-           commentService.deleteComment(id);
-           return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-       }
-       catch(Exception e){
-           e.printStackTrace();
-        return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-       }
-      }
-       @PutMapping("/{id}")
-       public ResponseEntity<Comment>updateComment(@RequestBody Comment comment,@PathVariable("id") int id){
-             try{
-              this.commentService.updateComment(comment,id);
-        return ResponseEntity.ok().body(comment);
-             } 
-             catch(Exception e){
-              e.printStackTrace();
-          return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-             }    
-       }
-}
-

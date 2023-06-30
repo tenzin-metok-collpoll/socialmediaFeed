@@ -1,7 +1,15 @@
 package com.example.socialMediaFeed.repositories;
 import com.example.socialMediaFeed.models.Comment;
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
 
-public interface CommentRepository extends JpaRepository<Comment, Long> {
+public interface CommentRepository {
+    Comment findById(int id);
 
+    List<Comment> findAll();
+
+    Comment save(Comment comment);
+
+    Comment update(Comment comment);
+
+    void delete(int id);
 }

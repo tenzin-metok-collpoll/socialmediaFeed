@@ -1,6 +1,6 @@
 package com.example.socialMediaFeed.models;
-
-import java.time.Instant;
+import java.sql.Timestamp;
+import com.example.socialMediaFeed.repositories.Type;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
@@ -13,10 +13,10 @@ public class LikeDislike {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String user_name;
-    @Enumerated(EnumType.STRING)
-    @Column
-    private Type type;
-    private Instant time_stamp;
+    // @Enumerated(EnumType.STRING)
+    // @Column
+    private String type;
+    private Timestamp time_stamp;
     // @ManyToOne
     // @JoinColumn(name = "id")
     private Integer post_id;
@@ -28,7 +28,7 @@ public class LikeDislike {
     }
 
     // Parameterized constructor
-    public LikeDislike(String user_name, Type type, Instant time_stamp, Integer post_id) {
+    public LikeDislike(String user_name, String type, Timestamp time_stamp, Integer post_id) {
         this.user_name = user_name;
         this.type = type;
         this.time_stamp = time_stamp;
@@ -41,10 +41,10 @@ public class LikeDislike {
  public Integer getpost_id() {
     return post_id;
 }
-public Instant gettime_stamp() {
+public Timestamp gettime_stamp() {
     return time_stamp;
 }
-public void settime_stamp(Instant time_stamp) {
+public void settime_stamp(Timestamp time_stamp) {
     this.time_stamp = time_stamp;
 }
 public void setId(int id) {
@@ -56,13 +56,14 @@ public void setpost_id(Integer post_id) {
 public String getuser_name() {
     return user_name;
 }
-public void setType(Type type) {
+public void setType(String type) {
     this.type = type;
 }
 public void setuser_name(String user_name) {
     this.user_name = user_name;
 }
-public Type getType() {
+public String getType() {
+    System.out.println("--------------------++--+"+type);
     return type;
 }
  // toString() method for debugging and logging
@@ -77,5 +78,8 @@ public Type getType() {
                 ", post_id='" + post_id + '\'' +
                 '}';
     }
+
+    // public void setType(String string) {
+    // }
 
 }
