@@ -33,7 +33,7 @@ public class LikeDislikeRepositoryImpl implements LikeDislikeRepository{
     @Override
     public LikeDislike save(LikeDislike likeDislike) {
         String sql = "INSERT INTO like_and_dislike (user_name, type, post_id, time_stamp) VALUES (?, ?, ?, ?)";
-        jdbcTemplate.update(sql, likeDislike.getuser_name(), likeDislike.getType(), likeDislike.getpost_id(), likeDislike.gettime_stamp());
+        jdbcTemplate.update(sql, likeDislike.getUser_name(), likeDislike.getType(), likeDislike.getPost_id(), likeDislike.getTime_stamp());
         System.out.println("-----__----________--+"+likeDislike);
         return likeDislike;
     }
@@ -53,23 +53,22 @@ public class LikeDislikeRepositoryImpl implements LikeDislikeRepository{
     } 
 
     // Inside your repository or service class
-public Type mapStringToType(String typeString) {
-    System.out.println("000=============="+typeString);
-    try {
-        return Type.valueOf(typeString);
-    } catch (IllegalArgumentException e) {
-        // Handle invalid or unknown enum values if needed
-        return null;
-    }
-}
+// public Type mapStringToType(String typeString) {
+//     try {
+//         return Type.valueOf(typeString);
+//     } catch (IllegalArgumentException e) {
+//         // Handle invalid or unknown enum values if needed
+//         return null;
+//     }
+// }
 
     private LikeDislike mapRowToUser(ResultSet rs, int rowNum) throws SQLException {
         LikeDislike likeDislike = new LikeDislike();
         likeDislike.setId(rs.getInt("id"));
-        likeDislike.setuser_name(rs.getString("user_name"));
+        likeDislike.setUser_name(rs.getString("user_name"));
         likeDislike.setType(rs.getString("type"));
-        likeDislike.setpost_id(rs.getInt("post_id"));
-        likeDislike.settime_stamp(rs.getTimestamp("time_stamp"));
+        likeDislike.setPost_id(rs.getInt("post_id"));
+        likeDislike.setTime_stamp(rs.getTimestamp("time_stamp"));
         return likeDislike;
     }
 }
