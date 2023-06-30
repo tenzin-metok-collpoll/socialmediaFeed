@@ -1,5 +1,6 @@
 package com.example.socialMediaFeed.controllers;
 import com.example.socialMediaFeed.models.Comment;
+import com.example.socialMediaFeed.models.Post;
 import com.example.socialMediaFeed.services.CommentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,8 +29,14 @@ public class CommentController {
   }
 
   @GetMapping("/{id}")
-  public Comment getCommentById(@PathVariable int id) {
-    return commentService.getCommentById(id);
+  public ResponseEntity<Comment> getCommentById(@PathVariable int id) {
+    try {
+        Comment comment = commentService.getCommentById(id);
+        return ResponseEntity.ok(comment);
+    } catch (Exception e) {
+        // Handle the exception when the post is not found
+        return ResponseEntity.notFound().build();
+    }
   }
   @PostMapping("/")
   public ResponseEntity<Comment> createComment(@RequestBody Comment comment) {

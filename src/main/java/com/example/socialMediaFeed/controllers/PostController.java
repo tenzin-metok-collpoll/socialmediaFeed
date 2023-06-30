@@ -34,8 +34,14 @@ public class PostController {
 
 
     @GetMapping("/{id}")
-  public Post getPostById(@PathVariable int id) {
-    return postService.getPostById(id);
+  public ResponseEntity<Post> getPostById(@PathVariable int id) {
+    try {
+        Post post = postService.getPostById(id);
+        return ResponseEntity.ok(post);
+    } catch (Exception e) {
+        // Handle the exception when the post is not found
+        return ResponseEntity.notFound().build();
+    }
   }
   @PostMapping("/")
   public ResponseEntity<Post> createPost(@RequestBody Post post) {
