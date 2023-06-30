@@ -39,7 +39,7 @@ public class PostRepositoryImpl implements PostRepository{
 
     @Override
     public Post update(Post post) {
-        String sql = "UPDATE Posts SET user_name = ?, description = ?, id = ?, posted_time = ?  WHERE id = ?";
+        String sql = "UPDATE Posts SET user_name = ?, description = ?, posted_time = ? WHERE id = ?";
         jdbcTemplate.update(sql, post.getUser_name(), post.getDescription(),  post.getPosted_time(), post.getId());
         return post;
     }
