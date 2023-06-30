@@ -1,5 +1,6 @@
 package com.example.socialMediaFeed.models;
-import java.time.Instant;
+import java.sql.Timestamp;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
@@ -13,17 +14,17 @@ public class Post {
     private Integer id;
     private String user_name;
     private String description;
-    private Instant posted_time;
+    private Timestamp posted_time;
 
     // Constructors, getters, setters
     public int getId() {
     return id;
 }
-public Instant getposted_time() {
+public Timestamp getposted_time() {
     return posted_time;
 }
-public void setposted_time(Instant posted_time) {
-    this.posted_time = posted_time;
+public void setposted_time(Timestamp posted_time) {
+    this.posted_time=posted_time;
 }
 public void setId(int id) {
     this.id = id;

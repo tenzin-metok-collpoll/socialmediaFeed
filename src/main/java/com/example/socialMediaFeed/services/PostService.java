@@ -1,53 +1,18 @@
 package com.example.socialMediaFeed.services;
-
 import com.example.socialMediaFeed.models.Post;
-import com.example.socialMediaFeed.repositories.PostRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.Optional;
 
 @Service
-public class PostService {
-    private final PostRepository postRepository;
+public interface PostService {
 
-    public PostService(PostRepository postRepository) {
-        this.postRepository = postRepository;
-    }
+    Post getPostById(int id);
 
-    // getAllPost
-    public List<Post> getAllPosts() {
-        List<Post> list = (List<Post>) this.postRepository.findAll();
-        return list;
-    }
-    public class PostNotFoundException extends RuntimeException {
-    public PostNotFoundException(String message) {
-        super(message);
-    }
-}
+    List<Post> getAllPost();
 
-    public Optional<Post> getPostById(Long id) {
-    Optional<Post> postOptional = postRepository.findById(id);
+    Post createPost(Post post);
 
-    if (postOptional.isPresent()) {
-        return postOptional;
-    } else {
-        throw new PostNotFoundException("Post not found with ID: " + id);
-    }
-}
+     Post updatePost(Post post);
 
-
-    public Post createPost(Post post) {
-        Post post_new= postRepository.save(post);
-        return post_new;
-    }
-
-     public void deletePost(int id) {
-        postRepository.deleteById((long) id);
-    }
-    public void updatePost(Post post,int id){
-    post.setId(id);
-    postRepository.save(post);
-    }
-
-  
+    void deletePost(int id);  
 }
