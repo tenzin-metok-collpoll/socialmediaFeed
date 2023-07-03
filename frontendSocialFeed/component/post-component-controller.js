@@ -1,5 +1,5 @@
 //component directive
-angular.module("myApp").directive("postComponent", function () {
+angular.module("myApp").directive("postComponent",['$http', function ($http) {
     return {
       restrict: "E",
       scope: {
@@ -7,16 +7,36 @@ angular.module("myApp").directive("postComponent", function () {
         allPosts: "=",
         // Two-way binding for the data attribute
       },
-      templateUrl: "/component/postComponent.html",
+      templateUrl: "component/postComponent.html",
       controller: [
         "$scope",
         function ($scope) {
           $scope.setId = function (singlePost) {
-            var id = $scope.allPosts.indexOf(singlePost);
-            $scope.allPosts.id = id;
+            let index = $scope.allPosts.indexOf(singlePost);
+            $scope.allPosts.id = index;
             // console.log(=);
+            console.log("Setid",index);
             
           };
+          //update post
+          $scope.Edit = function () {
+            if ($scope.editMode) {
+              // Save changes
+              let url = 'http://localhost:7020/post/' + $scope.data.id;
+        
+              $http.put(url, $scope.data)
+                .then(function (response) {
+                  console.log('Post updated successfully');
+                  $scope.editMode = false;
+                })
+                .catch(function (error) {
+                  console.error('Failed to update post:', error);
+                });
+            } else {
+              // Enter edit mode
+              $scope.editMode = true;
+            }
+          }
           // like post
           $scope.incrementLike = (singlePost) => {
             console.log("after adding like singlePost: ", singlePost);
@@ -40,20 +60,60 @@ angular.module("myApp").directive("postComponent", function () {
           };
          
           //save changes to edit content feed
-          $scope.saveChanges =  ()=> {
-            if($scope.editedContent===undefined){
-                $scope.allPosts[$scope.allPosts.id].messg = $scope.allPosts[$scope.allPosts.id].messg;
-              }
-              else{
-                $scope.allPosts[$scope.allPosts.id].messg=$scope.editedContent;
-              }
-              $scope.editMode = false;
+          // $scope.saveChanges =  ()=> {
+          //   if($scope.editedContent===undefined){
+          //       $scope.allPosts[$scope.allPosts.id].description = $scope.allPosts[$scope.allPosts.id].description;
+          //     }
+          //     else{
+          //       $scope.allPosts[$scope.allPosts.id].description=$scope.editedContent;
+          //     }
+          //     $scope.editMode = false;
            
+          // };
+          $scope.saveChanges = function (singlePost) {
+            if ($scope.editedContent === undefined) {
+              $scope.editMode = false;
+            } else {
+              let updatedPost = $scope.data
+              console.log("index",updatedPost)
+              updatedPost.description = $scope.editedContent;
+             console.log("update post id",updatedPost.index)
+              let url = 'http://localhost:7020/post/' + singlePost.id;
+             updatedPost = $scope.allPosts.findIndex(post => post.id === singlePost.id);
+              $http.put(url, updatedPost)
+                .then(function (response) {
+                  console.log('Post updated successfully in save');
+                 
+                  if (postIndex !== -1) {
+                    $scope.allPosts[postIndex].description = $scope.editedContent;
+                  }
+                  $scope.editMode = false;
+                })
+                .catch(function (error) {
+                  console.error('Failed to update post:', error);
+                });
+            }
           };
+          
           // delete a feed
-          $scope.deleteFeed = (singlePost) => {
-            $scope.allPosts.splice($scope.allPosts.indexOf($scope.data) , 1)
+          $scope.deleteFeed = function(singlePost) {
+            let url = 'http://localhost:7020/post/' + singlePost.id;
+            console.log("singlepost id",singlePost.id)
+          
+            $http.delete(url)
+              .then(function(response) {
+                console.log('Post deleted successfully');
+                // Remove the post from the $scope.allPosts array
+                var index = $scope.allPosts.indexOf(singlePost);
+                if (index > -1) {
+                  $scope.allPosts.splice(index, 1);
+                }
+              })
+              .catch(function(error) {
+                console.error('Failed to delete post:', error);
+              });
           };
+          
           //edit comments
           $scope.EditComment = (singlePost, singleComment) => {
             singleComment.editMode = true;
@@ -81,9 +141,9 @@ angular.module("myApp").directive("postComponent", function () {
          
         };
         // delete a feed
-        $scope.deleteFeed = (singlePost) => {
-          $scope.allPosts.splice($scope.allPosts.indexOf($scope.data) , 1)
-        };
+        // $scope.deleteFeed = (singlePost) => {
+        //   $scope.allPosts.splice($scope.allPosts.indexOf($scope.data) , 1)
+        // };
         //edit comments
         $scope.EditComment = (singlePost, singleComment) => {
           singleComment.editMode = true;
@@ -132,4 +192,4 @@ angular.module("myApp").directive("postComponent", function () {
       },
     ],
   };
-});
+}]);

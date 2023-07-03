@@ -23,15 +23,16 @@ angular.module("myApp", ["ngRoute"]).config([
   },
 ]);
 
-angular.module("myApp").controller("myCtr", function ($scope, $filter, $interval) {
+angular.module("myApp").controller("myCtr", function ($scope,$http, $filter, $interval) {
   $scope.id = 0;
   $scope.show = false;
   $scope.allPosts = [
     {
-      name: "Priya Agarwal",
-      messg:
+      id:1,
+      user_name: "Priya Agarwal",
+      description:
         "PM Modi meets Elon Musk, discuss Tesla, Starlink India plans: All you need to know",
-      posted: new Date('2023-04-04'),
+        posted_time: new Date('2023-04-04'),
       likes: 56,
       dislike: 4,
 
@@ -47,10 +48,11 @@ angular.module("myApp").controller("myCtr", function ($scope, $filter, $interval
       ],
     },
     {
-      name: "Dhoni Singh",
-      messg:
+      id:2,
+      user_name: "Dhoni Singh",
+      description:
         "India slams China for blocking proposal to designate 26/11 planner",
-      posted: new Date('2023-05-01'),
+      posted_time: new Date('2023-05-01'),
       likes: 3,
       dislike: 43,
 
@@ -70,11 +72,12 @@ angular.module("myApp").controller("myCtr", function ($scope, $filter, $interval
       ],
     },
     {
-      name: "Yuvraj",
-      messg:
+      id:3,
+      user_name: "Yuvraj",
+      description:
         "submarine carrying five crew members disappeared on Sunday, American media is reporting. Internal US Department",
       likes: 10000,
-      posted: new Date('2022-01-02'),
+      posted_time: new Date('2022-01-02'),
       dislike: 122,
       comments: [
         {
@@ -114,19 +117,62 @@ angular.module("myApp").controller("myCtr", function ($scope, $filter, $interval
 
 
   // adding a new content in feed
+  let PostId=4;
   $scope.addToFeed = () => {
     $scope.show = false;
-    $scope.allPosts.push({
-      name: $scope.userName,
-      messg: $scope.story,
-      likes: 0,
-      dislike: 0,
-      posted: new Date(),
-      comments: [],
-    });
-    $scope.story = "";
-    $scope.userName = "";
-    console.log("===after adding post to feed, allpost :", $scope.allPosts);
+    const post = {
+      id: PostId,
+      user_name: $scope.userName,
+      description: $scope.story,
+      posted_time: new Date()
+    };
+  
+    // $scope.allPosts.push(post);
+    // $scope.story = "";
+    // $scope.userName = "";
+  
+    // console.log("===after adding post to feed, allpost:", $scope.allPosts);
+  
+    $http.post('http://localhost:7020/post/', post)
+      .then(function(response) {
+        console.log('Post added successfully:', response);
+        $scope.allPosts.push(post);
+        $scope.story = '';
+        $scope.userName = '';
+        console.log('===after adding post to feed, allpost:', $scope.allPosts);
+        PostId++;
+      })
+      .catch(function(error) {
+        console.error('Error adding post:', error);
+      });
   };
+  
+  // $http.get('http://localhost:7020/posts/')
+  // .then(function(response) {
+  //   console.log('Posts retrieved successfully:', response.data);
+  //   $scope.allPosts = response.data; // Assuming the response data is an array of posts
+  // })
+  // .catch(function(error) {
+  //   console.error('Error retrieving posts:', error);
+  // });
+  $http.get('http://localhost:7020/post/')
+  .then(function(response) {
+    console.log('Data retrieved successfully:', response.data,typeof(response.data));
+    $scope.allData = response.data; // Assuming the response data is an array of objects
+   $scope.allPosts = $scope.allPosts.concat(response.data);
+  })
+  .catch(function(error) {
+    console.error('Error retrieving data:', error);
+  });
+
+  //delete http
+  // $http.delete('http://localhost:7020/post/' + $scope.id)
+  // .then(function(response) {
+  //   console.log("id")
+  //   console.log('Post deleted successfully');
+  // })
+  // .catch(function(error) {
+  //   console.error('Failed to delete post:', error);
+  // });
 
 });

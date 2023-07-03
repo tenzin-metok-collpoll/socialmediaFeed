@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/post")
+ @CrossOrigin(origins = "http://127.0.0.1:5500")
 public class PostController {
 
   private final PostService postService;
@@ -25,6 +26,7 @@ public class PostController {
   }
 
   @GetMapping("/")
+
   public ResponseEntity<List<Post>> getAllPosts() {
     List<Post> list = postService.getAllPost();
     if (list.size() <= 0) {
