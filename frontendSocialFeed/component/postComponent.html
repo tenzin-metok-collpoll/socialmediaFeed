@@ -64,7 +64,7 @@
     <div class="row" ng-if="singleComment.post_id === data.id">
     <div class="col-9">
     <p class=commentList ng-show="!singleComment.editMode">{{singleComment.description}}</p>
-    <input class="commentInput" ng-show="singleComment.editMode" ng-model="singleComment.editedComment"
+    <input class="commentInput" ng-show="singleComment.editMode" ng-value="singleComment.description" ng-model="singleComment.editedComment"
       type="text">
     </div>
     <div class="dropdown col-3">
@@ -82,7 +82,7 @@
     </div>
     <div class="row comment-updation">
     <div class="col-3"><a class="dropdown-item update hover" 
-        ng-click="Update(singleComment)" ng-click="singleComment.editMode=false"
+        ng-click="Update(singleComment,data)" ng-click="singleComment.editMode=false"
         ng-show="singleComment.editMode">Update</a> </div>
     <div class="col-3"><a class="dropdown-item cancel hover" 
         ng-click="Cancel(singleComment)" ng-show="singleComment.editMode"
@@ -101,8 +101,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <input class="form-control" ng-model="editedContent" ng-value="allPosts[allPosts.id].description" type="text">
-            {{allPosts[allPosts.id].description}}
+            <input class="form-control" ng-model="editedContent" ng-value="allPosts.description" type="text">
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

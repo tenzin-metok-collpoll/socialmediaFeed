@@ -1,7 +1,7 @@
 angular.module("myApp").service("postService", ["$http", function($http) {
     return {
         getAllPosts : function (){
-            console.log("-------");
+            console.log("-------++++");
             return $http.get("http://localhost:8080/post/",{ cache: false })
             .then(function(response) {
                 console.log('response.data: ', response.data);

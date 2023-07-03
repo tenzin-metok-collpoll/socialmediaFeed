@@ -85,12 +85,13 @@ angular.module("myApp").controller("myCtr", [
           $scope.userName = "";
           // Handle the newly created post
           console.log(newPost);
+          fetchPost();
         })
         .catch(function (error) {
           console.error(error);
         });
     };
-    fetchPost();
+  
 
     // };
     function fetchPost() {

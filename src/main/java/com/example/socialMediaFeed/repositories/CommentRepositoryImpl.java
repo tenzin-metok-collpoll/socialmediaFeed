@@ -32,8 +32,8 @@ public class CommentRepositoryImpl implements CommentRepository{
 
     @Override
     public Comment save(Comment comment) {
-        String sql = "INSERT INTO Comments (id, user_name, description, post_id, time_stamp) VALUES (?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sql, comment.getId(), comment.getUser_name(), comment.getDescription(), comment.getPost_id(), comment.getTime_stamp());
+        String sql = "INSERT INTO Comments (user_name, description, post_id, time_stamp) VALUES (?, ?, ?, ?)";
+        jdbcTemplate.update(sql, comment.getUser_name(), comment.getDescription(), comment.getPost_id(), comment.getTime_stamp());
         return comment;
     }
 
