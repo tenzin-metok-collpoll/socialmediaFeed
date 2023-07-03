@@ -1,6 +1,5 @@
 package com.example.socialMediaFeed.controllers;
 import com.example.socialMediaFeed.models.Comment;
-import com.example.socialMediaFeed.models.Post;
 import com.example.socialMediaFeed.services.CommentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +10,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/comment")
+@CrossOrigin(origins = "http://127.0.0.1:5500")
 public class CommentController {
 
   private final CommentService commentService;

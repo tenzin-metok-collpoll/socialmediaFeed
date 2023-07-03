@@ -1,5 +1,7 @@
 //component directive
-angular.module("myApp").directive("postComponent",['$http', function ($http) {
+angular.module("myApp").directive("postComponent", [
+  "$http",
+  function ($http) {
     return {
       restrict: "E",
       scope: {
@@ -10,33 +12,26 @@ angular.module("myApp").directive("postComponent",['$http', function ($http) {
       templateUrl: "component/postComponent.html",
       controller: [
         "$scope",
-        function ($scope) {
+        "postService",
+        function ($scope,postService) {
+          var vm = this;
+          $scope.commentArr = [];
+          $scope.newComment = {};
+          // $scope.ids=0;
+          // $http
+          //   .get("http://localhost:8080/comment/")
+          //   .then(function (response) {
+          //     $scope.commentArr = response.data;
+          //   })
+          //   .catch(function (error) {
+          //     console.error("Error fetching comment:", error);
+          //   });
           $scope.setId = function (singlePost) {
-            let index = $scope.allPosts.indexOf(singlePost);
-            $scope.allPosts.id = index;
-            // console.log(=);
-            console.log("Setid",index);
-            
+            console.log("===============",singlePost);
+            $scope.allPosts.id = singlePost.id;
+            $scope.allPosts.user_name = singlePost.user_name;
           };
-          //update post
-          $scope.Edit = function () {
-            if ($scope.editMode) {
-              // Save changes
-              let url = 'http://localhost:7020/post/' + $scope.data.id;
-        
-              $http.put(url, $scope.data)
-                .then(function (response) {
-                  console.log('Post updated successfully');
-                  $scope.editMode = false;
-                })
-                .catch(function (error) {
-                  console.error('Failed to update post:', error);
-                });
-            } else {
-              // Enter edit mode
-              $scope.editMode = true;
-            }
-          }
+         
           // like post
           $scope.incrementLike = (singlePost) => {
             console.log("after adding like singlePost: ", singlePost);
@@ -46,19 +41,38 @@ angular.module("myApp").directive("postComponent",['$http', function ($http) {
           $scope.decrementLike = (singlePost) => {
             $scope.data.dislike += 1;
           };
-  
+
           //add comments
           $scope.addComment = (singlePost) => {
             $scope.showCommentInput = false;
-            if (singlePost.val !== "") {
-              $scope.data.comments.push({
-                content: singlePost.val,
-                editMode: false,
+             if (singlePost.val !== "") {
+              console.log('singlePost.val: ',typeof singlePost.val);
+              console.log(singlePost.id);
+            //   $scope.data.comments.push({
+            //     content: singlePost.val,
+            //     editMode: false,
+            //   });
+            singlePost.val = "";
+            const newComment = {
+              id: $scope.commentArr.length+1,
+              description: "heeellooo🤣🤣🤣",
+              post_id: singlePost.id,
+              time_stamp: new Date(),
+              user_name: "djksad",
+            };
+            $http
+              .post("http://localhost:8080/comment/", newComment)
+              .then(function (response) {
+                // Handle the response data
+                console.log("Data saved successfully!");
+              })
+              .catch(function (error) {
+                // Handle errors
+                console.error("Error saving data:", error);
               });
-              singlePost.val = "";
-            }
+             }
           };
-         
+
           //save changes to edit content feed
           // $scope.saveChanges =  ()=> {
           //   if($scope.editedContent===undefined){
@@ -68,52 +82,44 @@ angular.module("myApp").directive("postComponent",['$http', function ($http) {
           //       $scope.allPosts[$scope.allPosts.id].description=$scope.editedContent;
           //     }
           //     $scope.editMode = false;
-           
+
           // };
-          $scope.saveChanges = function (singlePost) {
+          $scope.saveChanges = function () {
             if ($scope.editedContent === undefined) {
               $scope.editMode = false;
             } else {
-              let updatedPost = $scope.data
-              console.log("index",updatedPost)
-              updatedPost.description = $scope.editedContent;
-             console.log("update post id",updatedPost.index)
-              let url = 'http://localhost:7020/post/' + singlePost.id;
-             updatedPost = $scope.allPosts.findIndex(post => post.id === singlePost.id);
-              $http.put(url, updatedPost)
-                .then(function (response) {
-                  console.log('Post updated successfully in save');
-                 
-                  if (postIndex !== -1) {
-                    $scope.allPosts[postIndex].description = $scope.editedContent;
-                  }
+              let updatedPost = {
+                user_name: $scope.allPosts.user_name,
+                description: $scope.editedContent,
+                posted_time: new Date()
+              };
+              //update a post
+              postService.updatePost($scope.allPosts.id, updatedPost)
+              .then(function(updatedPost) {
+                  // Handle the updated post
+                  console.log("Post updated successfully in save");
+                  console.log(updatedPost);
                   $scope.editMode = false;
-                })
-                .catch(function (error) {
-                  console.error('Failed to update post:', error);
-                });
-            }
-          };
-          
-          // delete a feed
-          $scope.deleteFeed = function(singlePost) {
-            let url = 'http://localhost:7020/post/' + singlePost.id;
-            console.log("singlepost id",singlePost.id)
-          
-            $http.delete(url)
-              .then(function(response) {
-                console.log('Post deleted successfully');
-                // Remove the post from the $scope.allPosts array
-                var index = $scope.allPosts.indexOf(singlePost);
-                if (index > -1) {
-                  $scope.allPosts.splice(index, 1);
-                }
               })
               .catch(function(error) {
-                console.error('Failed to delete post:', error);
+                  console.error(error);
               });
+            }
           };
-          
+
+          // delete a feed
+          $scope.deleteFeed = function (singlePost) {
+            postService.deletePost(singlePost.id)
+            .then(function() {
+                // Handle the successful deletion
+                console.log("Post deleted successfully");
+            })
+            .catch(function(error) {
+              console.error("Failed to delete post:", error);
+            });
+            postService.getAllPosts();
+          };
+
           //edit comments
           $scope.EditComment = (singlePost, singleComment) => {
             singleComment.editMode = true;
@@ -124,72 +130,63 @@ angular.module("myApp").directive("postComponent",['$http', function ($http) {
             singleComment.editMode = false;
             singleComment.content = singleComment.editedComment;
           };
-  
+
           //cancel comments
           $scope.cancelComment = () => {
             singleComment.editMode = false;
           };
           //delete comment
           $scope.deleteComment = (singlePost, singleComment) => {
-            var index = $scope.data.comments.indexOf(singleComment);
-            console.log("$scope.data.comments: ", $scope.data.comments);
-            console.log("index: ", index);
-            if (index > -1) {
-              $scope.data.comments.splice(index, 1); // Remove the comment from the comments array
-            }
+            // var index = $scope.data.comments.indexOf(singleComment);
+            // console.log("$scope.data.comments: ", $scope.data.comments);
+            // console.log("index: ", index);
+            // if (index > -1) {
+            //   $scope.data.comments.splice(index, 1); // Remove the comment from the comments array
+            // }
             $scope.editMode = false;
-         
-        };
-        // delete a feed
-        // $scope.deleteFeed = (singlePost) => {
-        //   $scope.allPosts.splice($scope.allPosts.indexOf($scope.data) , 1)
-        // };
-        //edit comments
-        $scope.EditComment = (singlePost, singleComment) => {
-          singleComment.editMode = true;
-          singleComment.editedComment = singleComment.content;
-        };
-        //save comments
-        $scope.saveComment = (singlePost, singleComment) => {
-          singleComment.editMode = false;
-          singleComment.content = singleComment.editedComment;
-        };
+            $http
+              .delete("http://localhost:8080/comment/$scope.singleComment.id")
+              .then(function (response) {
+                console.log("Comment deleted successfully");
+              })
+              .catch(function (error) {
+                console.error("Error deleting comment:", error);
+              });
+          };
 
-        //cancel comments
-        $scope.cancelComment = () => {
-          singleComment.editMode = false;
-        };
-        //delete comment
-        $scope.deleteComment = (singlePost, singleComment) => {
-          var index = $scope.data.comments.indexOf(singleComment);
-          console.log("$scope.data.comments: ", $scope.data.comments);
-          console.log("index: ", index);
-          if (index > -1) {
-            $scope.data.comments.splice(index, 1); // Remove the comment from the comments array
-          }
-        };
-        $scope.cancelAddComment = (singlePost) => {
-          showCommentInput = false;
-          singlePost.val = "";
-        };
-        //cancel feed
-        $scope.CancelFeed = () => {
-          $scope.show = false;
-          $scope.story = "";
-          $scope.userName = "";
-        };
+          $scope.cancelAddComment = (singlePost) => {
+            showCommentInput = false;
+            singlePost.val = "";
+          };
+          
 
-        //save comments
-        $scope.Update = (singleComment) => {
-          singleComment.editMode = false;
-          singleComment.content = singleComment.editedComment;
-        };
-        $scope.Cancel = (singleComment) => {
-          singleComment.editMode = false;
-          $scope.story = "";
-          $scope.userName = "";
-        };
-      },
-    ],
-  };
-}]);
+          //save comments
+          $scope.Update = (singleComment) => {
+            singleComment.editMode = false;
+            singleComment.content = singleComment.editedComment;
+            $scope.updatedComment = {
+              id: 9,
+              description: "uiuiuiuiu",
+              post_id: 2,
+              time_stamp: new Date(),
+              user_name: chandler,
+            }
+            $http
+              .put("http://localhost:8080/comment/", updatedComment)
+              .then(function (response) {
+                console.log("Comment updated successfully");
+              })
+              .catch(function (error) {
+                console.error("Error updating comment:", error);
+              });
+          };
+          $scope.Cancel = (singleComment) => {
+            singleComment.editMode = false;
+            $scope.story = "";
+            $scope.userName = "";
+          };
+        },
+      ],
+    };
+  },
+]);

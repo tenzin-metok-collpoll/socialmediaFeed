@@ -32,8 +32,9 @@ public class PostRepositoryImpl implements PostRepository{
 
     @Override
     public Post save(Post post) {
-        String sql = "INSERT INTO  Posts (id,user_name, description,  posted_time) VALUES (?, ?, ?, ?)";
-        jdbcTemplate.update(sql,post.getId(), post.getUser_name(), post.getDescription(),  post.getPosted_time());
+        String sql = "INSERT INTO  Posts (user_name, description,  posted_time) VALUES (?, ?, ?)";
+        jdbcTemplate.update(sql,post.getUser_name(), post.getDescription(),  post.getPosted_time());
+        System.out.println("++++=+++++++"+post);
         return post;
     }
 
@@ -42,6 +43,7 @@ public class PostRepositoryImpl implements PostRepository{
         String sql = "UPDATE Posts SET user_name = ?, description = ?, posted_time = ? WHERE id = ?";
         jdbcTemplate.update(sql, post.getUser_name(), post.getDescription(),  post.getPosted_time(), post.getId());
         return post;
+      
     }
 
     @Override
@@ -52,6 +54,7 @@ public class PostRepositoryImpl implements PostRepository{
 
     private Post mapRowToUser(ResultSet rs, int rowNum) throws SQLException {
         Post post= new Post();
+        System.out.println("++++=+++++++"+post);
         post.setId(rs.getInt("id"));
         post.setUser_name(rs.getString("user_name"));
         post.setDescription(rs.getString("description"));

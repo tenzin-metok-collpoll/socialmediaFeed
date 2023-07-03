@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/post")
- @CrossOrigin(origins = "http://127.0.0.1:5500")
+@CrossOrigin(origins = "http://127.0.0.1:5500")
 public class PostController {
 
   private final PostService postService;
@@ -29,6 +29,7 @@ public class PostController {
 
   public ResponseEntity<List<Post>> getAllPosts() {
     List<Post> list = postService.getAllPost();
+    System.out.println("----"+list);
     if (list.size() <= 0) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
