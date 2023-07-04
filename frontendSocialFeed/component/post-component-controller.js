@@ -12,13 +12,16 @@ angular.module("myApp").directive("postComponent", [
       templateUrl: "component/postComponent.html",
       controller: [
         "$scope",
-        // "http",
-        "postService",
+       "postService",
         "commentService",
-        function ($scope,postService,commentService) {
+        "likedislikeService",
+        function ($scope,postService,commentService,likedislikeService) {
           var vm = this;
           $scope.commentArr = [];
           $scope.newComment = {};
+
+          $scope.likeArr=[];
+          $scope.newLike={};
           fetchComment();
           function fetchComment(){
             commentService
@@ -31,6 +34,21 @@ angular.module("myApp").directive("postComponent", [
             console.error("Error retrieving data:", error);
           });
           }
+          function init() {
+            // Call the service method to fetch initial data
+            likedislikeService.getAlllikeDislike()
+              .then(function (likeDislike) {
+                // Handle the response data if needed
+                console.log("Initial data:",likeDislike);
+                // Assign the data to $scope or modify your existing data structure
+                $scope.likeArr =likeDislike;
+              })
+              .catch(function (error) {
+                console.error(error);
+              });
+          }
+        
+          init();
           function fetchPost() {
             postService
               .getAllPosts()
@@ -52,14 +70,47 @@ angular.module("myApp").directive("postComponent", [
          
           // like post
           $scope.incrementLike = (singlePost) => {
-            console.log("after adding like singlePost: ", singlePost);
-            $scope.data.likes += 1;
+            const newlike = {
+              user_name: singlePost.user_name,
+              type: 'like',
+              post_id: singlePost.id,
+              time_stamp: new Date(),
+            };
+        
+            likedislikeService.addlike(newlike)
+              .then(function (newlike) {
+                console.log("like added successfully:", newlike);
+                // Update the likes count in the singlePost object
+                singlePost.likes += 1;
+                singlePost.val = "";
+              })
+              .catch(function (error) {
+                console.error(error);
+              });
           };
-          // dislike post
+        
           $scope.decrementLike = (singlePost) => {
-            $scope.data.dislike += 1;
+            const newDislike = {
+              user_name: singlePost.user_name,
+              type: 'dislike',
+              post_id: singlePost.id,
+              time_stamp: new Date(),
+            };
+        
+            likedislikeService.addDislike(newDislike)
+              .then(function (newDislike) {
+                console.log("dislike added successfully:", newDislike);
+                // Update the dislikes count in the singlePost object
+                singlePost.dislikes += 1;
+                singlePost.val = "";
+              })
+              .catch(function (error) {
+                console.error(error);
+              });
           };
-
+        
+          // Fetch initial data or perform any necessary initialization
+         
           //add comments
           $scope.addComment = (singlePost) => {
             console.log('singlePost: ', singlePost);
@@ -110,6 +161,7 @@ angular.module("myApp").directive("postComponent", [
                   fetchPost();
                   console.log(updatedPost);
                   $scope.editMode = false;
+                
               })
               .catch(function(error) {
                   console.error(error);
