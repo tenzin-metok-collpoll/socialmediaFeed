@@ -13,7 +13,7 @@ public interface CommentService {
 
     List<Comment> getAllComment();
 
-    ResponseEntity<String> createComment(Comment comment);
+    ResponseEntity<CreateCommentResponse>createComment(Comment comment);
 
     Comment updateComment(Comment comment);
 

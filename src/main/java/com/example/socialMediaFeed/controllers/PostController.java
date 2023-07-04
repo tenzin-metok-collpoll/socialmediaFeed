@@ -40,29 +40,29 @@ public class PostController {
 
 
     @GetMapping("/{id}")
-public ResponseEntity<?> getPostById(@PathVariable int id) {
+ public ResponseEntity<?> getPostById(@PathVariable int id) {
+    if (id <= 0) {
+        // Return invalid ID response
+        return ResponseEntity.badRequest().body("Invalid ID");
+    }
+
     try {
         Post post = postService.getPostById(id);
         return ResponseEntity.ok(post);
-    } catch (NotFoundException e) {
-        // Handle the exception when the post is not found
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Post not found.");
     } catch (Exception e) {
-        // Handle other exceptions
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        // Handle the exception when the post is not found
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Post not found");
     }
 }
-
-
  @PostMapping("/")
 
-public ResponseEntity<String> createPost(@RequestBody(required = false) Post post) {
+public ResponseEntity<?> createPost(@RequestBody(required = false) Post post) {
     try {
         if (post == null) {
             throw new IllegalArgumentException("Request body is missing.");
         }
 
-        ResponseEntity<String>response = postService.createPost(post);
+        ResponseEntity<?>response = postService.createPost(post);
         return response;
     } catch (IllegalArgumentException e) {
         return ResponseEntity.badRequest().body(e.getMessage());
@@ -76,6 +76,10 @@ public ResponseEntity<String> createPost(@RequestBody(required = false) Post pos
   @DeleteMapping("/{id}")
 
 public ResponseEntity<String> deletePost(@PathVariable("id") int id) {
+  if (id <= 0) {
+        // Return invalid ID response
+        return ResponseEntity.badRequest().body("Invalid ID");
+    }
     try {
         postService.deletePost(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Post with ID " + id + " deleted successfully.");
@@ -93,6 +97,10 @@ public ResponseEntity<String> deletePost(@PathVariable("id") int id) {
  
 @PutMapping("/{id}")
 public ResponseEntity<?> updatePost(@RequestBody Post post, @PathVariable("id") int id) {
+  if (id <= 0) {
+        // Return invalid ID response
+        return ResponseEntity.badRequest().body("Invalid ID");
+    }
     try {
         post.setId(id);
         this.postService.updatePost(post);

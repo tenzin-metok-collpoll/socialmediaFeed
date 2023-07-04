@@ -30,23 +30,28 @@ public class CommentController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Comment> getCommentById(@PathVariable int id) {
+  public ResponseEntity<?> getCommentById(@PathVariable int id) {
+    if (id <= 0) {
+        // Return invalid ID response
+        return ResponseEntity.badRequest().body("Invalid ID");
+    }
+
     try {
         Comment comment = commentService.getCommentById(id);
         return ResponseEntity.ok(comment);
     } catch (Exception e) {
         // Handle the exception when the post is not found
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Post not found");
     }
-  }
+}
   @PostMapping("/")
-  public ResponseEntity<String> createComment(@RequestBody(required = false) Comment comment) {
+  public ResponseEntity<?> createComment(@RequestBody(required = false) Comment comment) {
     try {
         if (comment == null) {
             throw new IllegalArgumentException("Request body is missing.");
         }
 
-        ResponseEntity<String>response = commentService.createComment(comment);
+        ResponseEntity<?>response = commentService.createComment(comment);
         return response;
     } catch (IllegalArgumentException e) {
         return ResponseEntity.badRequest().body(e.getMessage());
@@ -58,6 +63,10 @@ public class CommentController {
 
   @DeleteMapping("/{id}")
   public ResponseEntity<String> deleteComment(@PathVariable("id") int id) {
+    if (id <= 0) {
+        // Return invalid ID response
+        return ResponseEntity.badRequest().body("Invalid ID");
+    }
     try {
         commentService.deleteComment(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Comment with ID " + id + " deleted successfully.");
@@ -71,6 +80,7 @@ public class CommentController {
 
   @PutMapping("/{id}")
   public ResponseEntity<Comment> updateComment(@RequestBody Comment comment, @PathVariable("id") int id) {
+    
     try {
       comment.setId(id);
       this.commentService.updateComment(comment);

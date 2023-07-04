@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import com.example.socialMediaFeed.services.CreatePostResponse;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -43,7 +45,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-public ResponseEntity<String> createPost(Post post) {
+public ResponseEntity<CreatePostResponse> createPost(Post post) {
     try {
         // Check required fields
         if (post.getDescription() == null || post.getUser_name() == null || post.getPosted_time() == null) {
@@ -51,15 +53,19 @@ public ResponseEntity<String> createPost(Post post) {
         }
 
         Post savedPost = postRepository.save(post);
-        return ResponseEntity.ok("Post saved successfully.");
+        CreatePostResponse response = new CreatePostResponse(savedPost, "Post saved successfully");
+        return ResponseEntity.ok(response);
     } catch (IllegalArgumentException e) {
         // Handle missing required fields
-        return ResponseEntity.badRequest().body("Missing required fields: Description, user_name, and posted_time are required.");
+        CreatePostResponse response = new CreatePostResponse(null, "Missing required fields: Description, user_name, and posted_time are required.");
+        return ResponseEntity.badRequest().body(response);
     } catch (Exception e) {
         // Handle other exceptions
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while creating the post.");
+        CreatePostResponse response = new CreatePostResponse(null, "An error occurred while creating the post.");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 }
+
 
 
 

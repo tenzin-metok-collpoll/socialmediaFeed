@@ -21,19 +21,19 @@ angular.module("myApp").service("postService", ["$http", function($http) {
             });
         },
         createPost: function(postData) {
-            return $http.post("http://localhost:8080/post/", postData,{
-                transformResponse: [function(data) {
-                    // Custom response transformation logic
-                    try {   
-                        let parsedData = JSON.parse(data);
-                        console.log("-----",parsedData);
-                        return parsedData;
-                    } catch (error) {
-                    //   console.error('Invalid JSON response:', data);
-                      return data;
-                    }
-                  }]
-                })
+            return $http.post("http://localhost:8080/post/", postData)
+                // transformResponse: [function(data) {
+                //     // Custom response transformation logic
+                //     try {   
+                //         let parsedData = JSON.parse(data);
+                //         console.log("-----",parsedData);
+                //         return parsedData;
+                //     } catch (error) {
+                //     //   console.error('Invalid JSON response:', data);
+                //       return data;
+                //     }
+                //   }]
+                // })
                 .then(function(response) {
                     return response.data;
                 })
