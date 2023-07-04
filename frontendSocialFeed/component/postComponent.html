@@ -17,7 +17,7 @@
     </div>
     <!-- FEED CONTENT -->
     <div class="card-body">
-    <p id="content" class="card-text" ng-show="!editMode">{{data.description }}</p>
+    <p id="content" class="card-text" ng-show="!editMode">{{data.description}}</p>
     <p class="posted">{{ data.posted_time | timeAgo }}</p>
     <input id="contentInput" class="card-text" ng-show="editMode" ng-model="editedContent" type="text">
     </div>

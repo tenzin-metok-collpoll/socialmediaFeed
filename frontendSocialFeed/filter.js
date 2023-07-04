@@ -1,34 +1,35 @@
-angular.module("myApp").filter("timeAgo", () => {
-    return function (posted) {
-      let postTime = posted;
-      let current = new Date();
-      let elapsed = current - postTime;
-      let seconds = Math.floor(elapsed / 1000);
-      if (seconds < 60) {
-        return "just now";
+angular.module('myApp')
+  .filter('timeAgo', function() {
+    return function(timestamp) {
+      var currentTime = new Date().getTime();
+      var postTime = new Date(timestamp).getTime();
+      var timeDiff = currentTime - postTime;
+      var seconds = Math.floor(timeDiff / 1000);
+
+      if (seconds < 5) {
+        return 'Just now';
       }
-  
-      let minutes = Math.floor(seconds / 60);
-      if (minutes < 60) {
-        return minutes + " minute ago";
+
+      var interval = Math.floor(seconds / 31536000);
+      if (interval > 1) {
+        return interval + ' years ago';
       }
-  
-      let hours = Math.floor(minutes / 60);
-      if (hours < 24) {
-        return hours + " hour ago";
+      interval = Math.floor(seconds / 2592000);
+      if (interval > 1) {
+        return interval + ' months ago';
       }
-  
-      let days = Math.floor(hours / 24);
-      if (days < 30) {
-        return days + " day ago";
+      interval = Math.floor(seconds / 86400);
+      if (interval > 1) {
+        return interval + ' days ago';
       }
-  
-      let months = Math.floor(days / 30);
-      if (months < 12) {
-        return months + " month ago";
-      } else {
-        let years = Math.floor(months / 12);
-        return years + " year ago";
+      interval = Math.floor(seconds / 3600);
+      if (interval > 1) {
+        return interval + ' hours ago';
       }
+      interval = Math.floor(seconds / 60);
+      if (interval > 1) {
+        return interval + ' minutes ago';
+      }
+      return Math.floor(seconds) + ' seconds ago';
     };
   });

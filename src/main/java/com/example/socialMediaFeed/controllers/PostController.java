@@ -61,7 +61,7 @@ public ResponseEntity<?> createPost(@RequestBody(required = false) Post post) {
         if (post == null) {
             throw new IllegalArgumentException("Request body is missing.");
         }
-
+ 
         ResponseEntity<?>response = postService.createPost(post);
         return response;
     } catch (IllegalArgumentException e) {

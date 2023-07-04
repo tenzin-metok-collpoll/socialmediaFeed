@@ -32,9 +32,8 @@ public class PostRepositoryImpl implements PostRepository{
 
     @Override
     public Post save(Post post) {
-        String sql = "INSERT INTO  Posts (user_name, description,  posted_time) VALUES (?, ?, ?)";
-        jdbcTemplate.update(sql,post.getUser_name(), post.getDescription(),  post.getPosted_time());
-        System.out.println("++++=+++++++"+post);
+        String sql = "INSERT INTO  Posts (user_name, description, posted_time) VALUES (?, ?, ?)";
+        jdbcTemplate.update(sql,post.getUser_name(), post.getDescription(), post.getPosted_time());
         return post;
     }
 
@@ -49,7 +48,7 @@ public class PostRepositoryImpl implements PostRepository{
     int rowsAffected = jdbcTemplate.update(sql, post.getUser_name(), post.getDescription(), post.getPosted_time(), postId);
 
     if (rowsAffected == 0) {
-        throw new NotFoundException("Post with ID " + postId + " does not exist. Unable to update the post.");
+        throw new NotFoundException("Post with ID" + postId + " does not exist. Unable to update the post.");
     }
 
     return post;
@@ -77,7 +76,6 @@ public class NotFoundException extends RuntimeException {
 
     private Post mapRowToUser(ResultSet rs, int rowNum) throws SQLException {
         Post post= new Post();
-        System.out.println("++++=+++++++"+post);
         post.setId(rs.getInt("id"));
         post.setUser_name(rs.getString("user_name"));
         post.setDescription(rs.getString("description"));

@@ -61,7 +61,6 @@ angular.module("myApp").controller("myCtr", [
       const post = {
         user_name: $scope.userName,
         description: $scope.story,
-        posted_time: new Date(),
       };
 
       //adding a post

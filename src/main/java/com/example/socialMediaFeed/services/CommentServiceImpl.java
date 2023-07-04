@@ -1,12 +1,14 @@
 package com.example.socialMediaFeed.services;
 import com.example.socialMediaFeed.models.Comment;
-import com.example.socialMediaFeed.models.Post;
 import com.example.socialMediaFeed.repositories.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -31,6 +33,8 @@ public class CommentServiceImpl implements CommentService{
     @Override
   public ResponseEntity<CreateCommentResponse>createComment(Comment comment) {
     try {
+         comment.setTime_stamp(Timestamp.from(Instant.now()));
+
         // Check required fields
         if (comment.getDescription() == null || comment.getUser_name() == null || comment.getTime_stamp() == null) {
             throw new IllegalArgumentException("Description, user_name, and time_stamp are required fields.");
@@ -52,6 +56,7 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public Comment updateComment(Comment comment) {
+        comment.setTime_stamp(Timestamp.from(Instant.now()));
         return commentRepository.update(comment);
     }
 

@@ -56,7 +56,6 @@ angular.module("myApp").directive("postComponent", [
               let updatedPost = {
                 user_name: $scope.allPosts.user_name,
                 description: $scope.editedContent,
-                posted_time: new Date(),
               };
               //update a post
               postService
@@ -114,7 +113,6 @@ angular.module("myApp").directive("postComponent", [
               const newComment =  {
                 description: singlePost.val,
                 post_id: singlePost.id,
-                time_stamp: new Date(),
                 user_name: singlePost.user_name,
               };
               commentService
@@ -172,7 +170,6 @@ angular.module("myApp").directive("postComponent", [
             const updatedComment = {
               description: singleComment.editedComment,
               post_id: singlePost.id,
-              time_stamp: new Date(),
               user_name: singlePost.user_name,
             };
             commentService
@@ -222,7 +219,6 @@ angular.module("myApp").directive("postComponent", [
               user_name: singlePost.user_name,
               type: "like",
               post_id: singlePost.id,
-              time_stamp: new Date(),
             };
 
             likedislikeService
@@ -247,7 +243,6 @@ angular.module("myApp").directive("postComponent", [
               user_name: singlePost.user_name,
               type: "dislike",
               post_id: singlePost.id,
-              time_stamp: new Date(),
             };
 
             likedislikeService

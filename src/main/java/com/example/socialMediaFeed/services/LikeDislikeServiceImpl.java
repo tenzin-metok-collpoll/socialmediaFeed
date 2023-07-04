@@ -3,6 +3,8 @@ import com.example.socialMediaFeed.models.LikeDislike;
 import com.example.socialMediaFeed.repositories.LikeDislikeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -26,7 +28,7 @@ public class LikeDislikeServiceImpl implements LikeDislikeService{
 
     @Override
     public LikeDislike addLikeDislike(LikeDislike likeDislike) {
-        System.out.println("----------------------+"+likeDislike);
+         likeDislike.setTime_stamp(Timestamp.from(Instant.now()));
         return likeDislikeRepository.save(likeDislike);
     }
 
