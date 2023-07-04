@@ -1,7 +1,6 @@
 angular.module("myApp").service("postService", ["$http", function($http) {
     return {
         getAllPosts : function (){
-            console.log("-------++++");
             return $http.get("http://localhost:8080/post/",{ cache: false })
             .then(function(response) {
                 console.log('response.data: ', response.data);
@@ -22,8 +21,19 @@ angular.module("myApp").service("postService", ["$http", function($http) {
             });
         },
         createPost: function(postData) {
-            console.log("-------+");
-            return $http.post("http://localhost:8080/post/", postData)
+            return $http.post("http://localhost:8080/post/", postData,{
+                transformResponse: [function(data) {
+                    // Custom response transformation logic
+                    try {   
+                        let parsedData = JSON.parse(data);
+                        console.log("-----",parsedData);
+                        return parsedData;
+                    } catch (error) {
+                    //   console.error('Invalid JSON response:', data);
+                      return data;
+                    }
+                  }]
+                })
                 .then(function(response) {
                     return response.data;
                 })
@@ -41,8 +51,10 @@ angular.module("myApp").service("postService", ["$http", function($http) {
                 });
         },
         deletePost: function(postId) {
+            console.log('postId: ', postId);
             return $http.delete("http://localhost:8080/post/" + postId)
                 .then(function(response) {
+                    console.log('response: ', response);
                     return response.data;
                 })
                 .catch(function(error) {

@@ -24,7 +24,7 @@
     <!-- options LIKE DISLIKE COMMENT SHARE -->
     <div class="row card-header">
     <ul class="nav nav-tabs card-header-tabs">
-    <li class="nav-item nav" ng-click="incrementLike(data)">
+    <li class="nav-item nav" ng-click="incrementLike(data)"  >
     <a class="nav-link hover"><i class="fas fa-thumbs-up"></i> Like</a>
     </li>
     <li class="nav-item nav" ng-click="decrementLike(data)">
@@ -39,11 +39,18 @@
     </li>
     </ul>
     </div>
-    <span class="btn-like" ng-show="data.likes>0 || data.dislike>0">
-    <span ng-show="data.likes>0">{{data.likes}} likes</span>&nbsp;
-    <span class="col-3" ng-show="data.dislike>0">{{data.dislike}} dislikes</span>
-  
+    <ul>
+    <li class="list-comment" ng-repeat="singleData in likeArr | orderBy: 'created_at':true">
+    <span class="btn-like" ng-if="singleData.post_id === data.id" ng-init="checkCondition(singleData,data)">
     </span>
+    </li> 
+    </ul>
+    <span>
+    <span ng-show="likeCounter > 0">
+    {{likeCounter}}likes</span>&nbsp;
+    <span ng-show="dislikeCounter > 0">
+    {{dislikeCounter}} dislikes
+  </span></span>
     <!-- comments section -->
     <div class="row card-footer add-comment" ng-show="showCommentInput" ng-hide="!showCommentInput">
     <div class="col-8">

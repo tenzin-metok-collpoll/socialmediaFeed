@@ -48,26 +48,14 @@ angular.module("myApp").controller("myCtr", [
         $scope.editMode = true;
       }
     };
-    //cancel feed
+    //cancel a add post
     $scope.CancelFeed = () => {
       $scope.show = false;
       $scope.story = "";
       $scope.userName = "";
     };
-    // const updateTime = () => {
-    //   let post = [];
-    //   $scope.allPosts.forEach((singlePost) => {
-    //     // console.log("SinglePost",singlePost);
-    //     post.posted = $filter("timeAgo")(singlePost);
-    //     // console.log("posted",singlePost.posted);
-    //   });
-    // };
 
-
-    // Update the time every second
-    // $interval(updateTime, 1000);
-
-    // adding a new content in feed
+    // adding a new post in feed
     $scope.addToFeed = () => {
       $scope.show = false;
       const post = {
@@ -75,6 +63,7 @@ angular.module("myApp").controller("myCtr", [
         description: $scope.story,
         posted_time: new Date(),
       };
+
       //adding a post
       postService
         .createPost(post)
@@ -83,8 +72,6 @@ angular.module("myApp").controller("myCtr", [
 
           $scope.story = "";
           $scope.userName = "";
-          // Handle the newly created post
-          console.log(newPost);
           fetchPost();
         })
         .catch(function (error) {
@@ -92,8 +79,7 @@ angular.module("myApp").controller("myCtr", [
         });
     };
   
-
-    // };
+    // get all post
     function fetchPost() {
       postService
         .getAllPosts()
