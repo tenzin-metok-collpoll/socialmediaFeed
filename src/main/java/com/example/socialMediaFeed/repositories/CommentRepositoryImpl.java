@@ -45,10 +45,16 @@ public class CommentRepositoryImpl implements CommentRepository{
     }
 
     @Override
-    public void delete(int id) {
-        String sql = "DELETE FROM Comments WHERE id = ?";
-        jdbcTemplate.update(sql, id);
+    public int delete(int id) {
+    String sql = "DELETE FROM Comments WHERE id = ?";
+    int rowsAffected = jdbcTemplate.update(sql, id);
+    
+    if (rowsAffected == 0) {
+        throw new IllegalArgumentException("Comment with ID " + id + " does not exist.");
     }
+    
+    return rowsAffected;
+}
 
     private Comment mapRowToUser(ResultSet rs, int rowNum) throws SQLException {
         Comment comment = new Comment();

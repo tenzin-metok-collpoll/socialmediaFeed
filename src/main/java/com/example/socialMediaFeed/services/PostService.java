@@ -1,5 +1,7 @@
 package com.example.socialMediaFeed.services;
 import com.example.socialMediaFeed.models.Post;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -10,7 +12,7 @@ public interface PostService {
 
     List<Post> getAllPost();
 
-    Post createPost(Post post);
+   ResponseEntity<String> createPost(Post post);
 
      Post updatePost(Post post);
 

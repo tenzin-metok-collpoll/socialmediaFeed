@@ -1,5 +1,8 @@
 package com.example.socialMediaFeed.services;
 import com.example.socialMediaFeed.models.Comment;
+
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -10,7 +13,7 @@ public interface CommentService {
 
     List<Comment> getAllComment();
 
-    Comment createComment(Comment comment);
+    ResponseEntity<String> createComment(Comment comment);
 
     Comment updateComment(Comment comment);
 

@@ -39,18 +39,41 @@ public class PostRepositoryImpl implements PostRepository{
     }
 
     @Override
-    public Post update(Post post) {
-        String sql = "UPDATE Posts SET user_name = ?, description = ?, posted_time = ? WHERE id = ?";
-        jdbcTemplate.update(sql, post.getUser_name(), post.getDescription(),  post.getPosted_time(), post.getId());
-        return post;
-      
+  public Post update(Post post) {
+    Integer postId = post.getId();
+    if (postId == null) {
+        throw new IllegalArgumentException("Invalid post ID for updating the post.");
     }
 
-    @Override
-    public void delete(int id) {
-        String sql = "DELETE FROM Posts WHERE id = ?";
-        jdbcTemplate.update(sql, id);
+    String sql = "UPDATE Posts SET user_name = ?, description = ?, posted_time = ? WHERE id = ?";
+    int rowsAffected = jdbcTemplate.update(sql, post.getUser_name(), post.getDescription(), post.getPosted_time(), postId);
+
+    if (rowsAffected == 0) {
+        throw new NotFoundException("Post with ID " + postId + " does not exist. Unable to update the post.");
     }
+
+    return post;
+}
+public class NotFoundException extends RuntimeException {
+    public NotFoundException(String message) {
+        super(message);
+    }
+}
+
+
+
+    @Override
+   public int delete(int id) {
+    String sql = "DELETE FROM Posts WHERE id = ?";
+    int rowsAffected = jdbcTemplate.update(sql, id);
+    
+    if (rowsAffected == 0) {
+        throw new IllegalArgumentException("Post with ID " + id + " does not exist.");
+    }
+    
+    return rowsAffected;
+}
+
 
     private Post mapRowToUser(ResultSet rs, int rowNum) throws SQLException {
         Post post= new Post();

@@ -11,5 +11,5 @@ public interface PostRepository {
 
     Post update(Post post);
 
-    void delete(int id);
+    int delete(int id);
 }

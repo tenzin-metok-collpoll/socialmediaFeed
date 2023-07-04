@@ -1,5 +1,6 @@
 package com.example.socialMediaFeed.controllers;
 import com.example.socialMediaFeed.models.Comment;
+import com.example.socialMediaFeed.models.Post;
 import com.example.socialMediaFeed.services.CommentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,27 +40,34 @@ public class CommentController {
     }
   }
   @PostMapping("/")
-  public ResponseEntity<Comment> createComment(@RequestBody Comment comment) {
-    Comment new_comment = null;
+  public ResponseEntity<String> createComment(@RequestBody(required = false) Comment comment) {
     try {
-      new_comment = this.commentService.createComment(comment);
-      return ResponseEntity.of(Optional.of(new_comment));
+        if (comment == null) {
+            throw new IllegalArgumentException("Request body is missing.");
+        }
+
+        ResponseEntity<String>response = commentService.createComment(comment);
+        return response;
+    } catch (IllegalArgumentException e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
     } catch (Exception e) {
-      e.printStackTrace();
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        e.printStackTrace();
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
-  }
+}
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<Void> deleteComment(@PathVariable("id") int id) {
+  public ResponseEntity<String> deleteComment(@PathVariable("id") int id) {
     try {
-      commentService.deleteComment(id);
-      return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        commentService.deleteComment(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Comment with ID " + id + " deleted successfully.");
+    } catch (IllegalArgumentException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     } catch (Exception e) {
-      e.printStackTrace();
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        e.printStackTrace();
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while deleting the post.");
     }
-  }
+}
 
   @PutMapping("/{id}")
   public ResponseEntity<Comment> updateComment(@RequestBody Comment comment, @PathVariable("id") int id) {
