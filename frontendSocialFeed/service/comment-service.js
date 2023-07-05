@@ -12,30 +12,10 @@ angular.module("myApp").service("commentService", ["$http", function($http) {
                 throw error;
             });
         },
-        // getPostById : function (){
-        //     return $http.get("http://localhost:8080/post/")
-        //     .then(function(response) {
-        //         return response.data;
-        //     })
-        //     .catch(function(error) {
-        //         throw error;
-        //     });
-        // },
+       
         addComment: function(comment) {
             
          return $http.post("http://localhost:8080/comment/", comment)
-                // transformResponse: [function(data) {
-                //     // Custom response transformation logic
-                //     try {   
-                //         let parsedData = JSON.parse(data);
-                //         console.log("-----",parsedData);
-                //         return parsedData;
-                //     } catch (error) {
-                //     //   console.error('Invalid JSON response:', data);
-                //       return data;
-                //     }
-                //   }]
-                // })
                 .then(function(response) {
                     return response.data;
                 })

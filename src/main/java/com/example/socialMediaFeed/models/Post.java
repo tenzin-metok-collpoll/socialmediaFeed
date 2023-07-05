@@ -26,4 +26,12 @@ public class Post {
         this.description = description;
         this.posted_time = posted_time;
     }
+
+    @Override
+    public String toString() {
+        return "Post [id=" + id + ", user_name=" + user_name + ", description=" + description + ", posted_time="
+                + posted_time + "]";
+    }
+    
+
 }

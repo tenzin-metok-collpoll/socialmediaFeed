@@ -30,7 +30,7 @@ public class PostController {
 
   public ResponseEntity<List<Post>> getAllPosts() {
     List<Post> list = postService.getAllPost();
-    System.out.println("----"+list);
+    // System.out.println("----"+list);
     if (list.size() <= 0) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }

@@ -30,4 +30,11 @@ public class Comment {
         this.time_stamp = time_stamp;
         this.post_id = post_id;
     }
+
+    @Override
+    public String toString() {
+        return "Comment [id=" + id + ", user_name=" + user_name + ", description=" + description + ", time_stamp="
+                + time_stamp + ", post_id=" + post_id + "]";
+    }
+    
 }
