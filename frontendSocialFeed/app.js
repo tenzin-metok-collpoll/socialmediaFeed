@@ -38,7 +38,9 @@ angular.module("myApp").controller("myCtr", [
     $scope.editModes = false;
     $scope.newComment = ""; // Initialize the new comment input
     $scope.showCommentInput = false; // Set initial state to show the comment input field
-    fetchPost();
+    // getAllPosts();
+    getAllData();
+    
     $scope.Edit = () => {
       if ($scope.editMode) {
         // Save changes
@@ -59,7 +61,7 @@ angular.module("myApp").controller("myCtr", [
     $scope.addToFeed = () => {
       $scope.show = false;
       const post = {
-        user_name: $scope.userName,
+        userName: $scope.userName,
         description: $scope.story,
       };
 
@@ -71,7 +73,8 @@ angular.module("myApp").controller("myCtr", [
 
           $scope.story = "";
           $scope.userName = "";
-          fetchPost();
+          // fetchPost();
+          getAllData();
         })
         .catch(function (error) {
           console.error(error);
@@ -79,11 +82,23 @@ angular.module("myApp").controller("myCtr", [
     };
 
     // get all post
-    function fetchPost() {
+    function getAllPosts() {
       postService
         .getAllPosts()
         .then(function (posts) {
           console.log("posts: ", posts);
+          $scope.allPosts = posts;
+        })
+        .catch(function (error) {
+          console.error("Error retrieving data:", error);
+        });
+    }
+     // get all post
+     function getAllData() {
+      postService
+        .getAllData()
+        .then(function (posts) {
+          console.log("posts:::::: ", posts);
           $scope.allPosts = posts;
         })
         .catch(function (error) {

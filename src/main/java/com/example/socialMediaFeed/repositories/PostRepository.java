@@ -7,6 +7,7 @@ public interface PostRepository {
     Post findById(int id);
 
     List<Post> findAll();
+    List<Post> getPostsWithLikeDislikeCount();
 
     Post save(Post post);
 

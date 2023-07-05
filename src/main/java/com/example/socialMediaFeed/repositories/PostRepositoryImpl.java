@@ -4,10 +4,12 @@ import com.example.socialMediaFeed.models.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-
+import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Collections;
 
 @Repository
 public class PostRepositoryImpl implements PostRepository {
@@ -30,11 +32,46 @@ public class PostRepositoryImpl implements PostRepository {
         String sql = "SELECT * FROM Posts";
         return jdbcTemplate.query(sql, this::mapRowToUser);
     }
+ 
+    @Override
+    public List<Post> getPostsWithLikeDislikeCount() {
+        String sqlQuery = "SELECT p.*, " +
+        "(SELECT COUNT(*) FROM like_and_dislike ld WHERE ld.post_id = p.id AND ld.type = 'like') AS likeCount, " +
+        "(SELECT COUNT(*) FROM like_and_dislike ld WHERE ld.post_id = p.id AND ld.type = 'dislike') AS dislikeCount, " +
+        "GROUP_CONCAT(c.description SEPARATOR ', ') AS comments " +
+        "FROM Posts p " +
+        "LEFT JOIN Comments c ON p.id = c.post_id " +
+        "GROUP BY p.id";
+
+        return jdbcTemplate.query(sqlQuery, new PostMapper());
+    }
+      private static class PostMapper implements RowMapper<Post> {
+        @Override
+        public Post mapRow(ResultSet rs, int rowNum) throws SQLException {
+            Post post = new Post();
+            post.setId(rs.getInt("id"));
+            post.setDescription(rs.getString("description"));
+            post.setUserName(rs.getString("user_name"));
+            post.setPostedTime(rs.getTimestamp("posted_time"));
+            post.setLikeCount(rs.getLong("likeCount"));
+            post.setDislikeCount(rs.getLong("dislikeCount"));
+
+            String commentsString = rs.getString("comments");
+            if (commentsString != null) {
+                String[] commentsArray = commentsString.split(", ");
+                post.setComments(Arrays.asList(commentsArray));
+            } else {
+                post.setComments(Collections.emptyList());
+            }
+
+            return post;
+        }
+    }
 
     @Override
     public Post save(Post post) {
         String sql = "INSERT INTO  Posts (user_name, description, posted_time) VALUES (?, ?, ?)";
-        jdbcTemplate.update(sql, post.getUser_name(), post.getDescription(), post.getPosted_time());
+        jdbcTemplate.update(sql, post.getUserName(), post.getDescription(), post.getPostedTime());
         return post;
     }
 
@@ -46,7 +83,7 @@ public class PostRepositoryImpl implements PostRepository {
         }
 
         String sql = "UPDATE Posts SET user_name = ?, description = ?, posted_time = ? WHERE id = ?";
-        int rowsAffected = jdbcTemplate.update(sql, post.getUser_name(), post.getDescription(), post.getPosted_time(),
+        int rowsAffected = jdbcTemplate.update(sql, post.getUserName(), post.getDescription(), post.getPostedTime(),
                 postId);
 
         if (rowsAffected == 0) {
@@ -77,9 +114,9 @@ public class PostRepositoryImpl implements PostRepository {
     private Post mapRowToUser(ResultSet rs, int rowNum) throws SQLException {
         Post post = new Post();
         post.setId(rs.getInt("id"));
-        post.setUser_name(rs.getString("user_name"));
+        post.setUserName(rs.getString("user_name"));
         post.setDescription(rs.getString("description"));
-        post.setPosted_time(rs.getTimestamp("posted_time"));
+        post.setPostedTime(rs.getTimestamp("posted_time"));
         return post;
     }
 }

@@ -4,7 +4,7 @@
       <img class="image" src="img/graduated.png" alt="not found" />
     </div>
     <div class="col-7 name">
-      <span ng-model="name">{{data.user_name}}</span>
+      <span ng-model="name">{{data.userName}}</span>
     </div>
     <div class="dropdown col-3">
       <button
@@ -33,7 +33,7 @@
     <p id="content" class="card-text" ng-show="!editMode">
       {{data.description}}
     </p>
-    <p class="posted">{{ data.posted_time | timeAgo }}</p>
+    <p class="posted">{{ data.postedTime | timeAgo }}</p>
     <input
       id="contentInput"
       class="card-text"
@@ -61,10 +61,10 @@
       </li>
     </ul>
   </div>
-  <ul>
+  <!-- <ul>
     <li
       class="list-comment"
-      ng-repeat="singleData in likeArr | orderBy: 'created_at':true"
+      ng-repeat="singleData in dat | orderBy: 'created_at':true"
     >
       <span
         class="btn-like"
@@ -73,11 +73,11 @@
       >
       </span>
     </li>
-  </ul>
+  </ul> -->
   <span>
-    <span ng-show="likeCounter > 0"> {{likeCounter}}likes</span>&nbsp;
-    <span ng-show="dislikeCounter > 0">
-      {{dislikeCounter}} dislikes
+    <span ng-show="data.likeCount > 0"> {{data.likeCount}}likes</span>&nbsp;
+    <span ng-show="data.dislikeCount > 0">
+      {{data.dislikeCount}} dislikes
     </span></span
   >
   <!-- comments section -->
@@ -115,12 +115,12 @@
   <ul>
     <li
       class="list-comment"
-      ng-repeat="singleComment in commentArr | orderBy: 'created_at':true"
+      ng-repeat="singleComment in data.comments | orderBy: 'created_at':true"
     >
-      <div class="row" ng-if="singleComment.post_id === data.id">
+      <div class="row" >
         <div class="col-9">
           <p class="commentList" ng-show="!singleComment.editMode">
-            {{singleComment.description}}
+            {{singleComment}}
           </p>
           <input
             class="commentInput"

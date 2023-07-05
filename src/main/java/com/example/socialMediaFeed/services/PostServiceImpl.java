@@ -39,17 +39,23 @@ public class PostServiceImpl implements PostService {
     public List<Post> getAllPost() {
         return postRepository.findAll();
     }
+     @Override
+    public List<Post> getAllPostsWithData() {
+        return postRepository.getPostsWithLikeDislikeCount();
+    }
+
+    
 
     @Override
     public ResponseEntity<CreatePostResponse> createPost(Post post) {
         try {
             // Set the timestamp value in UTC
-            post.setPosted_time(Timestamp.from(Instant.now()));
+            post.setPostedTime(Timestamp.from(Instant.now()));
             // Check required fields
-            if (post.getDescription() == " " || post.getUser_name() == " ") {
+            if (post.getDescription() == " " || post.getUserName() == " ") {
                 throw new IllegalArgumentException();
             }
-            if (post.getDescription() == null || post.getUser_name() == null) {
+            if (post.getDescription() == null || post.getUserName() == null) {
                 throw new IllegalArgumentException("Description and user_name are required fields.");
             }
 
@@ -78,7 +84,7 @@ public class PostServiceImpl implements PostService {
 
         // Perform the update operation
         // ...
-        post.setPosted_time(Timestamp.from(Instant.now()));
+        post.setPostedTime(Timestamp.from(Instant.now()));
         return postRepository.update(post);
     }
 

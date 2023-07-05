@@ -13,7 +13,19 @@ angular.module("myApp").service("postService", [
             throw error;
           });
       },
-      getPostById: function () {
+
+      getAllData: function (){
+        return $http 
+        .get("http://localhost:8080/posts/getAllData")
+        .then(function (response) {
+          console.log("response.data:::::::::: ", response);
+          return response.data;
+        })
+        .catch(function (error) {
+          throw error;
+        });
+      },
+       getPostById: function () {
         return $http
           .get("http://localhost:8080/posts/")
           .then(function (response) {

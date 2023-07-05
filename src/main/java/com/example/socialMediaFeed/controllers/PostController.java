@@ -32,6 +32,16 @@ public class PostController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(list);
     }
+    @GetMapping("/getAllData")
+
+    public ResponseEntity<List<Post>> getAllPostsWithData() {
+        List<Post> list = postService.getAllPostsWithData();
+        if (list.size() <= 0) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(list);
+    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getPostById(@PathVariable int id) {

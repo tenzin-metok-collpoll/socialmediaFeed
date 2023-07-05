@@ -22,9 +22,9 @@ angular.module("myApp").directive("postComponent", [
           $scope.newLike = {};
           $scope.likeCounter = 0;
           $scope.dislikeCounter = 0;
-          fetchComment();
-          fetchLikeDislike();
-          fetchPost();
+          // fetchComment();
+          // fetchLikeDislike();
+          // fetchPost();
 
           //-------------- POST --------------------
 
@@ -49,11 +49,12 @@ angular.module("myApp").directive("postComponent", [
 
           //update the post
           $scope.saveChanges = function (data) {
+            console.log('data: ', data);
             if ($scope.editedContent === undefined) {
               $scope.editMode = false;
             } else {
               let updatedPost = {
-                user_name: data.user_name,
+                userName: data.userName,
                 description: $scope.editedContent,
               };
               //update a post
