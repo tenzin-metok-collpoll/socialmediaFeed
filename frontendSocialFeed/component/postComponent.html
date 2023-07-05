@@ -1,122 +1,230 @@
 <div class="row card mt-4 custom-card">
-    <div class="card-header row">
-    <div class="col-2"><img class="image" src="img/graduated.png" alt="not found" /></div>
-    <div class="col-7 name"><span ng-model="name">{{data.user_name}}</span></div>
+  <div class="card-header row">
+    <div class="col-2">
+      <img class="image" src="img/graduated.png" alt="not found" />
+    </div>
+    <div class="col-7 name">
+      <span ng-model="name">{{data.user_name}}</span>
+    </div>
     <div class="dropdown col-3">
-    <button class="btn dp dropdown-toggle" type="button" id="dropdownMenuButton"
-    data-bs-toggle="dropdown" aria-expanded="false">
-    </button>
-    <ul class="dropdown-menu drop" aria-labelledby="dropdownMenuButton">
-    <li ng-click="deleteFeed(data)"><a class="dropdown-item hover"><i
-        class="fas fa-trash-alt"></i> Delete</a></li>
-    <li><a class="dropdown-item hover" data-bs-toggle="modal" data-bs-target="#editModal"
-      ng-Click="setId(data)"><i class="fas fa-edit"></i> {{ editMode ? 'Save'
-      : 'Edit' }}</a></li>
-    </ul>
+      <button
+        class="btn dp dropdown-toggle"
+        type="button"
+        id="dropdownMenuButton"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      ></button>
+      <ul class="dropdown-menu drop" aria-labelledby="dropdownMenuButton">
+        <li ng-click="deleteFeed(data)">
+          <a class="dropdown-item hover"
+            ><i class="fas fa-trash-alt"></i> Delete</a
+          >
+        </li>
+        <li>
+          <a class="dropdown-item hover" ng-Click="setId(data)"
+            ><i class="fas fa-edit"></i> {{ editMode ? 'Save' : 'Edit' }}</a
+          >
+        </li>
+      </ul>
     </div>
-    </div>
-    <!-- FEED CONTENT -->
-    <div class="card-body">
-    <p id="content" class="card-text" ng-show="!editMode">{{data.description}}</p>
+  </div>
+  <!-- FEED CONTENT -->
+  <div class="card-body">
+    <p id="content" class="card-text" ng-show="!editMode">
+      {{data.description}}
+    </p>
     <p class="posted">{{ data.posted_time | timeAgo }}</p>
-    <input id="contentInput" class="card-text" ng-show="editMode" ng-model="editedContent" type="text">
-    </div>
-    <!-- options LIKE DISLIKE COMMENT SHARE -->
-    <div class="row card-header">
+    <input
+      id="contentInput"
+      class="card-text"
+      ng-show="editMode"
+      ng-model="editedContent"
+      type="text"
+    />
+  </div>
+  <!-- options LIKE DISLIKE COMMENT SHARE -->
+  <div class="row card-header">
     <ul class="nav nav-tabs card-header-tabs">
-    <li class="nav-item nav" ng-click="incrementLike(data)"  >
-    <a class="nav-link hover"><i class="fas fa-thumbs-up"></i> Like</a>
-    </li>
-    <li class="nav-item nav" ng-click="decrementLike(data)">
-    <a class="nav-link hover" ><i class="fas fa-thumbs-down"></i> Dislike</a>
-    </li>
-    <li class="nav-item nav">
-    <a class="nav-link hover" ng-click="showCommentInput = true;"><i class="fas fa-comment"></i>
-      Comment</a>
-    </li>
-    <li class="nav-item nav sharebtn" style="float: right;">
-    <a class="nav-link hover"><i class="fas fa-share"></i> Share</a>
-    </li>
+      <li class="nav-item nav" ng-click="incrementLike(data)">
+        <a class="nav-link hover"><i class="fas fa-thumbs-up"></i> Like</a>
+      </li>
+      <li class="nav-item nav" ng-click="decrementLike(data)">
+        <a class="nav-link hover"><i class="fas fa-thumbs-down"></i> Dislike</a>
+      </li>
+      <li class="nav-item nav">
+        <a class="nav-link hover" ng-click="showCommentInput = true;"
+          ><i class="fas fa-comment"></i> Comment</a
+        >
+      </li>
+      <li class="nav-item nav sharebtn" style="float: right">
+        <a class="nav-link hover"><i class="fas fa-share"></i> Share</a>
+      </li>
     </ul>
-    </div>
-    <ul>
-    <li class="list-comment" ng-repeat="singleData in likeArr | orderBy: 'created_at':true">
-    <span class="btn-like" ng-if="singleData.post_id === data.id" ng-init="checkCondition(singleData,data)">
-    </span>
-    </li> 
-    </ul>
-    <span>
-    <span ng-show="likeCounter > 0">
-    {{likeCounter}}likes</span>&nbsp;
+  </div>
+  <ul>
+    <li
+      class="list-comment"
+      ng-repeat="singleData in likeArr | orderBy: 'created_at':true"
+    >
+      <span
+        class="btn-like"
+        ng-if="singleData.post_id === data.id"
+        ng-init="checkCondition(singleData,data)"
+      >
+      </span>
+    </li>
+  </ul>
+  <span>
+    <span ng-show="likeCounter > 0"> {{likeCounter}}likes</span>&nbsp;
     <span ng-show="dislikeCounter > 0">
-    {{dislikeCounter}} dislikes
-  </span></span>
-    <!-- comments section -->
-    <div class="row card-footer add-comment" ng-show="showCommentInput" ng-hide="!showCommentInput">
+      {{dislikeCounter}} dislikes
+    </span></span
+  >
+  <!-- comments section -->
+  <div
+    class="row card-footer add-comment"
+    ng-show="showCommentInput"
+    ng-hide="!showCommentInput"
+  >
     <div class="col-8">
-    <input class="form-control inp" ng-model="data.val" rows="3" placeholder="Add comment" />
+      <input
+        class="form-control inp"
+        ng-model="data.val"
+        rows="3"
+        placeholder="Add comment"
+      />
     </div>
     <div class="col-2">
-    <button class="btn btn-primary addCommentButton"
-    ng-click=" showCommentInput = false; addComment(data)">Add</button>
+      <button
+        class="btn btn-primary addCommentButton"
+        ng-click=" showCommentInput = false; addComment(data)"
+      >
+        Add
+      </button>
     </div>
     <div class="col-2">
-    <button class="btn btn-primary addCommentButton" 
-    ng-click=" showCommentInput = false; cancelAddComment(data)">X</button>
+      <button
+        class="btn btn-primary addCommentButton"
+        ng-click=" showCommentInput = false; cancelAddComment(data)"
+      >
+        X
+      </button>
     </div>
-    </div>
-    <!-- list of comments -->
-    <ul>
-    <li class="list-comment" ng-repeat="singleComment in commentArr | orderBy: 'created_at':true">
-    <div class="row" ng-if="singleComment.post_id === data.id">
-    <div class="col-9">
-    <p class=commentList ng-show="!singleComment.editMode">{{singleComment.description}}</p>
-    <input class="commentInput" ng-show="singleComment.editMode" ng-value="singleComment.description" ng-model="singleComment.editedComment"
-      type="text">
-    </div>
-    <div class="dropdown col-3">
-    <button class="btn  dropdown-toggle dp" type="button"
-      id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-    </button>
-    <ul class="dropdown-menu drop" aria-labelledby="dropdownMenuButton">
-      <li><a class="dropdown-item hover" 
-          ng-click="deleteComment(allPosts.indexOf(data),singleComment)"><i
-            class="fas fa-trash-alt"></i> Delete</a></li>
-      <li><a class="dropdown-item hover" 
-          ng-click="singleComment.editMode=true; EditComment(data,singleComment)"><i
-            class="fas fa-edit"></i> {{ singleComment.editMode ? 'Save' : 'Edit' }}</a> </li>
-    </ul>
-    </div>
-    <div class="row comment-updation">
-    <div class="col-3"><a class="dropdown-item update hover" 
-      ng-click="Update(singleComment,data)" ng-click="singleComment.editMode=false"
-        ng-show="singleComment.editMode">Update</a> </div>
-    <div class="col-3"><a class="dropdown-item cancel hover" 
-        ng-click="Cancel(singleComment)" ng-show="singleComment.editMode"
-        ng-click="editMode=false">Cancel</a></div>
-    <div class="col-6"></div>
-    </div>
-    </div>
+  </div>
+  <!-- list of comments -->
+  <ul>
+    <li
+      class="list-comment"
+      ng-repeat="singleComment in commentArr | orderBy: 'created_at':true"
+    >
+      <div class="row" ng-if="singleComment.post_id === data.id">
+        <div class="col-9">
+          <p class="commentList" ng-show="!singleComment.editMode">
+            {{singleComment.description}}
+          </p>
+          <input
+            class="commentInput"
+            ng-show="singleComment.editMode"
+            ng-value="singleComment.description"
+            ng-model="singleComment.editedComment"
+            type="text"
+          />
+        </div>
+        <div class="dropdown col-3">
+          <button
+            class="btn dropdown-toggle dp"
+            type="button"
+            id="dropdownMenuButton"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          ></button>
+          <ul class="dropdown-menu drop" aria-labelledby="dropdownMenuButton">
+            <li>
+              <a
+                class="dropdown-item hover"
+                ng-click="deleteComment(allPosts.indexOf(data),singleComment)"
+                ><i class="fas fa-trash-alt"></i> Delete</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item hover"
+                ng-click="singleComment.editMode=true; EditComment(data,singleComment)"
+                ><i class="fas fa-edit"></i> {{ singleComment.editMode ? 'Save'
+                : 'Edit' }}</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="row comment-updation">
+          <div class="col-3">
+            <a
+              class="dropdown-item update hover"
+              ng-click="Update(singleComment,data)"
+              ng-click="singleComment.editMode=false"
+              ng-show="singleComment.editMode"
+              >Update</a
+            >
+          </div>
+          <div class="col-3">
+            <a
+              class="dropdown-item cancel hover"
+              ng-click="Cancel(singleComment)"
+              ng-show="singleComment.editMode"
+              ng-click="editMode=false"
+              >Cancel</a
+            >
+          </div>
+          <div class="col-6"></div>
+        </div>
+      </div>
     </li>
-    </ul>
-     <!--Edit modal pop up  -->
-     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="editModalLabel">Edit Post</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <input class="form-control" ng-model="editedContent" ng-value="allPosts.description" type="text">
-         
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" ng-click="saveChanges(data)" data-bs-dismiss="modal">Save
-              changes</button>
-          </div>
+  </ul>
+  <!--Edit modal pop up  -->
+  <div
+    class="modal fade"
+    id="editModal{{data.id}}"
+    tabindex="-1"
+    aria-labelledby="editModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editModalLabel">Edit Post</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <input
+            class="form-control"
+            ng-model="editedContent"
+            ng-value="data.description"
+            type="text"
+          />
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            ng-click="saveChanges(data)"
+            data-bs-dismiss="modal"
+          >
+            Save changes
+          </button>
         </div>
       </div>
     </div>
-    </div>
+  </div>
+</div>

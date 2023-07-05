@@ -77,7 +77,7 @@ angular.module("myApp").controller("myCtr", [
           console.error(error);
         });
     };
-  
+
     // get all post
     function fetchPost() {
       postService

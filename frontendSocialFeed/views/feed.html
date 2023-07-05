@@ -1,55 +1,104 @@
 <div class="content" ng-app="myApp" ng-controller="myCtr">
-    <div class="row gap"></div>
-    <div class="row">
-      <div class="col-3 sidebar-first">
-        <a class="sideNav list-group-item list-group-item-action py-2 ripple" aria-current="true">
-          <i class="fa fa-user icon" aria-hidden="true"></i><span>Tenzin</span>
-        </a>
-        <a class=" list-group-item list-group-item-action py-2 ripple" aria-current="true">
-          <i class="fa fa-file icon"></i><span>Pages</span>
-        </a>
-        <a class=" list-group-item list-group-item-action py-2 ripple" aria-current="true">
-          <i class="fa fa-users icon" aria-hidden="true"></i><span>Groups</span>
-        </a>
-        <a class=" list-group-item list-group-item-action py-2 ripple" aria-current="true">
-          <i class='fas fa-tv icon'></i><span>Watch</span>
-        </a> 
-      </div>
-      <div class="col-6 main">
-        <div class="row">
-          <div class="col-6 actionBlock" >
-            <div class="option"><a href="#!/question" class="menu" class="{red: hover}" ng-mouseenter="hover = true"
-              ng-mouseleave="hover = false">ASK QUESTION</a></div>
-          </div>
-          <div class="col-6 actionBlock hover" ng-class="{red: hover1}" ng-mouseenter="hover1 = true"
-            ng-mouseleave="hover1 = false" ng-click="show=true">
-            <div class="option">POST A UPDATE</div>
-          </div>
-        </div>
-        <div class="row" ng-show="show">
-          <form class="textBox">
-            <label for="exampleFormControlTextarea1"></label>
-            <textarea class="form-control textArea" id="exampleFormControlTextarea1" placeholder="Title"
-              ng-model="userName" rows="1"></textarea>
-            <textarea class="form-control textArea" id="exampleFormControlTextarea1" rows="3"
-              placeholder="what are you sharing today?" ng-model="story"></textarea>
-            <button type="button" class="btn btn-primary postBtn" 
-              ng-click="CancelFeed()">Cancel</button>
-            <button type="button" class="btn btn-primary postBtn"
-              ng-click="addToFeed()">Post</button>
-          </form>
-        </div>
-        <br />
-        <hr />
-        <ul ng-repeat="singlePost in allPosts | orderBy: 'created_at':true ">
-          <li>
-            <!-- component directive -->
-        <post-component data="singlePost" all-posts="allPosts"></post-component>
-       
-        </li>
-        </ul>
-       
-      </div>
-      <div class="col-3 sidebar-second"></div>
+  <div class="row gap"></div>
+  <div class="row">
+    <div class="col-3 sidebar-first">
+      <a
+        class="sideNav list-group-item list-group-item-action py-2 ripple"
+        aria-current="true"
+      >
+        <i class="fa fa-user icon" aria-hidden="true"></i><span>Tenzin</span>
+      </a>
+      <a
+        class="list-group-item list-group-item-action py-2 ripple"
+        aria-current="true"
+      >
+        <i class="fa fa-file icon"></i><span>Pages</span>
+      </a>
+      <a
+        class="list-group-item list-group-item-action py-2 ripple"
+        aria-current="true"
+      >
+        <i class="fa fa-users icon" aria-hidden="true"></i><span>Groups</span>
+      </a>
+      <a
+        class="list-group-item list-group-item-action py-2 ripple"
+        aria-current="true"
+      >
+        <i class="fas fa-tv icon"></i><span>Watch</span>
+      </a>
     </div>
+    <div class="col-6 main">
+      <div class="row">
+        <div class="col-6 actionBlock">
+          <div class="option">
+            <a
+              href="#!/question"
+              class="menu"
+              class="{red: hover}"
+              ng-mouseenter="hover = true"
+              ng-mouseleave="hover = false"
+              >ASK QUESTION</a
+            >
+          </div>
+        </div>
+        <div
+          class="col-6 actionBlock hover"
+          ng-class="{red: hover1}"
+          ng-mouseenter="hover1 = true"
+          ng-mouseleave="hover1 = false"
+          ng-click="show=true"
+        >
+          <div class="option">POST A UPDATE</div>
+        </div>
+      </div>
+      <div class="row" ng-show="show">
+        <form class="textBox" name="myForm" novalidate>
+          <textarea
+            class="form-control textArea"
+            id="exampleFormControlTextarea1"
+            placeholder="Title"
+            ng-model="userName"
+            rows="1"
+            required
+          ></textarea>
+          <textarea
+            class="form-control textArea"
+            id="exampleFormControlTextarea1"
+            rows="3"
+            placeholder="what are you sharing today?"
+            ng-model="story"
+            required
+          ></textarea>
+          <button
+            type="button"
+            class="btn btn-primary postBtn"
+            ng-click="CancelFeed()"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary postBtn"
+            ng-disabled="myForm.$invalid"
+            ng-click="addToFeed()"
+            ng-disabled="disableButton"
+          >
+            Post
+          </button>
+        </form>
+      </div>
+      <br />
+      <hr />
+      <ul ng-repeat="singlePost in allPosts | orderBy: 'created_at':true ">
+        <li>
+          <!-- component directive -->
+          <post-component
+            data="singlePost"
+            all-posts="allPosts"
+          ></post-component>
+        </li>
+      </ul>
+    </div>
+    <div class="col-3 sidebar-second"></div>
   </div>
+</div>

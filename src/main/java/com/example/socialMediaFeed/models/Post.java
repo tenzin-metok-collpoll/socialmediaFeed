@@ -1,4 +1,5 @@
 package com.example.socialMediaFeed.models;
+
 import java.sql.Timestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -7,11 +8,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @Entity
 @Table(name = "Posts")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Getter @Setter @NoArgsConstructor
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+@Getter
+@Setter
+@NoArgsConstructor
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +34,5 @@ public class Post {
         return "Post [id=" + id + ", user_name=" + user_name + ", description=" + description + ", posted_time="
                 + posted_time + "]";
     }
-    
 
 }

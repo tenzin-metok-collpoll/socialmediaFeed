@@ -1,4 +1,5 @@
 package com.example.socialMediaFeed.services;
+
 import com.example.socialMediaFeed.models.LikeDislike;
 import com.example.socialMediaFeed.repositories.LikeDislikeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +9,8 @@ import java.time.Instant;
 import java.util.List;
 
 @Service
-public class LikeDislikeServiceImpl implements LikeDislikeService{
-        private final LikeDislikeRepository likeDislikeRepository;
+public class LikeDislikeServiceImpl implements LikeDislikeService {
+    private final LikeDislikeRepository likeDislikeRepository;
 
     @Autowired
     public LikeDislikeServiceImpl(LikeDislikeRepository likeDislikeRepository) {
@@ -18,7 +19,7 @@ public class LikeDislikeServiceImpl implements LikeDislikeService{
 
     // @Override
     // public LikeDislike getCommentById(int id) {
-    //     return likeDislikeRepository.findById(id);
+    // return likeDislikeRepository.findById(id);
     // }
 
     @Override
@@ -28,13 +29,13 @@ public class LikeDislikeServiceImpl implements LikeDislikeService{
 
     @Override
     public LikeDislike addLikeDislike(LikeDislike likeDislike) {
-         likeDislike.setTime_stamp(Timestamp.from(Instant.now()));
+        likeDislike.setTime_stamp(Timestamp.from(Instant.now()));
         return likeDislikeRepository.save(likeDislike);
     }
 
     // @Override
     // public Comment updateComment(Comment comment) {
-    //     return commentRepository.update(comment);
+    // return commentRepository.update(comment);
     // }
 
     @Override

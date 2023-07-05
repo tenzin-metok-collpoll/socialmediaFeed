@@ -27,9 +27,9 @@ angular.module("myApp").directive("postComponent", [
           fetchPost();
 
           //-------------- POST --------------------
-          
-           //getAllPost
-           function fetchPost() {
+
+          //getAllPost
+          function fetchPost() {
             postService
               .getAllPosts()
               .then(function (posts) {
@@ -40,26 +40,25 @@ angular.module("myApp").directive("postComponent", [
                 console.error("Error retrieving data:", error);
               });
           }
-          
+
           //setID for modal pop up
           $scope.setId = function (singlePost) {
-            $scope.allPosts.id = singlePost.id;
-            $scope.allPosts.user_name = singlePost.user_name;
-            $scope.allPosts.description = singlePost.description;
+            $scope.modalData = { value: singlePost };
+            $(`#editModal${singlePost.id}`).modal("show");
           };
 
           //update the post
-          $scope.saveChanges = function () {
+          $scope.saveChanges = function (data) {
             if ($scope.editedContent === undefined) {
               $scope.editMode = false;
             } else {
               let updatedPost = {
-                user_name: $scope.allPosts.user_name,
+                user_name: data.user_name,
                 description: $scope.editedContent,
               };
               //update a post
               postService
-                .updatePost($scope.allPosts.id, updatedPost)
+                .updatePost(data.id, updatedPost)
                 .then(function (updatedPost) {
                   // Handle the updated post
                   console.log("Post updated successfully in save");
@@ -105,12 +104,12 @@ angular.module("myApp").directive("postComponent", [
               });
           }
 
-           //add comments
-           $scope.addComment = (singlePost) => {
+          //add comments
+          $scope.addComment = (singlePost) => {
             console.log("singlePost: ", singlePost);
             $scope.showCommentInput = false;
             if (singlePost.val !== "") {
-              const newComment =  {
+              const newComment = {
                 description: singlePost.val,
                 post_id: singlePost.id,
                 user_name: singlePost.user_name,
@@ -128,8 +127,8 @@ angular.module("myApp").directive("postComponent", [
             }
           };
 
-           //edit comments
-           $scope.EditComment = (singlePost, singleComment) => {
+          //edit comments
+          $scope.EditComment = (singlePost, singleComment) => {
             singleComment.editMode = true;
             singleComment.editedComment = singleComment.content;
           };
@@ -140,8 +139,8 @@ angular.module("myApp").directive("postComponent", [
             singleComment.content = singleComment.editedComment;
           };
 
-           //cancel comments
-           $scope.cancelComment = () => {
+          //cancel comments
+          $scope.cancelComment = () => {
             singleComment.editMode = false;
           };
 
@@ -195,8 +194,6 @@ angular.module("myApp").directive("postComponent", [
           };
 
           //---------------END OF COMMENTS-----------------------------
-
-
 
           //---------------LIKE AND DISLIKE-----------------------------
 
@@ -281,7 +278,7 @@ angular.module("myApp").directive("postComponent", [
             $scope.dislikeCounter++;
           };
 
-        //---------------END OF LIKE AND DISLIKE-----------------------------
+          //---------------END OF LIKE AND DISLIKE-----------------------------
         },
       ],
     };

@@ -1,6 +1,6 @@
 package com.example.socialMediaFeed.services;
-import com.example.socialMediaFeed.models.Comment;
 
+import com.example.socialMediaFeed.models.Comment;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -13,9 +13,9 @@ public interface CommentService {
 
     List<Comment> getAllComment();
 
-    ResponseEntity<CreateCommentResponse>createComment(Comment comment);
+    ResponseEntity<CreateCommentResponse> createComment(Comment comment);
 
     Comment updateComment(Comment comment);
 
-    void deleteComment(int id);  
+    void deleteComment(int id);
 }

@@ -1,4 +1,5 @@
 package com.example.socialMediaFeed.services;
+
 import com.example.socialMediaFeed.models.LikeDislike;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -14,5 +15,5 @@ public interface LikeDislikeService {
 
     // LikeDislike updateComment(LikeDislike comment);
 
-    void deleteLikeDislike(int id);  
+    void deleteLikeDislike(int id);
 }

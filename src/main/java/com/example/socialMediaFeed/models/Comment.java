@@ -13,7 +13,9 @@ import lombok.Setter;
 @Entity
 @Table(name = "Comments")
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-@Getter @Setter @NoArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,5 +38,5 @@ public class Comment {
         return "Comment [id=" + id + ", user_name=" + user_name + ", description=" + description + ", time_stamp="
                 + time_stamp + ", post_id=" + post_id + "]";
     }
-    
+
 }

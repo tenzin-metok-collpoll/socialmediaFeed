@@ -1,4 +1,5 @@
 package com.example.socialMediaFeed.repositories;
+
 import com.example.socialMediaFeed.models.LikeDislike;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -9,8 +10,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository
-public class LikeDislikeRepositoryImpl implements LikeDislikeRepository{
-     private final JdbcTemplate jdbcTemplate;
+public class LikeDislikeRepositoryImpl implements LikeDislikeRepository {
+    private final JdbcTemplate jdbcTemplate;
 
     @Autowired
     public LikeDislikeRepositoryImpl(JdbcTemplate jdbcTemplate) {
@@ -19,9 +20,10 @@ public class LikeDislikeRepositoryImpl implements LikeDislikeRepository{
 
     // @Override
     // public LikeDislike findById(int id) {
-    //     String sql = "SELECT * FROM like_and_dislike WHERE id = ?";
-    //    return jdbcTemplate.queryForObject(sql, new Object[]{id}, this::mapRowToUser);
-        
+    // String sql = "SELECT * FROM like_and_dislike WHERE id = ?";
+    // return jdbcTemplate.queryForObject(sql, new Object[]{id},
+    // this::mapRowToUser);
+
     // }
 
     @Override
@@ -33,34 +35,36 @@ public class LikeDislikeRepositoryImpl implements LikeDislikeRepository{
     @Override
     public LikeDislike save(LikeDislike likeDislike) {
         String sql = "INSERT INTO like_and_dislike (user_name, type, post_id, time_stamp) VALUES (?, ?, ?, ?)";
-        jdbcTemplate.update(sql, likeDislike.getUser_name(), likeDislike.getType(), likeDislike.getPost_id(), likeDislike.getTime_stamp());
-        System.out.println("-----__----________--+"+likeDislike);
+        jdbcTemplate.update(sql, likeDislike.getUser_name(), likeDislike.getType(), likeDislike.getPost_id(),
+                likeDislike.getTime_stamp());
         return likeDislike;
     }
 
     // @Override
     // public LikeDislike update(LikeDislike likeDislike) {
-    //     String sql = "UPDATE like_and_dislike SET user_name = ?, type = ?, post_id = ?, time_stamp = ?  WHERE id = ?";
-    //     jdbcTemplate.update(sql, likeDislike.getuser_name(), likeDislike.getType(), likeDislike.getpost_id(), likeDislike.gettime_stamp(), likeDislike.getId());
-    //     return likeDislike;
+    // String sql = "UPDATE like_and_dislike SET user_name = ?, type = ?, post_id =
+    // ?, time_stamp = ? WHERE id = ?";
+    // jdbcTemplate.update(sql, likeDislike.getuser_name(), likeDislike.getType(),
+    // likeDislike.getpost_id(), likeDislike.gettime_stamp(), likeDislike.getId());
+    // return likeDislike;
     // }
 
     // @Override
     public void delete(int id) {
-        
+
         String sql = "DELETE FROM like_and_dislike WHERE id = ?";
         jdbcTemplate.update(sql, id);
-    } 
+    }
 
     // Inside your repository or service class
-// public Type mapStringToType(String typeString) {
-//     try {
-//         return Type.valueOf(typeString);
-//     } catch (IllegalArgumentException e) {
-//         // Handle invalid or unknown enum values if needed
-//         return null;
-//     }
-// }
+    // public Type mapStringToType(String typeString) {
+    // try {
+    // return Type.valueOf(typeString);
+    // } catch (IllegalArgumentException e) {
+    // // Handle invalid or unknown enum values if needed
+    // return null;
+    // }
+    // }
 
     private LikeDislike mapRowToUser(ResultSet rs, int rowNum) throws SQLException {
         LikeDislike likeDislike = new LikeDislike();

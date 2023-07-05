@@ -40,6 +40,7 @@ public class ReactionController {
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
   }
+
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> deleteLikeDislike(@PathVariable("id") int id) {
     try {

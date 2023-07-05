@@ -1,4 +1,5 @@
 package com.example.socialMediaFeed.controllers;
+
 import com.example.socialMediaFeed.models.Comment;
 import com.example.socialMediaFeed.models.Post;
 import com.example.socialMediaFeed.services.CommentService;
@@ -32,55 +33,56 @@ public class CommentController {
   @GetMapping("/{id}")
   public ResponseEntity<?> getCommentById(@PathVariable int id) {
     if (id <= 0) {
-        // Return invalid ID response
-        return ResponseEntity.badRequest().body("Invalid ID");
+      // Return invalid ID response
+      return ResponseEntity.badRequest().body("Invalid ID");
     }
 
     try {
-        Comment comment = commentService.getCommentById(id);
-        return ResponseEntity.ok(comment);
+      Comment comment = commentService.getCommentById(id);
+      return ResponseEntity.ok(comment);
     } catch (Exception e) {
-        // Handle the exception when the post is not found
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Post not found");
+      // Handle the exception when the post is not found
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Post not found");
     }
-}
+  }
+
   @PostMapping("/")
   public ResponseEntity<?> createComment(@RequestBody(required = false) Comment comment) {
     try {
-        if (comment == null) {
-            throw new IllegalArgumentException("Request body is missing.");
-        }
+      if (comment == null) {
+        throw new IllegalArgumentException("Request body is missing.");
+      }
 
-        ResponseEntity<?>response = commentService.createComment(comment);
-        return response;
+      ResponseEntity<?> response = commentService.createComment(comment);
+      return response;
     } catch (IllegalArgumentException e) {
-        return ResponseEntity.badRequest().body(e.getMessage());
+      return ResponseEntity.badRequest().body(e.getMessage());
     } catch (Exception e) {
-        e.printStackTrace();
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+      e.printStackTrace();
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
-}
+  }
 
   @DeleteMapping("/{id}")
   public ResponseEntity<String> deleteComment(@PathVariable("id") int id) {
     if (id <= 0) {
-        // Return invalid ID response
-        return ResponseEntity.badRequest().body("Invalid ID");
+      // Return invalid ID response
+      return ResponseEntity.badRequest().body("Invalid ID");
     }
     try {
-        commentService.deleteComment(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Comment with ID " + id + " deleted successfully.");
+      commentService.deleteComment(id);
+      return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Comment with ID " + id + " deleted successfully.");
     } catch (IllegalArgumentException e) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     } catch (Exception e) {
-        e.printStackTrace();
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while deleting the post.");
+      e.printStackTrace();
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while deleting the post.");
     }
-}
+  }
 
   @PutMapping("/{id}")
   public ResponseEntity<Comment> updateComment(@RequestBody Comment comment, @PathVariable("id") int id) {
-    
+
     try {
       comment.setId(id);
       this.commentService.updateComment(comment);
