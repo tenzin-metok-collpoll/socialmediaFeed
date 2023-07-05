@@ -42,29 +42,30 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public ResponseEntity<CreatePostResponse> createPost(Post post) {
-        try {
-                      // Set the timestamp value in UTC
-            post.setPosted_time(Timestamp.from(Instant.now()));
-            // Check required fields
-            if (post.getDescription() == null || post.getUser_name() == null || post.getPosted_time() == null) {
-                throw new IllegalArgumentException("Description, user_name, and posted_time are required fields.");
-            }
-
-            Post savedPost = postRepository.save(post);
-            CreatePostResponse response = new CreatePostResponse(savedPost, "Post saved successfully");
-            return ResponseEntity.ok(response);
-        } catch (IllegalArgumentException e) {
-            // Handle missing required fields
-            CreatePostResponse response = new CreatePostResponse(null,
-                    "Missing required fields: Description, user_name, and posted_time are required.");
-            return ResponseEntity.badRequest().body(response);
-        } catch (Exception e) {
-            // Handle other exceptions
-            CreatePostResponse response = new CreatePostResponse(null, "An error occurred while creating the post.");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+   public ResponseEntity<CreatePostResponse> createPost(Post post) {
+    try {
+        // Set the timestamp value in UTC
+        post.setPosted_time(Timestamp.from(Instant.now()));
+        // Check required fields
+        if (post.getDescription() == null || post.getUser_name() == null) {
+            throw new IllegalArgumentException("Description and user_name are required fields.");
         }
+
+        Post savedPost = postRepository.save(post);
+        CreatePostResponse response = new CreatePostResponse("Post saved successfully");
+        return ResponseEntity.ok(response);
+    } catch (IllegalArgumentException e) {
+        // Handle missing required fields
+        CreatePostResponse response = new CreatePostResponse(
+                "Missing required fields: Description and user_name are required.");
+        return ResponseEntity.badRequest().body(response);
+    } catch (Exception e) {
+        // Handle other exceptions
+        CreatePostResponse response = new CreatePostResponse("An error occurred while creating the post.");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
+}
+
 
     @Override
     public Post updatePost(Post post) {

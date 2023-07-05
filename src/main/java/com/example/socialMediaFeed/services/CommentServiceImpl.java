@@ -31,28 +31,29 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-  public ResponseEntity<CreateCommentResponse>createComment(Comment comment) {
+ public ResponseEntity<CreateCommentResponse> createComment(Comment comment) {
     try {
-         comment.setTime_stamp(Timestamp.from(Instant.now()));
+        comment.setTime_stamp(Timestamp.from(Instant.now()));
 
         // Check required fields
-        if (comment.getDescription() == null || comment.getUser_name() == null || comment.getTime_stamp() == null) {
+        if (comment.getDescription() == null || comment.getUser_name() == null || comment.getPost_id() == null) {
             throw new IllegalArgumentException("Description, user_name, and time_stamp are required fields.");
         }
 
         Comment savedComment = commentRepository.save(comment);
-        CreateCommentResponse response = new CreateCommentResponse(savedComment, "Post saved successfully");
+        CreateCommentResponse response = new CreateCommentResponse("Comment saved successfully");
         return ResponseEntity.ok(response);
     } catch (IllegalArgumentException e) {
         // Handle missing required fields
-        CreateCommentResponse response = new CreateCommentResponse(null, "Missing required fields: Description, user_name, and posted_time are required.");
+        CreateCommentResponse response = new CreateCommentResponse("Missing required fields: Description, user_name, and posted_time are required.");
         return ResponseEntity.badRequest().body(response);
     } catch (Exception e) {
         // Handle other exceptions
-        CreateCommentResponse response = new CreateCommentResponse(null, "An error occurred while creating the post.");
+        CreateCommentResponse response = new CreateCommentResponse("An error occurred while creating the comment.");
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 }
+
 
     @Override
     public Comment updateComment(Comment comment) {

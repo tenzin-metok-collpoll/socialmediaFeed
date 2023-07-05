@@ -1,7 +1,7 @@
 angular.module("myApp").service("postService", ["$http", function($http) {
     return {
         getAllPosts : function (){
-            return $http.get("http://localhost:8080/post/",{ cache: false })
+            return $http.get("http://localhost:8080/posts/",{ cache: false })
             .then(function(response) {
                 console.log('response.data: ', response.data);
                 return response.data;
@@ -12,7 +12,7 @@ angular.module("myApp").service("postService", ["$http", function($http) {
             });
         },
         getPostById : function (){
-            return $http.get("http://localhost:8080/post/")
+            return $http.get("http://localhost:8080/posts/")
             .then(function(response) {
                 return response.data;
             })
@@ -21,7 +21,7 @@ angular.module("myApp").service("postService", ["$http", function($http) {
             });
         },
         createPost: function(postData) {
-            return $http.post("http://localhost:8080/post/", postData)
+            return $http.post("http://localhost:8080/posts/", postData)
        
                 .then(function(response) {
                     return response.data;
@@ -31,7 +31,7 @@ angular.module("myApp").service("postService", ["$http", function($http) {
                 });
         },
         updatePost: function(postId, postData) {
-            return $http.put("http://localhost:8080/post/" + postId, postData)
+            return $http.put("http://localhost:8080/posts/" + postId, postData)
                 .then(function(response) {
                     return response.data;
                 })
@@ -41,7 +41,7 @@ angular.module("myApp").service("postService", ["$http", function($http) {
         },
         deletePost: function(postId) {
             console.log('postId: ', postId);
-            return $http.delete("http://localhost:8080/post/" + postId)
+            return $http.delete("http://localhost:8080/posts/" + postId)
                 .then(function(response) {
                     console.log('response: ', response);
                     return response.data;
