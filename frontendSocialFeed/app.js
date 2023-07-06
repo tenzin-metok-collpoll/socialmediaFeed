@@ -40,6 +40,10 @@ angular.module("myApp").controller("myCtr", [
     $scope.showCommentInput = false; // Set initial state to show the comment input field
     // getAllPosts();
     getAllData();
+    $scope.handleDataFromChild = function(data) {
+      console.log('Data received from child:', data);
+      getAllData();
+    };
     
     $scope.Edit = () => {
       if ($scope.editMode) {

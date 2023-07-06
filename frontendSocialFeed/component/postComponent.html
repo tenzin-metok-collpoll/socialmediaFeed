@@ -115,12 +115,12 @@
   <ul>
     <li
       class="list-comment"
-      ng-repeat="singleComment in data.comments | orderBy: 'created_at':true"
+      ng-repeat="singleComment in commentArr | orderBy: 'created_at':true"
     >
-      <div class="row" >
+      <div class="row" ng-show="singleComment.post_id===data.id">
         <div class="col-9">
           <p class="commentList" ng-show="!singleComment.editMode">
-            {{singleComment}}
+            {{singleComment.description}}
           </p>
           <input
             class="commentInput"

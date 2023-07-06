@@ -7,6 +7,7 @@ angular.module("myApp").directive("postComponent", [
       scope: {
         data: "=",
         allPosts: "=",
+        onDataUpdated: '&'
         // Two-way binding for the data attribute
       },
       templateUrl: "component/postComponent.html",
@@ -22,24 +23,24 @@ angular.module("myApp").directive("postComponent", [
           $scope.newLike = {};
           $scope.likeCounter = 0;
           $scope.dislikeCounter = 0;
-          // fetchComment();
+          fetchComment();
           // fetchLikeDislike();
           // fetchPost();
 
           //-------------- POST --------------------
 
           //getAllPost
-          function fetchPost() {
-            postService
-              .getAllPosts()
-              .then(function (posts) {
-                console.log("posts: ", posts);
-                $scope.allPosts = posts;
-              })
-              .catch(function (error) {
-                console.error("Error retrieving data:", error);
-              });
-          }
+          // function fetchPost() {
+          //   postService
+          //     .getAllPosts()
+          //     .then(function (posts) {
+          //       console.log("posts: ", posts);
+          //       $scope.allPosts = posts;
+          //     })
+          //     .catch(function (error) {
+          //       console.error("Error retrieving data:", error);
+          //     });
+          // }
 
           //setID for modal pop up
           $scope.setId = function (singlePost) {
@@ -63,7 +64,7 @@ angular.module("myApp").directive("postComponent", [
                 .then(function (updatedPost) {
                   // Handle the updated post
                   console.log("Post updated successfully in save");
-                  fetchPost();
+                  $scope.onDataUpdated({ data: updatedPost });
                   console.log(updatedPost);
                   $scope.editMode = false;
                 })
@@ -79,7 +80,7 @@ angular.module("myApp").directive("postComponent", [
               .deletePost(singlePost.id)
               .then(function () {
                 // Handle the successful deletion
-                console.log("Post deleted successfully");
+                $scope.onDataUpdated({ data: singlePost.id });
                 fetchPost();
               })
               .catch(function (error) {
@@ -170,7 +171,7 @@ angular.module("myApp").directive("postComponent", [
             const updatedComment = {
               description: singleComment.editedComment,
               post_id: singlePost.id,
-              user_name: singlePost.user_name,
+              user_name: singlePost.userName,
             };
             commentService
               .updateComment(singleComment.id, updatedComment)
@@ -214,7 +215,7 @@ angular.module("myApp").directive("postComponent", [
           // increment likes
           $scope.incrementLike = (singlePost) => {
             const newlike = {
-              user_name: singlePost.user_name,
+              user_name: singlePost.userName,
               type: "like",
               post_id: singlePost.id,
             };
@@ -223,7 +224,7 @@ angular.module("myApp").directive("postComponent", [
               .addlike(newlike)
               .then(function (newlike) {
                 console.log("like added successfully:", newlike);
-                fetchLikeDislike();
+                $scope.onDataUpdated({ data: newlike });
                 // Update the likes count in the singlePost object
                 singlePost.likes += 1;
                 $scope.likeCounter = 0;
@@ -238,7 +239,7 @@ angular.module("myApp").directive("postComponent", [
           //increment dislike
           $scope.decrementLike = (singlePost) => {
             const newDislike = {
-              user_name: singlePost.user_name,
+              user_name: singlePost.userName,
               type: "dislike",
               post_id: singlePost.id,
             };
