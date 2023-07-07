@@ -28,6 +28,7 @@ angular.module("myApp").controller("myCtr", [
   "postService",
   function ($scope, $http, postService) {
     var vm = this;
+    $scope.loading = false;
 
     $scope.id = 0;
     $scope.show = false;
@@ -38,12 +39,32 @@ angular.module("myApp").controller("myCtr", [
     $scope.editModes = false;
     $scope.newComment = ""; // Initialize the new comment input
     $scope.showCommentInput = false; // Set initial state to show the comment input field
-    // getAllPosts();
+
     getAllData();
     $scope.handleDataFromChild = function(data) {
       console.log('Data received from child:', data);
       getAllData();
     };
+
+    $scope.parseAndAssignComments = function(post) {
+      post.comments = parseComments(post.comments);
+    };
+
+    function parseComments(commentsArray) {
+      if (Array.isArray(commentsArray)) {
+        return commentsArray.map(function(commentString) {
+          var parts = commentString.split(',');
+          return {
+            text: parts[0],
+            id: parts[1],
+            editMode: false
+          };
+        });
+      } else {
+        return [];
+      }
+    }
+
     
     $scope.Edit = () => {
       if ($scope.editMode) {
@@ -63,6 +84,8 @@ angular.module("myApp").controller("myCtr", [
 
     // adding a new post in feed
     $scope.addToFeed = () => {
+      if (navigator.onLine) {
+        $scope.loading = true;
       $scope.show = false;
       const post = {
         userName: $scope.userName,
@@ -77,37 +100,34 @@ angular.module("myApp").controller("myCtr", [
 
           $scope.story = "";
           $scope.userName = "";
-          // fetchPost();
           getAllData();
         })
         .catch(function (error) {
           console.error(error);
-        });
+        })
+      } else {
+        alert("Application is offline. Please check your internet connection.");
+      }
     };
 
-    // get all post
-    function getAllPosts() {
-      postService
-        .getAllPosts()
-        .then(function (posts) {
-          console.log("posts: ", posts);
-          $scope.allPosts = posts;
-        })
-        .catch(function (error) {
-          console.error("Error retrieving data:", error);
-        });
-    }
-     // get all post
+ 
      function getAllData() {
+      if (navigator.onLine) {
+      $scope.loading = true;
       postService
         .getAllData()
         .then(function (posts) {
-          console.log("posts:::::: ", posts);
+          $scope.loading = false;
           $scope.allPosts = posts;
         })
         .catch(function (error) {
           console.error("Error retrieving data:", error);
         });
     }
+    else {
+      alert("Application is offline. Please check your internet connection.");
+    }}
   },
+
+  
 ]);

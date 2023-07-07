@@ -34,10 +34,10 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public ResponseEntity<CreateCommentResponse> createComment(Comment comment) {
         try {
-            comment.setTime_stamp(Timestamp.from(Instant.now()));
+            comment.setTimeStamp(Timestamp.from(Instant.now()));
 
             // Check required fields
-            if (comment.getDescription() == null || comment.getUser_name() == null || comment.getPost_id() == null) {
+            if (comment.getDescription() == null || comment.getUserName() == null || comment.getPostId() == null) {
                 throw new IllegalArgumentException("Description, user_name, and time_stamp are required fields.");
             }
 
@@ -58,7 +58,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Comment updateComment(Comment comment) {
-        comment.setTime_stamp(Timestamp.from(Instant.now()));
+        comment.setTimeStamp(Timestamp.from(Instant.now()));
         return commentRepository.update(comment);
     }
 

@@ -20,23 +20,23 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String user_name;
+    private String userName;
     private String description;
-    private Timestamp time_stamp;
-    private Integer post_id;
+    private Timestamp timeStamp;
+    private Integer postId;
 
-    public Comment(Integer id, String user_name, String description, Timestamp time_stamp, Integer post_id) {
+    public Comment(Integer id, String userName, String description, Timestamp timeStamp, Integer postId) {
         this.id = id;
-        this.user_name = user_name;
+        this.userName = userName;
         this.description = description;
-        this.time_stamp = time_stamp;
-        this.post_id = post_id;
+        this.timeStamp = timeStamp;
+        this.postId = postId;
     }
 
     @Override
     public String toString() {
-        return "Comment [id=" + id + ", user_name=" + user_name + ", description=" + description + ", time_stamp="
-                + time_stamp + ", post_id=" + post_id + "]";
+        return "Comment [id=" + id + ", user_name=" + userName + ", description=" + description + ", time_stamp="
+                + timeStamp + ", post_id=" + postId + "]";
     }
 
 }

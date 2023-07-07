@@ -17,31 +17,31 @@ public class LikeDislike {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String user_name;
+    private String userName;
     // @Enumerated(EnumType.STRING)
     // @Column
     private String type;
-    private Timestamp time_stamp;
+    private Timestamp timeStamp;
     // @ManyToOne
     // @JoinColumn(name = "id")
-    private Integer post_id;
+    private Integer postId;
 
-    public LikeDislike(Integer id, String user_name, String type, Timestamp time_stamp, Integer post_id) {
+    public LikeDislike(Integer id, String userName, String type, Timestamp timeStamp, Integer postId) {
         this.id = id;
-        this.user_name = user_name;
+        this.userName = userName;
         this.type = type;
-        this.time_stamp = time_stamp;
-        this.post_id = post_id;
+        this.timeStamp = timeStamp;
+        this.postId = postId;
     }
 
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", user_name='" + user_name + '\'' +
-                ", time_stamp='" + time_stamp + '\'' +
+                ", user_name='" + userName + '\'' +
+                ", time_stamp='" + timeStamp + '\'' +
                 ", type='" + type + '\'' +
-                ", post_id='" + post_id + '\'' +
+                ", post_id='" + postId + '\'' +
                 '}';
     }
 }

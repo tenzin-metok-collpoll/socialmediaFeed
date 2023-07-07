@@ -29,7 +29,7 @@ public class LikeDislikeServiceImpl implements LikeDislikeService {
 
     @Override
     public LikeDislike addLikeDislike(LikeDislike likeDislike) {
-        likeDislike.setTime_stamp(Timestamp.from(Instant.now()));
+        likeDislike.setTimeStamp(Timestamp.from(Instant.now()));
         return likeDislikeRepository.save(likeDislike);
     }
 

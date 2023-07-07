@@ -6,10 +6,26 @@ angular.module("myApp").service("commentService", [
         return $http
           .get("http://localhost:8080/comments/", { cache: false })
           .then(function (response) {
-            console.log("response.data: ", response.data);
-            return response.data;
+            if (response.status === 200) {
+              console.log("Get all comments successful.");
+              return response.data;
+            }
+            else {
+              throw new Error("Failed to delete post");
+            }
           })
           .catch(function (error) {
+            if (error.response) {
+              if (error.response.status === 404) {
+                alert("Comments not found.", "error");
+              } else {
+                alert("An error occurred while fetching comments.", "error");
+              }
+            } else if (error.request) {
+              alert("No response received from the server.", "error");
+            } else {
+              alert("An error occurred while making the request.", "error");
+            }
             throw error;
           });
       },
@@ -18,15 +34,30 @@ angular.module("myApp").service("commentService", [
         return $http
           .post("http://localhost:8080/comments/", comment)
           .then(function (response) {
-            return response.data;
+            if (response.status === 200) {
+              console.log("Comments added successfully.");
+              return response.data;
+            }
+            else {
+              throw new Error("Failed to delete post");
+            }
           })
           .catch(function (error) {
-            if (error.status === 400) {
-              // Bad Request: Data sent is incorrect or not in the expected format
-              console.error("Bad Request: Invalid data format");
+            if (error.response) {
+              if (error.status === 400) {
+                // Bad Request: Data sent is incorrect or not in the expected format
+                alert("Bad Request: Invalid data format");
+              }
+
+              if (error.response.status === 404) {
+                alert("Comments not found.", "error");
+              } else {
+                alert("An error occurred while fetching comments.", "error");
+              }
+            } else if (error.request) {
+              alert("No response received from the server.", "error");
             } else {
-              // Other errors
-              console.error("An error occurred:", error);
+              alert("An error occurred while making the request.", "error");
             }
           });
       },
@@ -34,21 +65,61 @@ angular.module("myApp").service("commentService", [
         return $http
           .put("http://localhost:8080/comments/" + commentId, commentData)
           .then(function (response) {
-            console.log("response.data: ", response.data);
-            return response.data;
+            if (response.status === 200) {
+              console.log("Comments updated successfully.");
+              return response.data;
+            }
+            else {
+              throw new Error("Failed to delete post");
+            }
           })
           .catch(function (error) {
-            throw error;
+            if (error.response) {
+              if (error.status === 400) {
+                alert("Bad Request: Invalid data format");
+              }
+
+              if (error.response.status === 404) {
+                alert("Comments not found.", "error");
+              } else {
+                alert("An error occurred while fetching comments.", "error");
+              }
+            } else if (error.request) {
+              alert("No response received from the server.", "error");
+            } else {
+              alert("An error occurred while making the request.", "error");
+            }
           });
       },
       deleteComment: function (commentId) {
         return $http
           .delete("http://localhost:8080/comments/" + commentId)
           .then(function (response) {
-            return response.data;
+            if (response.status === 200) {
+              console.log("Comments deleted successfully.");
+              return response.data;
+            }
+            else {
+              throw new Error("Failed to delete post");
+            }
           })
           .catch(function (error) {
-            throw error;
+            if (error.response) {
+              if (error.status === 400) {
+                // Bad Request: Data sent is incorrect or not in the expected format
+                alert("Bad Request: Invalid data format");
+              }
+
+              if (error.response.status === 404) {
+                alert("Comments not found.", "error");
+              } else {
+                alert("An error occurred while fetching comments.", "error");
+              }
+            } else if (error.request) {
+              alert("No response received from the server.", "error");
+            } else {
+              alert("An error occurred while making the request.", "error");
+            }
           });
       },
     };

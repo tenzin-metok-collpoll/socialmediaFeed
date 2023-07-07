@@ -115,18 +115,18 @@
   <ul>
     <li
       class="list-comment"
-      ng-repeat="singleComment in commentArr | orderBy: 'created_at':true"
+      ng-repeat="singleComment in data.comments | orderBy: 'created_at':true"
     >
-      <div class="row" ng-show="singleComment.post_id===data.id">
+      <div class="row">
         <div class="col-9">
           <p class="commentList" ng-show="!singleComment.editMode">
-            {{singleComment.description}}
+            {{singleComment.text}}
           </p>
           <input
             class="commentInput"
             ng-show="singleComment.editMode"
-            ng-value="singleComment.description"
-            ng-model="singleComment.editedComment"
+            ng-value="singleComment.text"
+            ng-model="formData.editedComment"
             type="text"
           />
         </div>
@@ -142,7 +142,7 @@
             <li>
               <a
                 class="dropdown-item hover"
-                ng-click="deleteComment(allPosts.indexOf(data),singleComment)"
+                ng-click="deleteComment(singleComment)"
                 ><i class="fas fa-trash-alt"></i> Delete</a
               >
             </li>
@@ -150,8 +150,8 @@
               <a
                 class="dropdown-item hover"
                 ng-click="singleComment.editMode=true; EditComment(data,singleComment)"
-                ><i class="fas fa-edit"></i> {{ singleComment.editMode ? 'Save'
-                : 'Edit' }}</a
+                ><i class="fas fa-edit"></i> {{ formData.editModes ? 'Save' :
+                'Edit' }}</a
               >
             </li>
           </ul>
@@ -171,7 +171,7 @@
               class="dropdown-item cancel hover"
               ng-click="Cancel(singleComment)"
               ng-show="singleComment.editMode"
-              ng-click="editMode=false"
+              ng-click="singleComment.editMode=false"
               >Cancel</a
             >
           </div>

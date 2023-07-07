@@ -4,6 +4,7 @@ import com.example.socialMediaFeed.models.Post;
 import com.example.socialMediaFeed.services.PostService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -66,12 +67,12 @@ public class PostController {
             if (post == null) {
                 throw new IllegalArgumentException("Request body is missing.");
             }
-
             ResponseEntity<?> response = postService.createPost(post);
             return response;
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
-        } catch (Exception e) {
+        } 
+        catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
@@ -89,7 +90,9 @@ public class PostController {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Post with ID " + id + " deleted successfully.");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        } catch (Exception e) {
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.badRequest().body("Cannot delete a Post having comments or like dislike");
+        }catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("An error occurred while deleting the post.");

@@ -35,8 +35,8 @@ public class LikeDislikeRepositoryImpl implements LikeDislikeRepository {
     @Override
     public LikeDislike save(LikeDislike likeDislike) {
         String sql = "INSERT INTO like_and_dislike (user_name, type, post_id, time_stamp) VALUES (?, ?, ?, ?)";
-        jdbcTemplate.update(sql, likeDislike.getUser_name(), likeDislike.getType(), likeDislike.getPost_id(),
-                likeDislike.getTime_stamp());
+        jdbcTemplate.update(sql, likeDislike.getUserName(), likeDislike.getType(), likeDislike.getPostId(),
+                likeDislike.getTimeStamp());
         return likeDislike;
     }
 
@@ -69,10 +69,10 @@ public class LikeDislikeRepositoryImpl implements LikeDislikeRepository {
     private LikeDislike mapRowToUser(ResultSet rs, int rowNum) throws SQLException {
         LikeDislike likeDislike = new LikeDislike();
         likeDislike.setId(rs.getInt("id"));
-        likeDislike.setUser_name(rs.getString("user_name"));
+        likeDislike.setUserName(rs.getString("user_name"));
         likeDislike.setType(rs.getString("type"));
-        likeDislike.setPost_id(rs.getInt("post_id"));
-        likeDislike.setTime_stamp(rs.getTimestamp("time_stamp"));
+        likeDislike.setPostId(rs.getInt("post_id"));
+        likeDislike.setTimeStamp(rs.getTimestamp("time_stamp"));
         return likeDislike;
     }
 }

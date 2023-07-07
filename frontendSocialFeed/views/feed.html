@@ -1,4 +1,9 @@
 <div class="content" ng-app="myApp" ng-controller="myCtr">
+  <div ng-show="loading" >
+    <div class="loader">
+      <div class="spinner"></div>
+    </div>
+  </div>
   <div class="row gap"></div>
   <div class="row">
     <div class="col-3 sidebar-first">
@@ -96,6 +101,7 @@
             data="singlePost"
             all-posts="allPosts"
             on-data-updated="handleDataFromChild(data)"
+            ng-init="singlePost.comments && parseAndAssignComments(singlePost)"
           ></post-component>
         </li>
       </ul>

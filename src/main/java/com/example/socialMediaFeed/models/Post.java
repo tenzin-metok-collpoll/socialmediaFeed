@@ -30,9 +30,9 @@ public class Post {
         this.userName = userName;
         this.description = description;
         this.postedTime = postedTime;
-        this.likeCount = likeCount;
-        this.dislikeCount = dislikeCount;
-        this.comments = comments;
+        // this.likeCount = likeCount;
+        // this.dislikeCount = dislikeCount;
+        // this.comments = comments;
     }
 
     @Override
