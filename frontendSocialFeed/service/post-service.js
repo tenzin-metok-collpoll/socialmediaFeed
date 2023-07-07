@@ -155,7 +155,7 @@ angular.module("myApp").service("postService", [
         return $http
           .delete("http://localhost:8080/posts/" + postId)
           .then(function (response) {
-            if (response.status === 200) {
+            if (response.status === 204) {
               console.log("Post deleted successfully");
               return response.data;
             }

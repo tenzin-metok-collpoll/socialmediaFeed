@@ -95,7 +95,7 @@ angular.module("myApp").service("commentService", [
         return $http
           .delete("http://localhost:8080/comments/" + commentId)
           .then(function (response) {
-            if (response.status === 200) {
+            if (response.status === 204) {
               console.log("Comments deleted successfully.");
               return response.data;
             }
