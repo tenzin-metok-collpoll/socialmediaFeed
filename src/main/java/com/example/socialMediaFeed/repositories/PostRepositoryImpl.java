@@ -1,15 +1,17 @@
 package com.example.socialMediaFeed.repositories;
 
+import com.example.socialMediaFeed.models.Comment;
 import com.example.socialMediaFeed.models.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.jdbc.core.RowMapper;
+
+import java.sql.Timestamp;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Collections;
+import java.util.Map;
+import java.util.HashMap;
 
 @Repository
 public class PostRepositoryImpl implements PostRepository {
@@ -32,49 +34,64 @@ public class PostRepositoryImpl implements PostRepository {
         String sql = "SELECT * FROM Posts";
         return jdbcTemplate.query(sql, this::mapRowToUser);
     }
- 
+
     @Override
     public List<Post> getPostsWithLikeDislikeCount() {
-        String sqlQuery = "SELECT " +
-        "p.id, " +
-        "p.user_name, " +
-        "p.description, " +
-        "p.posted_time, " +
-        "COUNT(DISTINCT CASE WHEN ld.type = 'like' THEN ld.id END) AS likeCount, " +
-        "COUNT(DISTINCT CASE WHEN ld.type = 'dislike' THEN ld.id END) AS dislikeCount, " +
-        "GROUP_CONCAT(DISTINCT CONCAT(c.description, ',', c.id) SEPARATOR ', ') AS comments " +
-        "FROM " +
-        "Posts p " +
-        "LEFT JOIN Comments c ON p.id = c.post_id " +
-        "LEFT JOIN like_and_dislike ld ON ld.post_id = p.id " +
-        "GROUP BY " +
-        "p.id";
+        String sqlQuery = "SELECT p.id as post_id, " +
+                "p.user_name, " +
+                "p.description, " +
+                "p.posted_time, " +
+                "ld.type, " +
+                "c.id as comment_id, " +
+                "c.user_name as commented_by, " +
+                "c.description as comment, " +
+                "c.time_stamp as comment_timestamp " + // Add a space here
+                "FROM Posts p " +
+                "LEFT JOIN Comments c ON p.id = c.post_id " +
+                "LEFT JOIN like_and_dislike ld ON ld.post_id = p.id";
 
-
-
-        return jdbcTemplate.query(sqlQuery, new PostMapper());
-    }
-      private static class PostMapper implements RowMapper<Post> {
-        @Override
-        public Post mapRow(ResultSet rs, int rowNum) throws SQLException {
+        List<Post> posts = jdbcTemplate.query(sqlQuery, (rs, rowNum) -> {
+            Integer postId = rs.getInt("post_id");
             Post post = new Post();
-            post.setId(rs.getInt("id"));
-            post.setDescription(rs.getString("description"));
+            post.setId(postId);
             post.setUserName(rs.getString("user_name"));
+            post.setDescription(rs.getString("description"));
             post.setPostedTime(rs.getTimestamp("posted_time"));
-            post.setLikeCount(rs.getLong("likeCount"));
-            post.setDislikeCount(rs.getLong("dislikeCount"));
 
-            String commentsString = rs.getString("comments");
-            if (commentsString != null) {
-                String[] commentsArray = commentsString.split(", ");
-                post.setComments(Arrays.asList(commentsArray));
-            } else {
-                post.setComments(Collections.emptyList());
-            }
+            Map<String, Long> countsMap = new HashMap<>();
+            countsMap.put("likeCount", 0L);
+            countsMap.put("dislikeCount", 0L);
+
+            Map<Integer, Comment> commentsMap = new HashMap<>();
+
+            do {
+                String type = rs.getString("type");
+                if (type != null) {
+                    if (type.equals("like")) {
+                        countsMap.put("likeCount", countsMap.get("likeCount") + 1);
+                    } else if (type.equals("dislike")) {
+                        countsMap.put("dislikeCount", countsMap.get("dislikeCount") + 1);
+                    }
+                }
+
+                Integer id = rs.getInt("comment_id");
+                String userName = rs.getString("commented_by");
+                String description = rs.getString("comment");
+                Timestamp timeStamp = rs.getTimestamp("comment_timestamp");
+
+                if (id > 0 && userName != null && description != null) {
+                    Comment comment = new Comment(id, userName, description, timeStamp, postId);
+                    commentsMap.put(id, comment);
+                }
+            } while (rs.next() && postId == rs.getInt("post_id"));
+
+            post.setCounts(countsMap);
+            post.setComments(commentsMap);
 
             return post;
-        }
+        });
+        return posts;
+
     }
 
     @Override

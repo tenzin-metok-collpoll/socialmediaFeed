@@ -33,6 +33,7 @@ public class PostController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(list);
     }
+
     @GetMapping("/getAllData")
 
     public ResponseEntity<List<Post>> getAllPostsWithData() {
@@ -42,7 +43,6 @@ public class PostController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(list);
     }
-
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getPostById(@PathVariable int id) {
@@ -71,8 +71,7 @@ public class PostController {
             return response;
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
-        } 
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
@@ -92,7 +91,7 @@ public class PostController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (DataIntegrityViolationException e) {
             return ResponseEntity.badRequest().body("Cannot delete a Post having comments or like dislike");
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("An error occurred while deleting the post.");

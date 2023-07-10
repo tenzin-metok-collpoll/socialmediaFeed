@@ -232,9 +232,9 @@ angular.module("myApp").directive("postComponent", [
                   console.log("like added successfully:", newlike);
                   $scope.onDataUpdated({ data: newlike });
                   // Update the likes count in the singlePost object
-                  singlePost.likes += 1;
-                  $scope.likeCounter = 0;
-                  $scope.dislikeCounter = 0;
+                  // singlePost.likes += 1;
+                  // $scope.likeCounter = 0;
+                  // $scope.dislikeCounter = 0;
                   singlePost.val = "";
                 })
                 .catch(function (error) {
@@ -279,25 +279,25 @@ angular.module("myApp").directive("postComponent", [
             }
           };
 
-          //check condition
-          $scope.checkCondition = function (item, data) {
-            if (item.type === "like" && item.post_id === data.id) {
-              $scope.incrementLikeCounter();
-            }
-            if (item.type === "dislike" && item.post_id === data.id) {
-              $scope.incrementDislikeCounter();
-            }
-          };
+          // //check condition
+          // $scope.checkCondition = function (item, data) {
+          //   if (item.type === "like" && item.post_id === data.id) {
+          //     $scope.incrementLikeCounter();
+          //   }
+          //   if (item.type === "dislike" && item.post_id === data.id) {
+          //     $scope.incrementDislikeCounter();
+          //   }
+          // };
 
-          //increment the like counter
-          $scope.incrementLikeCounter = function () {
-            $scope.likeCounter++;
-          };
+          // //increment the like counter
+          // $scope.incrementLikeCounter = function () {
+          //   $scope.likeCounter++;
+          // };
 
-          //increment dislike counter
-          $scope.incrementDislikeCounter = function () {
-            $scope.dislikeCounter++;
-          };
+          // //increment dislike counter
+          // $scope.incrementDislikeCounter = function () {
+          //   $scope.dislikeCounter++;
+          // };
 
           //---------------END OF LIKE AND DISLIKE-----------------------------
         },

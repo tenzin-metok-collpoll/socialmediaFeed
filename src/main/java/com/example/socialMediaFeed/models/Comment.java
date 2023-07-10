@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 // import java.security.Timestamp;
 // import java.time.Instant;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,11 @@ public class Comment {
     private String userName;
     private String description;
     private Timestamp timeStamp;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "postId")
+    private Post post;
+    @Column(insertable = false, updatable = false)
     private Integer postId;
 
     public Comment(Integer id, String userName, String description, Timestamp timeStamp, Integer postId) {

@@ -1,13 +1,16 @@
 package com.example.socialMediaFeed.models;
 
 import java.sql.Timestamp;
-
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 @Entity
 @Table(name = "Posts")
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
@@ -21,26 +24,30 @@ public class Post {
     private String userName;
     private String description;
     private Timestamp postedTime;
-    private Long likeCount;
-    private Long dislikeCount;
-    private List<String> comments;
+    @ElementCollection
+    @CollectionTable(name = "post_counts", joinColumns = @JoinColumn(name = "postId"))
+    @Column(name = "count", nullable = false)
+    @MapKeyColumn(name = "type")
+    private Map<String, Long> counts;
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<Comment> comments;
 
     public Post(Integer id, String userName, String description, Timestamp postedTime) {
         this.id = id;
         this.userName = userName;
         this.description = description;
         this.postedTime = postedTime;
-        // this.likeCount = likeCount;
-        // this.dislikeCount = dislikeCount;
-        // this.comments = comments;
+    }
+
+    public void setComments(Map<Integer, Comment> comments) {
+        this.comments = new ArrayList<>(comments.values());
     }
 
     @Override
     public String toString() {
         return "Post [id=" + id + ", userName=" + userName + ", description=" + description + ", postedTime="
-                + postedTime + ", likeCount=" + likeCount + ", dislikeCount=" + dislikeCount + ", comments=" + comments
+                + postedTime + ", likeCount=" + counts + ", comments=" + comments
                 + "]";
     }
 
-    
 }

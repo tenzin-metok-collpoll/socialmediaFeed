@@ -18,12 +18,8 @@ public class LikeDislike {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String userName;
-    // @Enumerated(EnumType.STRING)
-    // @Column
     private String type;
     private Timestamp timeStamp;
-    // @ManyToOne
-    // @JoinColumn(name = "id")
     private Integer postId;
 
     public LikeDislike(Integer id, String userName, String type, Timestamp timeStamp, Integer postId) {

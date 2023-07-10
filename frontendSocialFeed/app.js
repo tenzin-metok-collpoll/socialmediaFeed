@@ -46,24 +46,24 @@ angular.module("myApp").controller("myCtr", [
       getAllData();
     };
 
-    $scope.parseAndAssignComments = function(post) {
-      post.comments = parseComments(post.comments);
-    };
+    // $scope.parseAndAssignComments = function(post) {
+    //   post.comments = parseComments(post.comments);
+    // };
 
-    function parseComments(commentsArray) {
-      if (Array.isArray(commentsArray)) {
-        return commentsArray.map(function(commentString) {
-           parts = commentString.split(',');
-          return {
-            text: parts[0],
-            id: parts[1],
-            editMode: false
-          };
-        });
-      } else {
-        return [];
-      }
-    }
+    // function parseComments(commentsArray) {
+    //   if (Array.isArray(commentsArray)) {
+    //     return commentsArray.map(function(commentString) {
+    //        parts = commentString.split(',');
+    //       return {
+    //         text: parts[0],
+    //         id: parts[1],
+    //         editMode: false
+    //       };
+    //     });
+    //   } else {
+    //     return [];
+    //   }
+    // }
 
     
     $scope.Edit = () => {

@@ -57,10 +57,10 @@
       </div>
   </div>
  
-  <span ng-show="data.likeCount > 0 || data.dislikeCount > 0">
-    <span ng-show="data.likeCount > 0"> {{data.likeCount}} likes</span>&nbsp;&nbsp;
-    <span ng-show="data.dislikeCount > 0">
-      {{data.dislikeCount}} dislikes
+  <span ng-show="data.counts.likeCount > 0 || data.counts.dislikeCount > 0">
+    <span ng-show="data.counts.likeCount > 0"> {{data.counts.likeCount}} likes</span>&nbsp;&nbsp;
+    <span ng-show="data.counts.dislikeCount > 0">
+      {{data.counts.dislikeCount}} dislikes
     </span></span
   >
   <!-- comments section -->
@@ -103,12 +103,12 @@
       <div class="row">
         <div class="col-10">
           <p class="commentList" ng-show="!singleComment.editMode">
-            {{singleComment.text}}
+            {{singleComment.description}}
           </p>
           <input
             class="commentInput"
             ng-show="singleComment.editMode"
-            ng-value="singleComment.text"
+            ng-value="singleComment.description"
             ng-model="formData.editedComment"
             type="text"
           />

@@ -1,7 +1,6 @@
 package com.example.socialMediaFeed.controllers;
 
 import com.example.socialMediaFeed.models.Comment;
-import com.example.socialMediaFeed.models.Post;
 import com.example.socialMediaFeed.services.CommentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
