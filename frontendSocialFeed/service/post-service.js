@@ -155,6 +155,7 @@ angular.module("myApp").service("postService", [
         return $http
           .delete("http://localhost:8080/posts/" + postId)
           .then(function (response) {
+            console.log('response: ::::::::', response);
             if (response.status === 204) {
               console.log("Post deleted successfully");
               return response.data;
@@ -164,6 +165,7 @@ angular.module("myApp").service("postService", [
             }
           })
           .catch(function (error) {
+            console.log('error: ', error.response);
             if (error.response) {
               if (error.status === 400) {
                 // Bad Request: Data sent is incorrect or not in the expected format
@@ -177,7 +179,11 @@ angular.module("myApp").service("postService", [
               }
             } else if (error.request) {
               alert("No response received from the server.", "error");
-            } else {
+            } 
+            else if (error.response === undefined ) {
+              alert("Cannot delete a Post having comments and Likes Dislikes", "error");
+            }
+            else {
               alert("An error occurred while making the request.", "error");
             }
           });

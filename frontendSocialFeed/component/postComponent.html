@@ -1,4 +1,4 @@
-<div class="row card mt-4 custom-card">
+<div class="row card custom-card">
   <div class="card-header row">
     <div class="col-2">
       <img class="image" src="img/facebook.png" alt="not found" />
@@ -44,38 +44,23 @@
   </div>
   <!-- options LIKE DISLIKE COMMENT SHARE -->
   <div class="row card-header">
-    <ul class="nav nav-tabs card-header-tabs">
-      <li class="nav-item nav" ng-click="incrementLike(data)">
-        <a class="nav-link hover"><i class="fas fa-heart"></i> Like</a>
-      </li>
-      <li class="nav-item nav" ng-click="decrementLike(data)">
-        <a class="nav-link hover"><i class="fas fa-thumbs-down"></i> Dislike</a>
-      </li>
-      <li class="nav-item nav">
-        <a class="nav-link hover" ng-click="showCommentInput = true;"
-          ><i class="fas fa-comment"></i> Comment</a
-        >
-      </li>
-      <li class="nav-item nav sharebtn" style="float: right">
-        <a class="nav-link hover"><i class="fas fa-share"></i> Share</a>
-      </li>
-    </ul>
+        <div class="col-3" ng-click="incrementLike(data)">
+        <a class="nav-link hover" style="color: black"><i class="fa fa-heart" style="color: black;"></i> Like</a>
+        </div>
+      <div class="col-3" ng-click="decrementLike(data)">
+        <a class="nav-link hover" style="color: black"><i class="fa fa-thumbs-down"></i> Dislike</a>
+      </div>
+      <div class="col-3">
+        <a class="nav-link hover" style="color: black" ng-click="showCommentInput = true;"
+          ><i class="fa fa-comment"></i> Comment</a>
+      </div>
+      <div class="col-3 sharebtn" style="float: right">
+        <a class="nav-link hover" style="color: black"><i class="fas fa-share"></i> Share</a>
+      </div>
   </div>
-  <!-- <ul>
-    <li
-      class="list-comment"
-      ng-repeat="singleData in dat | orderBy: 'created_at':true"
-    >
-      <span
-        class="btn-like"
-        ng-if="singleData.post_id === data.id"
-        ng-init="checkCondition(singleData,data)"
-      >
-      </span>
-    </li>
-  </ul> -->
-  <span>
-    <span ng-show="data.likeCount > 0"> {{data.likeCount}}likes</span>&nbsp;
+ 
+  <span ng-show="data.likeCount > 0 || data.dislikeCount > 0">
+    <span ng-show="data.likeCount > 0"> {{data.likeCount}} likes</span>&nbsp;&nbsp;
     <span ng-show="data.dislikeCount > 0">
       {{data.dislikeCount}} dislikes
     </span></span
@@ -96,7 +81,7 @@
     </div>
     <div class="col-2">
       <button
-        class="btn btn-primary addCommentButton"
+        class="btn btn-dark addCommentButton"
         ng-click=" showCommentInput = false; addComment(data)"
       >
         Add
@@ -104,10 +89,10 @@
     </div>
     <div class="col-2">
       <button
-        class="btn btn-primary addCommentButton"
+        class="btn btn-dark addCommentButton"
         ng-click=" showCommentInput = false; cancelAddComment(data)"
       >
-        X
+        Cancel
       </button>
     </div>
   </div>

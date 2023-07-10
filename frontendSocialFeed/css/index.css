@@ -27,10 +27,7 @@
       height: 4rem;
       width: 100%;
     }
-     .navbar-nav .nav-link {
-      padding-right: 0.5rem;
-      padding-left: 10rem !important;
-  }
+
     .navbar-brand{
       font-size: large;
     }
@@ -62,7 +59,7 @@
       height: 4rem; 
       padding-top: 1rem;
       border-radius: 5px;
-      background-color:rgb(151, 138, 138);
+      background-color:#666;
       border: 1px solid #bab0b0;
       margin-top: -0.8rem;
     }
@@ -77,9 +74,16 @@
       margin-top: 1rem !important;
       box-shadow: none;
     }
+    .card {
+      border-radius: 0.5rem !important;
+    }
+   
     .card-header{
       width:100%;
       margin-left: 0.1px !important;
+    }
+    .side1 {
+      margin-top: 17px;
     }
     .text-center{
       text-align: left;
@@ -100,18 +104,23 @@
     .main{
       padding-top: 1rem;
       background:#ddd;
+      margin-top: 2.5rem !important;
     
     }
     .menu {
       text-decoration: none;
       color: #000;
     }
-    
+    .sideNav {
+      margin-top: 2rem !important;
+    }
     .sidebar-first{
       background:#ddd;
-         }
+      margin-top: 2.5rem !important;
+      margin-left: 5px !important;
+    }
     .sidebar-second{ 
-      background: #ddd;
+      background: #ddd !important;
     }
   .list-group-item {
     background-color: #ddd !important;
@@ -158,9 +167,7 @@
   .card-footer {
     margin-left: 0.1px !important;
   }
-  .container-fluid{
-    color:red !important;
-  }
+ 
   .list-comment{
     list-style-type:none;
     font-size:15px;
@@ -208,11 +215,14 @@
     box-shadow: none;
     background-color: white;
   }
+  .contentM{
+    background: #ddd !important;
+  }
   .hover{
     cursor:pointer;
     border:none;
-    color:black!important;
-    padding-left:1rem;
+    /* color:black!important;
+    padding-left:1rem; */
   }
   .posted{
     font-size:0.8rem;
@@ -255,55 +265,13 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-.navnew{
-  font-size:1.3rem;
-  color:#000!important;
-}
-.search-button {
-  background-image: url("../img/facebook.png");
-  background-repeat: no-repeat;
-  background-position: center;
-  padding-right: 25px; /* Adjust the padding as needed to accommodate the image */
-  background-size: 40px 40px;
-  
-}
-.cardImage{
-  margin-top:2rem;
-}
-.mt-4 {
-  margin-top: -1.4rem!important;
-}
-col-6 {
-  flex: 0 0 auto;
-  width: 50%;
-  margin-top: -10rem !important;
-}
-.post-btn{
-  margin-left:470px;
-  width:80px;
-}
-.searchbar{
- 
-  width:439px;
-  border-radius:0.8rem
-}
-.input-search{
 
-  margin-top:-35px!important;
-}
-input{
-  margin-left: 10px;
-}
-.me-2 {
-  margin-right: 0.5rem !important;
-  border-radius: 2rem!important;
-}
 .notification-card {
   position: relative;
   overflow: hidden;
- 
+
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-  
+
 }
 
 .notification-card:before {
@@ -326,6 +294,22 @@ input{
 .notification-card .card-body {
   position: relative;
   z-index: 2;
+}
+.l-bg-cherry {
+  background: linear-gradient(to right, #493240, #f09) !important;
+  color: #fff;
+}
+
+.l-bg-blue-dark {
+  margin-top:1rem;
+  background: linear-gradient(to right, #373b44, #4286f4) !important;
+  color: #fff;
+}
+
+.l-bg-green-dark {
+  margin-top:1rem;
+  background: linear-gradient(to right, #0a504a, #38ef7d) !important;
+  color: #fff;
 }
 
 .notification-card .card-body div {

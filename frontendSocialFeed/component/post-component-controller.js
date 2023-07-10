@@ -29,26 +29,6 @@ angular.module("myApp").directive("postComponent", [
             editModes: false,
           };
 
-
-
-          function showToast(message, type) {
-            var toast = document.createElement("div");
-            toast.classList.add("toast", "show", "bg-" + type);
-            toast.setAttribute("role", "alert");
-            toast.setAttribute("aria-live", "assertive");
-            toast.setAttribute("aria-atomic", "true");
-          
-            var toastBody = document.createElement("div");
-            toastBody.classList.add("toast-body");
-            toastBody.textContent = message;
-          
-            toast.appendChild(toastBody);
-            document.body.appendChild(toast);
-          
-            var bootstrapToast = new bootstrap.Toast(toast);
-            bootstrapToast.show();
-          }
-
           //-------------- POST --------------------
 
           //setID for modal pop up
@@ -96,9 +76,11 @@ angular.module("myApp").directive("postComponent", [
               $scope.loading = true;
               postService
                 .deletePost(singlePost.id)
-                .then(function () {
+                .then(function (res) {
+                  if(res==='') $scope.onDataUpdated({ data: singlePost.id });
                   // Handle the successful deletion
-                  $scope.onDataUpdated({ data: singlePost.id });
+                  console.log("sdfgdgdfgdfgdf");
+                  
                   // fetchPost();
                 })
                 .catch(function (error) {
