@@ -46,7 +46,7 @@
         font-size:2rem;
         /* margin-top: 2rem; */
         color: #ade6ec !important;
-        text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+        text-shadow: -2px 2px 0px #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
         border: #000;
         padding-left: 1rem;
     }
@@ -72,6 +72,9 @@
       margin-top: -0.8rem;
     }
     .postBtn {
+      color: #060606 !important;
+      background-color: #ade5ec !important;
+      box-shadow: 1px 3px 3px 0px grey !important;
       margin-top: 0.2rem;
       float: right;
       width: 15%;

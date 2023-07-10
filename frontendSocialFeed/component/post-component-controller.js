@@ -220,9 +220,6 @@ angular.module("myApp").directive("postComponent", [
           $scope.incrementLike = (singlePost) => {
             if (navigator.onLine) {
               $scope.loading = true;
-            // if(singlePost.liked !== undefined){
-
-            // }
               const newlike = {
                 userName: singlePost.userName,
                 type: "like",
