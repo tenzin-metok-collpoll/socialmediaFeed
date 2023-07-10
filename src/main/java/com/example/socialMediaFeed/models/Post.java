@@ -37,8 +37,10 @@ public class Post {
 
     @Override
     public String toString() {
-        return "Post [id=" + id + ", user_name=" + userName + ", description=" + description + ", posted_time="
-                + postedTime + ", likeCount=" + likeCount + ", dislikeCount="+ dislikeCount +"]";
+        return "Post [id=" + id + ", userName=" + userName + ", description=" + description + ", postedTime="
+                + postedTime + ", likeCount=" + likeCount + ", dislikeCount=" + dislikeCount + ", comments=" + comments
+                + "]";
     }
 
+    
 }

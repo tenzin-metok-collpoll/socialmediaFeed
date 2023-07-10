@@ -35,13 +35,22 @@ public class PostRepositoryImpl implements PostRepository {
  
     @Override
     public List<Post> getPostsWithLikeDislikeCount() {
-        String sqlQuery = "SELECT p.*, " +
-        "(SELECT COUNT(*) FROM like_and_dislike ld WHERE ld.post_id = p.id AND ld.type = 'like') AS likeCount, " +
-        "(SELECT COUNT(*) FROM like_and_dislike ld WHERE ld.post_id = p.id AND ld.type = 'dislike') AS dislikeCount, " +
-        "GROUP_CONCAT(CONCAT(c.description, ',', c.id) SEPARATOR ', ') AS comments " +
-        "FROM Posts p " +
+        String sqlQuery = "SELECT " +
+        "p.id, " +
+        "p.user_name, " +
+        "p.description, " +
+        "p.posted_time, " +
+        "COUNT(DISTINCT CASE WHEN ld.type = 'like' THEN ld.id END) AS likeCount, " +
+        "COUNT(DISTINCT CASE WHEN ld.type = 'dislike' THEN ld.id END) AS dislikeCount, " +
+        "GROUP_CONCAT(DISTINCT CONCAT(c.description, ',', c.id) SEPARATOR ', ') AS comments " +
+        "FROM " +
+        "Posts p " +
         "LEFT JOIN Comments c ON p.id = c.post_id " +
-        "GROUP BY p.id";
+        "LEFT JOIN like_and_dislike ld ON ld.post_id = p.id " +
+        "GROUP BY " +
+        "p.id";
+
+
 
         return jdbcTemplate.query(sqlQuery, new PostMapper());
     }

@@ -7,54 +7,39 @@
   <div class="row gap"></div>
   <div class="row">
     <div class="col-3 sidebar-first">
-      <a
-        class="sideNav list-group-item list-group-item-action py-2 ripple"
-        aria-current="true"
-      >
-        <i class="fa fa-user icon" aria-hidden="true"></i><span>Tenzin</span>
-      </a>
-      <a
-        class="list-group-item list-group-item-action py-2 ripple"
-        aria-current="true"
-      >
-        <i class="fa fa-file icon"></i><span>Pages</span>
-      </a>
-      <a
-        class="list-group-item list-group-item-action py-2 ripple"
-        aria-current="true"
-      >
-        <i class="fa fa-users icon" aria-hidden="true"></i><span>Groups</span>
-      </a>
-      <a
-        class="list-group-item list-group-item-action py-2 ripple"
-        aria-current="true"
-      >
-        <i class="fas fa-tv icon"></i><span>Watch</span>
-      </a>
+      <div class="card" style="width: 18rem;">
+        <img src="img/Blog.jpg" class="card-img-top" alt="...">
+        <img src="img/facebook.png" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 70px; height: 70px;" alt="Overlay Image">
+       
+        <div class="card-body cardImage">
+          <h5 class="card-title" style="margin-left:4rem">Card title</h5>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        
+        </div>
+      </div>
     </div>
     <div class="col-6 main">
       <div class="row">
-        <div class="col-6 actionBlock">
-          <div class="option">
-            <a
-              href="#!/question"
-              class="menu"
-              class="{red: hover}"
-              ng-mouseenter="hover = true"
-              ng-mouseleave="hover = false"
-              >ASK QUESTION</a
-            >
-          </div>
-        </div>
-        <div
-          class="col-6 actionBlock hover"
-          ng-class="{red: hover1}"
+        <div class="d-flex justify-content-between align-items-center col-6">
+
+       
+
+          <div class="d-flex flex-row">
+
+           
+            <button class="btn btn-primary new hover post-btn"  ng-class="{red: hover1}"
           ng-mouseenter="hover1 = true"
           ng-mouseleave="hover1 = false"
-          ng-click="show=true"
-        >
-          <div class="option">POST A UPDATE</div>
-        </div>
+          ng-click="show=true"><i class="fa fa-plus"></i> Post</button>
+            
+          </div>
+      
+      </div>
+      <div class="input-search">
+        <i class="fa fa-search"></i>
+        <input type="text" class="searchbar" placeholder="Search Posts">
+      
+    </div>
       </div>
       <div class="row" ng-show="show">
         <form class="textBox" name="myForm" novalidate>
@@ -90,6 +75,9 @@
           >
             Post
           </button>
+          <!-- ng-mouseenter="hover1 = true"
+          ng-mouseleave="hover1 = false"
+          ng-click="show=true" -->
         </form>
       </div>
       <br />
@@ -105,6 +93,36 @@
         </li>
       </ul>
     </div>
-    <div class="col-3 sidebar-second"></div>
-  </div>
+    <div class="col-3 sidebar-second">
+      <div class="card notification-card" style="width: 14rem;">
+      <div>
+        <h4>Recent Notification</h2>
+      </div>
+        <div class="card-body notification-card">
+          <div style="display:flex">
+            <img src="img/facebook.png" style="width: 40px; height: 40px">
+            <h6 style="margin-left:2rem">Rahul</h6>
+            <p style="margin-top:1rem;margin-left:-3rem">2 minute ago</p>
+          </div>
+          <div style="display:flex">
+            <img src="img/facebook.png" style="width: 40px; height: 40px">
+            <h6 style="margin-left:2rem">Saksham</h6>
+            <p style="margin-top:1rem;margin-left:-4rem">1 days ago</p>
+          </div>
+          <div style="display:flex">
+            <img src="img/facebook.png" style="width: 40px; height: 40px">
+            <h6 style="margin-left:2rem">Varun</h6>
+            <p style="margin-top:1rem;margin-left:-3rem">2 days ago</p>
+          </div>
+          <div style="display:flex">
+            <img src="img/facebook.png" style="width: 40px; height: 40px">
+            <h6 style="margin-left:2rem">Suraj</h6>
+            <p style="margin-top:1rem;margin-left:-3rem">5 days ago</p>
+          </div>
+        </div>
+      </div>
+    </div>
+   
+    </div>
+   
 </div>

@@ -4,13 +4,12 @@
     .content {
       color: #000; 
     }
-    .rahul{
-      color:red;
-    }
+   
     .content1{
       position:fixed;
       width: 100%;
       z-index: 100;
+      color:red !important;
     }
     .navbar-brand {
       padding-top: 0.3125rem;
@@ -23,11 +22,15 @@
       color: #666 !important;
   }
     .navbar {
-      background: white;
+      background:rgb(88, 79, 79);
       padding-left: 1rem;
       height: 4rem;
       width: 100%;
     }
+     .navbar-nav .nav-link {
+      padding-right: 0.5rem;
+      padding-left: 10rem !important;
+  }
     .navbar-brand{
       font-size: large;
     }
@@ -59,8 +62,9 @@
       height: 4rem; 
       padding-top: 1rem;
       border-radius: 5px;
-      background-color: #666;
+      background-color:rgb(151, 138, 138);
       border: 1px solid #bab0b0;
+      margin-top: -0.8rem;
     }
     .postBtn {
       margin-top: 0.2rem;
@@ -96,19 +100,16 @@
     .main{
       padding-top: 1rem;
       background:#ddd;
-      margin-top: 2.5rem !important;
+    
     }
     .menu {
       text-decoration: none;
       color: #000;
     }
-    .sideNav {
-      margin-top: 2rem !important;
-    }
+    
     .sidebar-first{
       background:#ddd;
-      margin-top: 2.5rem !important;
-    }
+         }
     .sidebar-second{ 
       background: #ddd;
     }
@@ -156,6 +157,9 @@
   }
   .card-footer {
     margin-left: 0.1px !important;
+  }
+  .container-fluid{
+    color:red !important;
   }
   .list-comment{
     list-style-type:none;
@@ -207,6 +211,8 @@
   .hover{
     cursor:pointer;
     border:none;
+    color:black!important;
+    padding-left:1rem;
   }
   .posted{
     font-size:0.8rem;
@@ -248,4 +254,88 @@
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+.navnew{
+  font-size:1.3rem;
+  color:#000!important;
+}
+.search-button {
+  background-image: url("../img/facebook.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  padding-right: 25px; /* Adjust the padding as needed to accommodate the image */
+  background-size: 40px 40px;
+  
+}
+.cardImage{
+  margin-top:2rem;
+}
+.mt-4 {
+  margin-top: -1.4rem!important;
+}
+col-6 {
+  flex: 0 0 auto;
+  width: 50%;
+  margin-top: -10rem !important;
+}
+.post-btn{
+  margin-left:470px;
+  width:80px;
+}
+.searchbar{
+ 
+  width:439px;
+  border-radius:0.8rem
+}
+.input-search{
+
+  margin-top:-35px!important;
+}
+input{
+  margin-left: 10px;
+}
+.me-2 {
+  margin-right: 0.5rem !important;
+  border-radius: 2rem!important;
+}
+.notification-card {
+  position: relative;
+  overflow: hidden;
+ 
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  
+}
+
+.notification-card:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.3));
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  z-index: 1;
+}
+
+.notification-card:hover:before {
+  opacity: 1;
+}
+
+.notification-card .card-body {
+  position: relative;
+  z-index: 2;
+}
+
+.notification-card .card-body div {
+  animation: fadeUp 0.5s ease-in-out;
+}
+
+.notification-card .card-body div img {
+  border-radius: 50%;
+}
+
+.notification-card .card-body div:nth-child(n+2) {
+  margin-top: 1rem;
 }

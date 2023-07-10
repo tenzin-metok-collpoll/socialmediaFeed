@@ -53,7 +53,7 @@ angular.module("myApp").controller("myCtr", [
     function parseComments(commentsArray) {
       if (Array.isArray(commentsArray)) {
         return commentsArray.map(function(commentString) {
-          var parts = commentString.split(',');
+           parts = commentString.split(',');
           return {
             text: parts[0],
             id: parts[1],
