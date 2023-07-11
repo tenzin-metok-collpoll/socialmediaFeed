@@ -11,6 +11,9 @@ angular.module("myApp", ["ngRoute"]).config([
       .when("/question", {
         templateUrl: "views/question.html",
       })
+      .when("/share", {
+        templateUrl: "views/share.html",
+      })
       .when("/feed", {
         templateUrl: "views/feed.html",
         styleUrls: ["/css/index.css"],
@@ -26,7 +29,8 @@ angular.module("myApp").controller("myCtr", [
   "$scope",
   "$http",
   "postService",
-  function ($scope, $http, postService) {
+  '$routeParams',
+  function ($scope, $http, postService,$routeParams) {
     var vm = this;
     $scope.loading = false;
     $scope.loadingComments=false;
@@ -42,7 +46,8 @@ angular.module("myApp").controller("myCtr", [
     $scope.editModes = false;
     $scope.newComment = ""; // Initialize the new comment input
     $scope.showCommentInput = false; // Set initial state to show the comment input field
-
+    $scope.userName = $routeParams.userName;
+    $scope.description = $routeParams.description;
     getAllData();
     $scope.handleDataFromChild = function(data) {
       console.log('Data received from child:', data);

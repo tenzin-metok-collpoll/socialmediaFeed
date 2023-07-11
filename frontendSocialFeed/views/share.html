@@ -1,0 +1,43 @@
+  
+  <div class="center-div-share" ng-controller="myCtr">
+    <div class="card mt-4">
+      
+      <div class="card-body share-card">
+        <img class="image" src="img/facebook.png" alt="not found" />
+        <span class="spanshare">{{ userName }}</span>
+        <hr>
+        <p class="card-text" style="margin-top: 2rem;">{{ description }}</p>
+        <span>2 hour ago</span>
+      </div>
+     
+      <div class="row card-header">
+        <div class="col-3" ng-click="incrementLike(data)" style="position: relative;">
+        <a class="nav-link hover" style="color: black"><i class="fa fa-heart" style="color: black;"></i> Like</a>
+        <div ng-show="loadinglike" class="allloader">
+          <div class="spinner"></div>
+        </div>
+        </div>
+      <div class="col-3" ng-click="decrementLike(data)" style="position: relative;">
+        <a class="nav-link hover" style="color: black"><i class="fa fa-thumbs-down"></i> Dislike</a>
+        <div ng-show="loadingDislike" class="allloader">
+          <div class="spinner"></div>
+        </div>
+      </div>
+      <div class="col-3" style="position: relative;">
+        <a class="nav-link hover" style="color: black" ng-click="showCommentInput = true;">
+          <i class="fa fa-comment"></i> Comment
+        </a>
+        <div ng-show="loadingComments" class="allloader">
+          <div class="spinner"></div>
+        </div>
+      </div>
+      
+      
+      <div class="col-3 sharebtn" style="float: right">
+        <a  href="#" class="nav-link hover" style="color: black"><i class="fas fa-share"></i><span class ="text">Share</span></a>
+      </div>
+  </div>
+ 
+    </div>
+  </div>
+  

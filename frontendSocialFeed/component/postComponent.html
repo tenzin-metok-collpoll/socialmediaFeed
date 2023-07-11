@@ -66,8 +66,13 @@
       
       
       <div class="col-3 sharebtn" style="float: right">
-        <a class="nav-link hover" style="color: black"><i class="fas fa-share"></i><span class ="text">Share</span></a>
+        <a href="#!/share?userName={{data.userName}}&description={{data.description}}" class="nav-link hover" style="color: black">
+          <i class="fas fa-share"></i>
+          <span class="text">Share</span>
+        </a>
       </div>
+      
+      
   </div>
  
   <span ng-show="data.counts.likeCount > 0 || data.counts.dislikeCount > 0">
