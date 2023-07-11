@@ -80,6 +80,22 @@
       width: 15%;
       margin-left: 1rem;
     }
+    @media ((max-width: 1199px) and (min-width: 40px)) {
+      .col-3 .text {
+        display: none !important; 
+      }}
+    @media (max-width: 991px) {
+      .main {
+        width: 100% !important;
+      }
+      .sidebar-first {
+        display: none !important;
+      }
+      .sidebar-second {
+        display: none !important;
+      }
+    }
+   
     .textBox {
       width:100%;
       margin-top: 1rem !important;
@@ -292,15 +308,15 @@
 }
 
 .notification-card {
-  position: relative;
-  overflow: hidden;
+  /* position: relative;
+  overflow: hidden; */
 
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
     background: linear-gradient(transparent, rgba(134, 225, 241, 0.3));
 
 }
 
-.notification-card:before {
+/* .notification-card:before {
   content: "";
   position: absolute;
   top: 0;
@@ -311,18 +327,18 @@
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
   z-index: 1;
-}
+} */
 
 
 
-.notification-card:hover:before {
+/* .notification-card:hover:before {
   opacity: 1;
-}
+} */
 
-.notification-card .card-body {
+/* .notification-card .card-body {
   position: relative;
   z-index: 2;
-}
+} */
 .l-bg-cherry {
   background: linear-gradient(to right, #493240, #f09) !important;
   color: #fff;
@@ -344,7 +360,7 @@
   background: linear-gradient(to right, #0a504a, #38ef7d) !important;
   color: #fff;
 }
-
+/* 
 .notification-card .card-body div {
   animation: fadeUp 0.5s ease-in-out;
 }
@@ -355,4 +371,4 @@
 
 .notification-card .card-body div:nth-child(n+2) {
   margin-top: 1rem;
-}
+} */

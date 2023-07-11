@@ -11,7 +11,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.HashMap;
+import java.util.HashSet;
 
 @Repository
 public class PostRepositoryImpl implements PostRepository {
@@ -42,6 +44,7 @@ public class PostRepositoryImpl implements PostRepository {
                 "p.description, " +
                 "p.posted_time, " +
                 "ld.type, " +
+                "ld.id as liDi, " +
                 "c.id as comment_id, " +
                 "c.user_name as commented_by, " +
                 "c.description as comment, " +
@@ -63,17 +66,22 @@ public class PostRepositoryImpl implements PostRepository {
             countsMap.put("dislikeCount", 0L);
 
             Map<Integer, Comment> commentsMap = new HashMap<>();
+              Set<Integer> lidiSet = new HashSet<>();
 
             do {
                 String type = rs.getString("type");
+                Integer lidi = rs.getInt("liDi");
+
+        if (!lidiSet.contains(lidi)) {
                 if (type != null) {
                     if (type.equals("like")) {
                         countsMap.put("likeCount", countsMap.get("likeCount") + 1);
                     } else if (type.equals("dislike")) {
                         countsMap.put("dislikeCount", countsMap.get("dislikeCount") + 1);
-                    }
+                    } 
                 }
-
+                lidiSet.add(lidi);
+            }
                 Integer id = rs.getInt("comment_id");
                 String userName = rs.getString("commented_by");
                 String description = rs.getString("comment");
@@ -91,7 +99,6 @@ public class PostRepositoryImpl implements PostRepository {
             return post;
         });
         return posts;
-
     }
 
     @Override
