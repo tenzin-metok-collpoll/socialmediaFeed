@@ -29,7 +29,10 @@ angular.module("myApp").controller("myCtr", [
   function ($scope, $http, postService) {
     var vm = this;
     $scope.loading = false;
-
+    $scope.loadingComments=false;
+    $scope.loadingDelete=false;
+    $scope.loadingDislike=false;
+    $scope.loadinglike=false;
     $scope.id = 0;
     $scope.show = false;
     $scope.allPosts = [];
@@ -113,7 +116,7 @@ angular.module("myApp").controller("myCtr", [
  
      function getAllData() {
       if (navigator.onLine) {
-      $scope.loading = true;
+      // $scope.loading = true;
       postService
         .getAllData()
         .then(function (posts) {

@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
-import jakarta.persistence.EntityManager;
+
 
 @Configuration
 public class JpaConfig {

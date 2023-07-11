@@ -43,16 +43,28 @@
   </div>
   <!-- options LIKE DISLIKE COMMENT SHARE -->
   <div class="row card-header">
-        <div class="col-3" ng-click="incrementLike(data)">
-        <a class="nav-link hover" style="color: black"><i class="fa fa-heart" style="color: black;"></i> <span class ="text">Like</span></a>
+        <div class="col-3" ng-click="incrementLike(data)" style="position: relative;">
+        <a class="nav-link hover" style="color: black"><i class="fa fa-heart" style="color: black;"></i> Like</a>
+        <div ng-show="loadinglike" class="allloader">
+          <div class="spinner"></div>
         </div>
-      <div class="col-3" ng-click="decrementLike(data)">
-        <a class="nav-link hover" style="color: black"><i class="fa fa-thumbs-down"></i><span class ="text"> Dislike</span></a>
+        </div>
+      <div class="col-3" ng-click="decrementLike(data)" style="position: relative;">
+        <a class="nav-link hover" style="color: black"><i class="fa fa-thumbs-down"></i> Dislike</a>
+        <div ng-show="loadingDislike" class="allloader">
+          <div class="spinner"></div>
+        </div>
       </div>
-      <div class="col-3">
-        <a class="nav-link hover" style="color: black" ng-click="showCommentInput = true;"
-          ><i class="fa fa-comment"></i> <span class ="text">Comment</span></a>
+      <div class="col-3" style="position: relative;">
+        <a class="nav-link hover" style="color: black" ng-click="showCommentInput = true;">
+          <i class="fa fa-comment"></i> Comm
+        </a>
+        <div ng-show="loadingComments" class="allloader">
+          <div class="spinner"></div>
+        </div>
       </div>
+      
+      
       <div class="col-3 sharebtn" style="float: right">
         <a class="nav-link hover" style="color: black"><i class="fas fa-share"></i><span class ="text">Share</span></a>
       </div>
@@ -102,7 +114,7 @@
       ng-repeat="singleComment in data.comments | orderBy: 'created_at':true"
     >
       <div class="row">
-        <div class="col-10">
+        <div class="col-10" style="position: relative";>
           <p class="commentList" ng-show="!singleComment.editMode">
             {{singleComment.description}}
           </p>
@@ -130,6 +142,9 @@
             ng-click="singleComment.editMode=false"
             ><i class="fa fa-times" aria-hidden="true"></i></button
           >
+          <!-- <div ng-show="loadingComments" class="commentloader">
+            <div class="spinner"></div>
+          </div> -->
 
         </div>
         <div class="dropdown col-2">

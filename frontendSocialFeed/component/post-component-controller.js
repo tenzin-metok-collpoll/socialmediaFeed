@@ -100,7 +100,8 @@ angular.module("myApp").directive("postComponent", [
           //add comments
           $scope.addComment = (singlePost) => {
             if (navigator.onLine) {
-              $scope.loading = true;
+          
+    $scope.loadingComments=true;
               console.log("singlePost: ", singlePost);
               $scope.showCommentInput = false;
               if (singlePost.val !== "") {
@@ -138,7 +139,7 @@ angular.module("myApp").directive("postComponent", [
           $scope.deleteComment = (singleComment) => {
             console.log("singleComment: ", singleComment.id);
             if (navigator.onLine) {
-              $scope.loading = true;
+              $scope.loadingDelete=true;
               console.log("singleComment: ", singleComment);
               commentService
                 .deleteComment(singleComment.id)
@@ -168,7 +169,7 @@ angular.module("myApp").directive("postComponent", [
           $scope.Update = (singleComment, singlePost) => {
             console.log("$scope.editedComment", $scope.formData.editedComment);
             if (navigator.onLine) {
-              $scope.loading = true;
+              $scope.loadingComments=true;
               singleComment.editMode = false;
               const updatedComment = {
                 description: $scope.formData.editedComment,
@@ -219,7 +220,7 @@ angular.module("myApp").directive("postComponent", [
           // increment likes
           $scope.incrementLike = (singlePost) => {
             if (navigator.onLine) {
-              $scope.loading = true;
+              $scope.loadinglike=true;
               const newlike = {
                 userName: singlePost.userName,
                 type: "like",
@@ -250,7 +251,7 @@ angular.module("myApp").directive("postComponent", [
           //increment dislike
           $scope.decrementLike = (singlePost) => {
             if (navigator.onLine) {
-              $scope.loading = true;
+              $scope.loadingDislike=true;
               const newDislike = {
                 userName: singlePost.userName,
                 type: "dislike",
