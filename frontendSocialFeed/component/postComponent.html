@@ -57,7 +57,7 @@
       </div>
       <div class="col-3" style="position: relative;">
         <a class="nav-link hover" style="color: black" ng-click="showCommentInput = true;">
-          <i class="fa fa-comment"></i> Comm
+          <i class="fa fa-comment"></i> Comment
         </a>
         <div ng-show="loadingComments" class="allloader">
           <div class="spinner"></div>
@@ -75,10 +75,10 @@
       
   </div>
  
-  <span ng-show="data.counts.likeCount > 0 || data.counts.dislikeCount > 0">
-    <span ng-show="data.counts.likeCount > 0"> {{data.counts.likeCount}} likes</span>&nbsp;&nbsp;
-    <span ng-show="data.counts.dislikeCount > 0">
-      {{data.counts.dislikeCount}} dislikes
+  <span ng-show="data.likeCounts > 0 || data.dislikeCounts > 0">
+    <span ng-show="data.likeCounts > 0"> {{data.likeCounts}} likes</span>&nbsp;&nbsp;
+    <span ng-show="data.dislikeCounts > 0">
+      {{data.dislikeCounts}} dislikes
     </span></span
   >
   <!-- comments section -->

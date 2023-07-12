@@ -1,6 +1,5 @@
 package com.example.socialMediaFeed.services;
 import com.example.socialMediaFeed.models.Answer;
-import com.example.socialMediaFeed.models.Option;
 import com.example.socialMediaFeed.repositories.AnswerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -8,8 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.List;
 @Service
 public class AnswerServiceImpl implements AnswerService {

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -25,7 +26,7 @@ public class PostServiceImpl implements PostService {
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public PostServiceImpl(PostRepository postRepository, JdbcTemplate jdbcTemplate ) {
+    public PostServiceImpl(PostRepository postRepository, JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
         this.postRepository = postRepository;
     }
@@ -48,60 +49,75 @@ public class PostServiceImpl implements PostService {
     public List<Post> getAllPost() {
         return postRepository.findAll();
     }
-     @Override
+
+    @Override
     public List<Post> getAllPostsWithData() {
         String sqlQuery = postRepository.getPostsWithLikeDislikeCount();
-        List<Post> posts = jdbcTemplate.query(sqlQuery, (rs, rowNum) -> {
-            Integer postId = rs.getInt("post_id");
-            Post post = new Post();
-            post.setId(postId);
-            post.setUserName(rs.getString("user_name"));
-            post.setDescription(rs.getString("description"));
-            post.setPostedTime(rs.getTimestamp("posted_time"));
-
-            Map<String, Long> countsMap = new HashMap<>();
-            countsMap.put("likeCount", 0L);
-            countsMap.put("dislikeCount", 0L);
-
-            Map<Integer, Comment> commentsMap = new HashMap<>();
-              Set<Integer> lidiSet = new HashSet<>();
-
-            do {
-                String type = rs.getString("type");
-                Integer lidi = rs.getInt("liDi");
-
-        if (!lidiSet.contains(lidi)) {
-                if (type != null) {
-                    if (type.equals("like")) {
-                        countsMap.put("likeCount", countsMap.get("likeCount") + 1);
-                    } else if (type.equals("dislike")) {
-                        countsMap.put("dislikeCount", countsMap.get("dislikeCount") + 1);
-                    } 
+        List<Post> posts = jdbcTemplate.query(sqlQuery, (rs) -> {
+            Map<Integer, Post> postMap = new HashMap<>();
+        
+            while (rs.next()) {
+                Integer postId = rs.getInt("id");
+        
+                Post post = postMap.get(postId);
+                if (post == null) {
+                    post = new Post();
+                    post.setId(postId);
+                    post.setUserName(rs.getString("user_name"));
+                    post.setDescription(rs.getString("description"));
+                    post.setPostedTime(rs.getTimestamp("posted_time"));
+                    post.setType(rs.getString("type"));
+                    post.setLikeCounts(0L);
+                    post.setDislikeCounts(0L);
+                    post.setComments(new HashMap<>());
+        
+                    postMap.put(postId, post);
                 }
-                lidiSet.add(lidi);
+
+             Map<Integer, Comment> commentsMap = new HashMap<>();
+                 Set<Integer> lidiSet = new HashSet<>();
+                 Set<Integer> commentSet = new HashSet<>();
+
+            String liDiType = rs.getString("liDiType");
+            Integer lidi = rs.getInt("liDi");
+            if (!lidiSet.contains(lidi)) {
+            if (liDiType != null) {
+                if (liDiType.equals("like")) {
+                    post.setLikeCounts(post.getLikeCounts() + 1);
+                } else if (liDiType.equals("dislike")) {
+                    post.setDislikeCounts(post.getDislikeCounts() + 1);
+                }
+                }
+               lidiSet.add(lidi);
             }
-                Integer id = rs.getInt("comment_id");
-                String userName = rs.getString("commented_by");
-                String description = rs.getString("comment");
-                Timestamp timeStamp = rs.getTimestamp("comment_timestamp");
-
-                if (id > 0 && userName != null && description != null) {
-                    Comment comment = new Comment(id, userName, description, timeStamp, postId);
-                    commentsMap.put(id, comment);
+        
+            Integer commentId = rs.getInt("comment_id");
+            String userName = rs.getString("commented_by");
+            String description = rs.getString("comment");
+            Timestamp timeStamp = rs.getTimestamp("comment_timestamp");
+            if (commentId > 0 && userName != null && description != null) {
+                Comment comment = new Comment(commentId, userName, description, timeStamp, postId);
+                
+                // Check if the comment already exists in the post's comments list
+                boolean commentExists = post.getComments().stream()
+                        .anyMatch(existingComment -> existingComment.getId().equals(commentId));
+                
+                // Add the comment only if it doesn't already exist
+                if (!commentExists) {
+                    post.getComments().add(comment);
                 }
-            } while (rs.next() && postId == rs.getInt("post_id"));
-
-            post.setCounts(countsMap);
-            post.setComments(commentsMap);
-
-            return post;
+            }
+        }
+    
+        
+            return new ArrayList<>(postMap.values());
         });
+        
         return posts;
+        
 
     }
-            
-    
-    
+
     @Override
     public ResponseEntity<CreatePostResponse> createPost(Post post) {
         try {

@@ -36,11 +36,8 @@ public class PostRepositoryImpl implements PostRepository {
 
     @Override
     public String getPostsWithLikeDislikeCount() {
-   String sqlQuery = "SELECT p.id as post_id, " +
-                "p.user_name, " +
-                "p.description, " +
-                "p.posted_time, " +
-                "ld.type, " +
+   String sqlQuery =  "SELECT p.*, " +
+                "ld.type as liDiType, " +
                 "ld.id as liDi, " +
                 "c.id as comment_id, " +
                 "c.user_name as commented_by, " +

@@ -1,7 +1,5 @@
 package com.example.socialMediaFeed.repositories;
 import com.example.socialMediaFeed.models.Answer;
-import com.example.socialMediaFeed.models.Option;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
