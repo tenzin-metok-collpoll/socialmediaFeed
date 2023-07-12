@@ -1,4 +1,4 @@
-angular.module("myApp", ["ngRoute"]).config([
+angular.module("myApp", ["ngRoute",]).config([
   "$routeProvider",
   function ($routeProvider) {
     $routeProvider
@@ -30,7 +30,7 @@ angular.module("myApp").controller("myCtr", [
   "$http",
   "postService",
   '$routeParams',
-  function ($scope, $http, postService,$routeParams) {
+  function ($scope, $http, postService,$routeParams, ngToast) {
     var vm = this;
     $scope.loading = false;
     $scope.loadingComments=false;
@@ -48,6 +48,7 @@ angular.module("myApp").controller("myCtr", [
     $scope.showCommentInput = false; // Set initial state to show the comment input field
     $scope.userName = $routeParams.userName;
     $scope.description = $routeParams.description;
+    $scope.postedTime=$routeParams.postedTime;
     getAllData();
     $scope.handleDataFromChild = function(data) {
       console.log('Data received from child:', data);
@@ -83,6 +84,9 @@ angular.module("myApp").controller("myCtr", [
         $scope.editMode = true;
       }
     };
+    $scope.showToast = function() {
+      toaster.success('Post added successfully');
+    };
     //cancel a add post
     $scope.CancelFeed = () => {
       $scope.show = false;
@@ -105,7 +109,7 @@ angular.module("myApp").controller("myCtr", [
         .createPost(post)
         .then(function (newPost) {
           console.log("Post added successfully:", newPost);
-
+          $scope.showToast();
           $scope.story = "";
           $scope.userName = "";
           getAllData();
