@@ -1,6 +1,7 @@
 package com.example.socialMediaFeed.repositories;
 
 import com.example.socialMediaFeed.models.Comment;
+import com.example.socialMediaFeed.models.LikeDislike;
 import com.example.socialMediaFeed.models.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -9,8 +10,6 @@ import org.springframework.stereotype.Repository;
 import java.sql.Timestamp;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
 import java.util.*;
 
 @Repository
@@ -36,8 +35,8 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
-    public List<Post> getPostsWithLikeDislikeCount() {
-        String sqlQuery = "SELECT p.id as post_id, " +
+    public String getPostsWithLikeDislikeCount() {
+   String sqlQuery = "SELECT p.id as post_id, " +
                 "p.user_name, " +
                 "p.description, " +
                 "p.posted_time, " +
@@ -46,57 +45,12 @@ public class PostRepositoryImpl implements PostRepository {
                 "c.id as comment_id, " +
                 "c.user_name as commented_by, " +
                 "c.description as comment, " +
-                "c.time_stamp as comment_timestamp " + // Add a space here
+                "c.time_stamp as comment_timestamp " +
                 "FROM Posts p " +
                 "LEFT JOIN Comments c ON p.id = c.post_id " +
                 "LEFT JOIN like_and_dislike ld ON ld.post_id = p.id";
 
-        List<Post> posts = jdbcTemplate.query(sqlQuery, (rs, rowNum) -> {
-            Integer postId = rs.getInt("post_id");
-            Post post = new Post();
-            post.setId(postId);
-            post.setUserName(rs.getString("user_name"));
-            post.setDescription(rs.getString("description"));
-            post.setPostedTime(rs.getTimestamp("posted_time"));
-
-            Map<String, Long> countsMap = new HashMap<>();
-            countsMap.put("likeCount", 0L);
-            countsMap.put("dislikeCount", 0L);
-
-            Map<Integer, Comment> commentsMap = new HashMap<>();
-              Set<Integer> lidiSet = new HashSet<>();
-
-            do {
-                String type = rs.getString("type");
-                Integer lidi = rs.getInt("liDi");
-
-        if (!lidiSet.contains(lidi)) {
-                if (type != null) {
-                    if (type.equals("like")) {
-                        countsMap.put("likeCount", countsMap.get("likeCount") + 1);
-                    } else if (type.equals("dislike")) {
-                        countsMap.put("dislikeCount", countsMap.get("dislikeCount") + 1);
-                    } 
-                }
-                lidiSet.add(lidi);
-            }
-                Integer id = rs.getInt("comment_id");
-                String userName = rs.getString("commented_by");
-                String description = rs.getString("comment");
-                Timestamp timeStamp = rs.getTimestamp("comment_timestamp");
-
-                if (id > 0 && userName != null && description != null) {
-                    Comment comment = new Comment(id, userName, description, timeStamp, postId);
-                    commentsMap.put(id, comment);
-                }
-            } while (rs.next() && postId == rs.getInt("post_id"));
-
-            post.setCounts(countsMap);
-            post.setComments(commentsMap);
-
-            return post;
-        });
-        return posts;
+        return sqlQuery;
     }
 
     

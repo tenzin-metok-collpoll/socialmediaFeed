@@ -1,23 +1,32 @@
 package com.example.socialMediaFeed.services;
 
+import com.example.socialMediaFeed.models.Comment;
+import com.example.socialMediaFeed.models.LikeDislike;
 import com.example.socialMediaFeed.models.Post;
 import com.example.socialMediaFeed.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Service
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
+    private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public PostServiceImpl(PostRepository postRepository) {
+    public PostServiceImpl(PostRepository postRepository, JdbcTemplate jdbcTemplate ) {
+        this.jdbcTemplate = jdbcTemplate;
         this.postRepository = postRepository;
     }
 
@@ -41,11 +50,58 @@ public class PostServiceImpl implements PostService {
     }
      @Override
     public List<Post> getAllPostsWithData() {
-        return postRepository.getPostsWithLikeDislikeCount();
+        String sqlQuery = postRepository.getPostsWithLikeDislikeCount();
+        List<Post> posts = jdbcTemplate.query(sqlQuery, (rs, rowNum) -> {
+            Integer postId = rs.getInt("post_id");
+            Post post = new Post();
+            post.setId(postId);
+            post.setUserName(rs.getString("user_name"));
+            post.setDescription(rs.getString("description"));
+            post.setPostedTime(rs.getTimestamp("posted_time"));
+
+            Map<String, Long> countsMap = new HashMap<>();
+            countsMap.put("likeCount", 0L);
+            countsMap.put("dislikeCount", 0L);
+
+            Map<Integer, Comment> commentsMap = new HashMap<>();
+              Set<Integer> lidiSet = new HashSet<>();
+
+            do {
+                String type = rs.getString("type");
+                Integer lidi = rs.getInt("liDi");
+
+        if (!lidiSet.contains(lidi)) {
+                if (type != null) {
+                    if (type.equals("like")) {
+                        countsMap.put("likeCount", countsMap.get("likeCount") + 1);
+                    } else if (type.equals("dislike")) {
+                        countsMap.put("dislikeCount", countsMap.get("dislikeCount") + 1);
+                    } 
+                }
+                lidiSet.add(lidi);
+            }
+                Integer id = rs.getInt("comment_id");
+                String userName = rs.getString("commented_by");
+                String description = rs.getString("comment");
+                Timestamp timeStamp = rs.getTimestamp("comment_timestamp");
+
+                if (id > 0 && userName != null && description != null) {
+                    Comment comment = new Comment(id, userName, description, timeStamp, postId);
+                    commentsMap.put(id, comment);
+                }
+            } while (rs.next() && postId == rs.getInt("post_id"));
+
+            post.setCounts(countsMap);
+            post.setComments(commentsMap);
+
+            return post;
+        });
+        return posts;
+
     }
-
+            
     
-
+    
     @Override
     public ResponseEntity<CreatePostResponse> createPost(Post post) {
         try {
