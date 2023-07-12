@@ -24,6 +24,7 @@ public class Post {
     private String userName;
     private String description;
     private Timestamp postedTime;
+    private String type;
     @ElementCollection
     @CollectionTable(name = "post_counts", joinColumns = @JoinColumn(name = "postId"))
     @Column(name = "count", nullable = false)
@@ -32,11 +33,12 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> comments;
 
-    public Post(Integer id, String userName, String description, Timestamp postedTime) {
+    public Post(Integer id, String userName, String description, Timestamp postedTime, String Type) {
         this.id = id;
         this.userName = userName;
         this.description = description;
         this.postedTime = postedTime;
+        this.type = type;
     }
 
     public void setComments(Map<Integer, Comment> comments) {
@@ -46,7 +48,7 @@ public class Post {
     @Override
     public String toString() {
         return "Post [id=" + id + ", userName=" + userName + ", description=" + description + ", postedTime="
-                + postedTime + ", likeCount=" + counts + ", comments=" + comments
+                + postedTime + "type =" + type + ", likeCount=" + counts + ", comments=" + comments
                 + "]";
     }
 

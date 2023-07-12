@@ -57,8 +57,8 @@ public class PostRepositoryImpl implements PostRepository {
 
     @Override
     public Post save(Post post) {
-        String sql = "INSERT INTO  Posts (user_name, description, posted_time) VALUES (?, ?, ?)";
-        jdbcTemplate.update(sql, post.getUserName(), post.getDescription(), post.getPostedTime());
+        String sql = "INSERT INTO  Posts (user_name, description, posted_time, type) VALUES (?, ?, ?, ?)";
+        jdbcTemplate.update(sql, post.getUserName(), post.getDescription(), post.getPostedTime(), post.getType());
         return post;
     }
 
@@ -69,8 +69,8 @@ public class PostRepositoryImpl implements PostRepository {
             throw new IllegalArgumentException("Invalid post ID for updating the post.");
         }
 
-        String sql = "UPDATE Posts SET user_name = ?, description = ?, posted_time = ? WHERE id = ?";
-        int rowsAffected = jdbcTemplate.update(sql, post.getUserName(), post.getDescription(), post.getPostedTime(),
+        String sql = "UPDATE Posts SET user_name = ?, description = ?, posted_time = ?, type = ? WHERE id = ?";
+        int rowsAffected = jdbcTemplate.update(sql, post.getUserName(), post.getDescription(), post.getPostedTime(), post.getType(),
                 postId);
 
         if (rowsAffected == 0) {
@@ -102,6 +102,7 @@ public class PostRepositoryImpl implements PostRepository {
         Post post = new Post();
         post.setId(rs.getInt("id"));
         post.setUserName(rs.getString("user_name"));
+        post.setType(rs.getString("type"));
         post.setDescription(rs.getString("description"));
         post.setPostedTime(rs.getTimestamp("posted_time"));
         return post;
