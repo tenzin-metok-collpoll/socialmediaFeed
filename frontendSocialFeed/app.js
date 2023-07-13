@@ -140,6 +140,42 @@ angular.module("myApp").controller("myCtr", [
         alert("Application is offline. Please check your internet connection.");
       }
     };
+    $scope.options = [];
+
+$scope.addOption = function() {
+  $scope.options.push({ value: '' });
+};
+
+$scope.cancelOption = function(index) {
+  $scope.options.splice(index, 1);
+};
+$scope.sendData = function() {
+  // Create an array to store the options
+  var options = [];
+
+  // Iterate over each option and create an object with content and questionId
+  for (var i = 0; i < $scope.options.length; i++) {
+    var option = {
+      content: $scope.options[i].value,
+      questionId: 1
+    };
+   
+  
+
+  // Make the API call with options
+  // Replace the API_ENDPOINT with your actual API endpoint URL
+  $http.post("http://localhost:8080/options/", option)
+    .then(function(response) {
+      // API call success
+      console.log('Data sent to API successfully');
+    })
+    .catch(function(error) {
+      // API call error
+      console.error('Error sending data to API:', error);
+    });
+  }
+};
+
     $scope.addQuestion = () => {
       if (navigator.onLine) {
         $scope.loading = true;

@@ -284,6 +284,7 @@
               class="addPollBtn"
               ng-mouseenter="hover = true"
               ng-mouseleave="hover = false"
+              
               style="
                 color: #6c757d;
                 padding-left: 1rem;
@@ -428,48 +429,19 @@
                   Answer Options
                 </div>
                 <div style="padding-left: 2rem">
-                  <div>
-                    <input
-                      class="optionInput"
-                      placeholder="Option 1"
-                      type="text"
-                    />
+                  <div ng-repeat="option in options track by $index">
+                    <input class="optionInput" placeholder="Option {{$index + 1}}" type="text" ng-model="option.value" />
+                    <button class="cancelOptionBtn" ng-click="cancelOption($index)" style="border:none;margin-left:16rem">
+                      <i class="fas fa-times"></i>
+                    </button>
                   </div>
                   <div>
-                    <input
-                      class="optionInput"
-                      placeholder="Option 2"
-                      type="text"
-                      ng-show="showOption2"
-                    />
-                  </div>
-                  <div>
-                    <input
-                      class="optionInput"
-                      placeholder="Option 3"
-                      type="text"
-                      ng-show="showOption3"
-                    />
-                  </div>
-                  <div>
-                    <input
-                      class="optionInput"
-                      placeholder="Option 4"
-                      type="text"
-                      ng-show="showOption4"
-                    />
-                  </div>
-                  <div>
-                    <input
-                      class="optionInput"
-                      placeholder="Click to add option"
-                      type="button"
-                      ng-click="addOption()"
-                      ng-show="!showOption4"
-                    />
+                    <input class="optionInput" placeholder="Click to add option" type="button" ng-click="addOption()" ng-show="!showOption4" />
+                    <button class="btn postBtn" ng-click="sendData()" style="margin-top:2rem;">Send Data</button>
                   </div>
                 </div>
               </div>
+              
             </div>
           </div>
           <button type="button" class="btn postBtn" ng-click="CancelFeed()">
