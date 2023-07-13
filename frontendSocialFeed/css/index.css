@@ -95,10 +95,20 @@
         display: none !important;
       }
     }
+    .addPollBtn:hover, .addPollBtn[ng-mouseenter] {
+      color: blue; /* Change to the desired hover color */
+    }
+    .with-vertical-line {
+      border-right: 1px solid rgb(208, 201, 201); /* Adjust the color and thickness as needed */
+      padding-right: 1rem; /* Add some padding to create space between the line and the text */
+    }
    
     .textBox {
+      display: inline-block;
+
       width:100%;
       margin-top: 1rem !important;
+      border: none;
       box-shadow: none;
     }
     .card {
@@ -124,7 +134,12 @@
       flex:1;
     }
     .red {
-      color: red; 
+      background-color: #3ac6d6 ; 
+  
+    }
+
+    .blue {
+      background-color: #ade6ec ; 
   
     }
    
@@ -205,6 +220,11 @@
   }
   .commentInput {
     width: 70% !important;
+  }
+  .optionInput {
+    margin: 5px;
+    width: 15rem;
+    height: 1.5rem;
   }
   .add-comment{
     margin-left:0.01rem ;

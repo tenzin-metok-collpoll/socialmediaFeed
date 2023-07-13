@@ -38,9 +38,15 @@ angular.module("myApp").controller("myCtr", [
     $scope.loadingDislike=false;
     $scope.loadinglike=false;
     $scope.askQuestionMode=false;
+    $scope.showfirstOption=false;
     $scope.id = 0;
     $scope.show = false;
+    $scope.showPollOption = false;
+    $scope.showOption2 = false;
+    $scope.showOption3 = false;
+    $scope.showOption4 = false;
     $scope.askquestion = false;
+    $scope.showSecondOption = false;
     $scope.allPosts = [];
     $scope.count = 0;
     $scope.temp;
@@ -75,6 +81,16 @@ angular.module("myApp").controller("myCtr", [
     //     return [];
     //   }
     // }
+    $scope.addOption = function() {
+      if (!$scope.showOption2) {
+        $scope.showOption2 = true;
+      } else if (!$scope.showOption3) {
+        $scope.showOption3 = true;
+      }
+      else if(!$scope.showOption4) {
+        $scope.showOption4 = true;
+      }
+    };
 
     
     $scope.Edit = () => {
@@ -89,6 +105,7 @@ angular.module("myApp").controller("myCtr", [
    
     //cancel a add post
     $scope.CancelFeed = () => {
+      $scope.askquestion = false;
       $scope.show = false;
       $scope.story = "";
       $scope.userName = "";
