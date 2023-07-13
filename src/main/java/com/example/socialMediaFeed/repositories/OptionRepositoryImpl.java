@@ -25,6 +25,16 @@ public class OptionRepositoryImpl implements OptionRepository {
         return jdbcTemplate.queryForObject(sql, new Object[] { id }, this::mapRowToUser);
 
     }
+     @Override
+    public Option[] findByQuestionId(int id) {
+        String sql = "SELECT * FROM Options WHERE question_id = ?";
+    List<Option> optionList = jdbcTemplate.query(sql, new Object[]{id}, this::mapRowToUser);
+
+    // Convert the list of comments to an array
+    Option[] options = optionList.toArray(new Option[optionList.size()]);
+    return options;
+
+    }
 
     @Override
     public List<Option> findAll() {

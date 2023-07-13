@@ -5,6 +5,7 @@ import java.util.List;
 
 public interface OptionRepository {
     Option findById(int id);
+   Option[] findByQuestionId(int id);
 
     List<Option> findAll();
 

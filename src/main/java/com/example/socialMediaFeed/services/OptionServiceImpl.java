@@ -22,7 +22,9 @@ public class OptionServiceImpl implements OptionService {
     public Option getOptionById(int id) {
         return optionRepository.findById(id);
     }
-
+    public Option[] findByQuestionId(int id){
+        return optionRepository.findByQuestionId(id);
+    }
     @Override
     public List<Option> getAllOption() {
         return optionRepository.findAll();

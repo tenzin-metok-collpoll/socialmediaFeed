@@ -45,6 +45,15 @@ public class OptionController {
     }
   }
 
+  
+   @GetMapping("byId/{id}")
+  public Option[] findByQuestionId(@PathVariable int id) {
+
+      Option[] option = optionService.findByQuestionId(id);
+      return option;
+   
+  }
+
   @PostMapping("/")
   public ResponseEntity<?> createOption(@RequestBody(required = false) Option option) {
     try {

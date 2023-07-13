@@ -12,6 +12,7 @@ public interface OptionService {
     Option getOptionById(int id);
 
     List<Option> getAllOption();
+    Option[] findByQuestionId(int id);
 
     ResponseEntity<CreateOptionResponse> createOption(Option option);
 ResponseEntity<CreateOptionResponse> createOptionInBulk(List<Option> options);

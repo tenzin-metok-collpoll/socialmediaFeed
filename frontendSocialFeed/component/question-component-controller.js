@@ -16,8 +16,12 @@ angular.module("myApp").directive("questionComponent", [
           "$scope",
           "postService",
           "commentService",
+          "optionService",
           "likedislikeService",
-          function ($scope, postService, commentService) {
+          function ($scope, postService, commentService, optionService) {
+            $scope.options=[];
+            $scope.checkbox=false;
+
 
             //update the post
             $scope.saveChanges = function (data) {
@@ -74,65 +78,27 @@ angular.module("myApp").directive("questionComponent", [
                 );
               }
             };
-  
-            //---------------END OF POST---------------------------
-  
-            //---------------COMMENTS-----------------------------
-  
-            //add comments
-            $scope.addComment = (singlePost) => {
+
+          
+
+            $scope.getOptionsByQuestionId = function (id) {
+              $scope.checkbox=true;
               if (navigator.onLine) {
-            
-      $scope.loadingComments=true;
-                console.log("singlePost: ", singlePost);
-                $scope.showCommentInput = false;
-                if (singlePost.val !== "") {
-                  const newComment = {
-                    description: singlePost.val,
-                    postId: singlePost.id,
-                    userName: singlePost.userName,
-                  };
-                  commentService
-                    .addComment(newComment)
-                    .then(function (newComment) {
-                      console.log("Post added successfully:", newComment);
-                      // fetchComment();
-                      $scope.onDataUpdated({ data: newComment });
-                      singlePost.val = "";
-                    })
-                    .catch(function (error) {
-                      console.error(error);
-                    });
-                }
-              } else {
-                alert(
-                  "Application is offline. Please check your internet connection."
-                );
-              }
-            };
-  
-            //edit comments
-            $scope.EditComment = (singlePost, singleComment) => {
-              singleComment.editMode = true;
-              singleComment.editedComment = singleComment.content;
-            };
-  
-            //delete comment
-            $scope.deleteComment = (singleComment) => {
-              console.log("singleComment: ", singleComment.id);
-              if (navigator.onLine) {
-                $scope.loadingDelete=true;
-                console.log("singleComment: ", singleComment);
-                commentService
-                  .deleteComment(singleComment.id)
-                  .then(function () {
-                    console.log("comment deleted successfully");
-                    // fetchComment();
-                    $scope.onDataUpdated({ data: singleComment.id });
-                    $scope.formData.editMode = false;
+                $scope.loading = true;
+                optionService
+                  .getOptionsByQuestionId(id)
+                  .then(function (res) {
+                    $scope.options = res;
+                    console.log('res: ', res);
+                   
+                    // $scope.onDataUpdated({ data: id });
+                    // Handle the successful deletion
+                    console.log("get option successfully");
+                    
+                    // fetchPost();
                   })
                   .catch(function (error) {
-                    console.error("Failed to comment post:", error);
+                    console.error("Failed to get option:", error);
                   });
               } else {
                 alert(
@@ -140,49 +106,7 @@ angular.module("myApp").directive("questionComponent", [
                 );
               }
             };
-  
-            //cancel add comment
-            $scope.cancelAddComment = (singlePost) => {
-              showCommentInput = false;
-              singlePost.val = "";
-            };
-  
-            //save comments
-            $scope.Update = (singleComment, singlePost) => {
-              console.log("$scope.editedComment", $scope.formData.editedComment);
-              if (navigator.onLine) {
-                $scope.loadingComments=true;
-                singleComment.editMode = false;
-                const updatedComment = {
-                  description: $scope.formData.editedComment,
-                  postId: singlePost.id,
-                  userName: singlePost.userName,
-                };
-                commentService
-                  .updateComment(singleComment.id, updatedComment)
-                  .then(function (updatedComment) {
-                    // Handle the updated post
-  
-                    console.log("comment updated successfully in save");
-                    $scope.onDataUpdated({ data: singleComment.id });
-                  })
-                  .catch(function (error) {
-                    console.error(error);
-                  });
-              } else {
-                alert(
-                  "Application is offline. Please check your internet connection."
-                );
-              }
-            };
-  
-            //cancel the comment
-            $scope.Cancel = (singleComment) => {
-              singleComment.editMode = false;
-              $scope.formData.EditComment = "";
-            };
-  
-            //---------------END OF COMMENTS-----------------------------
+
           },
         ],
       };

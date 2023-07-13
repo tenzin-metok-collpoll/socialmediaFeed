@@ -1,126 +1,129 @@
 <div class="row card custom-card">
-    <div class="card-header row">
-      <div class="col-2">
-        <img class="image" src="img/question.jpeg" style="border-radius: 2rem;" alt="not found" />
-      </div>
-      <div class="col-7 name">
-        <span ng-model="name">{{data.userName}}</span>
-      </div>
-      <div class="dropdown col-3">
-        <i class="fas fa-ellipsis-h dots dp" 
-          type="button"
-          id="dropdownMenuButton"
-          data-bs-toggle="dropdown"
-          aria-expanded="false" 
-       ></i>
-        <ul class="dropdown-menu drop" aria-labelledby="dropdownMenuButton">
-          <li ng-click="deleteFeed(data)">
-            <a class="dropdown-item hover"
-              ><i class="fas fa-trash-alt"></i> Delete</a
-            >
-          </li>
-          <li>
-            <a class="dropdown-item hover" ng-Click="setId(data)"
-              ><i class="fas fa-edit"></i> {{ editMode ? 'Save' : 'Edit' }}</a
-            >
-          </li>
-        </ul>
-      </div>
-    </div>
-    <!-- FEED CONTENT -->
-    <div class="card-body">
-      <p id="content" class="card-text" ng-show="!editMode">
-        {{data.description}}
-      </p>
-      <p class="posted">{{ data.postedTime | timeAgo }}</p>
-      <input
-        id="contentInput"
-        class="card-text"
-        ng-show="editMode"
-        ng-model="editedContent"
-        type="text"
+  <div class="card-header row">
+    <div class="col-2">
+      <img
+        class="image"
+        src="img/question.jpeg"
+        style="border-radius: 2rem"
+        alt="not found"
       />
     </div>
-    <!-- options LIKE DISLIKE COMMENT SHARE -->
-    <div class="row card-header">
-          <div style="position: relative;">
-          <a class="nav-link hover" ng-click="checkbox=true" style="color: black"> Answers</a>
-          <div ng-show="loadinglike" class="allloader">
-            <div class="spinner"></div>
-          </div>
-          </div>
-          <!-- check box for ask question -->
-          <div ng-show="checkbox">
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-            <label class="form-check-label" for="inlineRadio1">Agree</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-            <label class="form-check-label" for="inlineRadio2">Disagree</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
-            <label class="form-check-label" for="inlineRadio3">Storgly Agree</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
-            <label class="form-check-label" for="inlineRadio3">Storgly Disagree</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
-            <label class="form-check-label" for="inlineRadio3">Neutral</label>
-          </div>
-        </div>
-     
-        </div>
+    <div class="col-7 name">
+      <span ng-model="name">{{data.userName}}</span>
     </div>
-    <!--Edit modal pop up  -->
-    <div
-      class="modal fade"
-      id="editModal{{data.id}}"
-      tabindex="-1"
-      aria-labelledby="editModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="editModalLabel">Edit Post</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
+    <div class="dropdown col-3">
+      <i
+        class="fas fa-ellipsis-h dots dp"
+        type="button"
+        id="dropdownMenuButton"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      ></i>
+      <ul class="dropdown-menu drop" aria-labelledby="dropdownMenuButton">
+        <li ng-click="deleteFeed(data)">
+          <a class="dropdown-item hover"
+            ><i class="fas fa-trash-alt"></i> Delete</a
+          >
+        </li>
+        <li>
+          <a class="dropdown-item hover" ng-Click="setId(data)"
+            ><i class="fas fa-edit"></i> {{ editMode ? 'Save' : 'Edit' }}</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- FEED CONTENT -->
+  <div class="card-body">
+    <p id="content" class="card-text" ng-show="!editMode">
+      {{data.description}}
+    </p>
+    <p class="posted">{{ data.postedTime | timeAgo }}</p>
+    <input
+      id="contentInput"
+      class="card-text"
+      ng-show="editMode"
+      ng-model="editedContent"
+      type="text"
+    />
+  </div>
+  <!-- options LIKE DISLIKE COMMENT SHARE -->
+  <div class="row card-header">
+    <div style="position: relative">
+      <a class="nav-link hover" ng-click="checkbox=true; getOptionsByQuestionId(data.id)" style="color: black">
+        Answers</a
+      >
+      <div ng-show="loadinglike" class="allloader">
+        <div class="spinner"></div>
+      </div>
+      
+      
+     
+    </div>
+    <!-- check box for ask question -->
+      <ul ng-show="checkbox"> 
+        <li
+          class="list-option"
+          ng-repeat="singleOption in options | orderBy: 'created_at':true"
+        >
+          <div class="form-check form-check-inline">
             <input
-              class="form-control"
-              ng-model="editedContent"
-              ng-value="data.description"
-              type="text"
+              class="form-check-input"
+              type="radio"
+              name="inlineRadioOptions"
+              id="inlineRadio1"
+              value="option1"
             />
+            <label class="form-check-label" for="inlineRadio1">{{singleOption.content}}</label>
           </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-            <button
-              type="button"
-              class="btn btn-primary"
-              ng-click="saveChanges(data)"
-              data-bs-dismiss="modal"
-            >
-              Save changes
-            </button>
-          </div>
+        </li>
+      </ul> 
+  </div>
+  <!--Edit modal pop up  -->
+  <div
+    class="modal fade"
+    id="editModal{{data.id}}"
+    tabindex="-1"
+    aria-labelledby="editModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editModalLabel">Edit Post</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <input
+            class="form-control"
+            ng-model="editedContent"
+            ng-value="data.description"
+            type="text"
+          />
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            ng-click="saveChanges(data)"
+            data-bs-dismiss="modal"
+          >
+            Save changes
+          </button>
         </div>
       </div>
     </div>
   </div>
-  
+</div>

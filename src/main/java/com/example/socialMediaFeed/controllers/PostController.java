@@ -61,7 +61,7 @@ public class PostController {
     }
 
     @PostMapping("/")
-
+    
     public Post createPost(@RequestBody(required = false) Post post) {
         // try {
             if (post == null) {
