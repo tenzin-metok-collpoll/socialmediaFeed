@@ -229,7 +229,8 @@
       </div>
       <br />
       <ul ng-repeat="singlePost in allPosts | orderBy: 'created_at':true ">
-        <li>
+        <!-- {{singlePost.type}} -->
+        <li ng-if="singlePost.type=='post'">
           <!-- component directive -->
           <post-component
         
@@ -237,9 +238,14 @@
           all-posts="allPosts"
           on-data-updated="handleDataFromChild(data)"
         ></post-component>
-        
-       
-        
+        </li>
+        <li ng-if="singlePost.type=='question'">
+          <!-- component directive -->
+          <question-component
+          data="singlePost"
+          all-posts="allPosts"
+          on-data-updated="handleDataFromChild(data)"
+        ></question-component>
         </li>
       </ul>
     </div>
