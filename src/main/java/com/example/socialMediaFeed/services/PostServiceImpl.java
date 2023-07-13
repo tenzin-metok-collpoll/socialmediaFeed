@@ -55,7 +55,7 @@ public class PostServiceImpl implements PostService {
         String sqlQuery = postRepository.getPostsWithLikeDislikeCount();
         List<Post> posts = jdbcTemplate.query(sqlQuery, (rs) -> {
             Map<Integer, Post> postMap = new HashMap<>();
-        
+             Set<Integer> lidiSet = new HashSet<>();
             while (rs.next()) {
                 Integer postId = rs.getInt("id");
         
@@ -75,12 +75,13 @@ public class PostServiceImpl implements PostService {
                 }
 
              Map<Integer, Comment> commentsMap = new HashMap<>();
-                 Set<Integer> lidiSet = new HashSet<>();
+            
                  Set<Integer> commentSet = new HashSet<>();
 
-            String liDiType = rs.getString("liDiType");
+           String liDiType = rs.getString("liDiType");
             Integer lidi = rs.getInt("liDi");
             if (!lidiSet.contains(lidi)) {
+                 
             if (liDiType != null) {
                 if (liDiType.equals("like")) {
                     post.setLikeCounts(post.getLikeCounts() + 1);

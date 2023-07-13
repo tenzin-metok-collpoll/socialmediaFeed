@@ -30,15 +30,17 @@ angular.module("myApp").controller("myCtr", [
   "$http",
   "postService",
   '$routeParams',
-  function ($scope, $http, postService,$routeParams, ngToast) {
+  function ($scope, $http, postService,$routeParams) {
     var vm = this;
     $scope.loading = false;
     $scope.loadingComments=false;
     $scope.loadingDelete=false;
     $scope.loadingDislike=false;
     $scope.loadinglike=false;
+    $scope.askQuestionMode=false;
     $scope.id = 0;
     $scope.show = false;
+    $scope.askquestion = false;
     $scope.allPosts = [];
     $scope.count = 0;
     $scope.temp;
@@ -84,9 +86,7 @@ angular.module("myApp").controller("myCtr", [
         $scope.editMode = true;
       }
     };
-    $scope.showToast = function() {
-      toaster.success('Post added successfully');
-    };
+   
     //cancel a add post
     $scope.CancelFeed = () => {
       $scope.show = false;
@@ -99,17 +99,46 @@ angular.module("myApp").controller("myCtr", [
       if (navigator.onLine) {
         $scope.loading = true;
       $scope.show = false;
+      $scope.askquestion=false;
       const post = {
         userName: $scope.userName,
         description: $scope.story,
+        type:"post",
       };
-
+      
       //adding a post
       postService
         .createPost(post)
         .then(function (newPost) {
           console.log("Post added successfully:", newPost);
-          $scope.showToast();
+        
+          $scope.story = "";
+          $scope.userName = "";
+          getAllData();
+        })
+        .catch(function (error) {
+          console.error(error);
+        })
+      } else {
+        alert("Application is offline. Please check your internet connection.");
+      }
+    };
+    $scope.addQuestion = () => {
+      if (navigator.onLine) {
+        $scope.loading = true;
+      $scope.show = false;
+      $scope.askquestion=false;
+      const post = {
+        userName: $scope.userName,
+        description: $scope.story,
+        type:"question",
+      };
+     
+      postService
+        .createPost(post)
+        .then(function (newPost) {
+          console.log("Post added successfully:", newPost);
+        
           $scope.story = "";
           $scope.userName = "";
           getAllData();
@@ -125,7 +154,7 @@ angular.module("myApp").controller("myCtr", [
  
      function getAllData() {
       if (navigator.onLine) {
-      // $scope.loading = true;
+      $scope.loading = true;
       postService
         .getAllData()
         .then(function (posts) {

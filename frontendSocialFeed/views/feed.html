@@ -130,17 +130,14 @@
     </div>
     <div class="col-6 main"> 
         <div class="row ">
-        <div class="col-6 actionBlock">
-            <a
-              href="#!/question"
-              class="menu"
-              class="{red: hover}"
-              ng-mouseenter="hover = true"
-              ng-mouseleave="hover = false"
-              ><button type="button" class="btn askBtn" style="border-radius: 3rem; height: 4rem; width: 70%"
-              ><i class="fa fa-question-circle pr-2" aria-hidden="true"
-              ></i>&nbsp;Ask Questions</button></a
-            >
+          <div
+          class="col-6 actionBlock hover"
+          ng-class="{red: hover1}"
+          ng-mouseenter="hover1 = true"
+          ng-mouseleave="hover1 = false"
+          ng-click="askquestion = true"
+        >
+        <button type="button" style="border-radius: 3rem; height: 4rem; width: 70%" class="btn askBtn"><i class="fa fa-plus pr-2" aria-hidden="true"></i>&nbsp;Ask Quesion</button>
         </div>
         <div
           class="col-6 actionBlock hover"
@@ -149,9 +146,10 @@
           ng-mouseleave="hover1 = false"
           ng-click="show=true"
         >
-        <button type="button" style="border-radius: 3rem; height: 4rem; width: 70%" class="btn askBtn"><i class="fa fa-plus pr-2" aria-hidden="true"></i>&nbsp;Add a Post</button>
+        <button type="button" style="border-radius: 3rem; height: 4rem; width: 70%" class="btn askBtn" ><i class="fa fa-plus pr-2" aria-hidden="true"></i>&nbsp;Add a Post</button>
         </div>
       </div>
+      <!-- div for post added contain -->
       <div class="row" ng-show="show" style="width:100%; margin-left: 0.5rem; margin-right: 1rem;">
         <form class="textBox" name="myForm" novalidate>
           <textarea
@@ -190,15 +188,58 @@
           </button>
         </form>
       </div>
+      <!-- div for ask question  -->
+      <div class="row" ng-show="askquestion" style="width:100%; margin-left: 0.5rem; margin-right: 1rem;">
+        <form class="textBox" name="myForm" novalidate>
+          <textarea
+            class="form-control textArea"
+            id="exampleFormControlTextarea1"
+            placeholder="Enter user name"
+            ng-model="userName"
+            rows="1"
+            required
+            style="box-shadow: none;"
+          ></textarea>
+          <textarea
+            class="form-control textArea"
+            id="exampleFormControlTextarea1"
+            rows="3"
+            placeholder="What are you asking today?"
+            ng-model="story"
+            required
+            style="box-shadow: none;"
+          ></textarea>
+          <button
+            type="button"
+            class="btn postBtn"
+            ng-click="CancelFeed()"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            class="btn postBtn"
+            ng-disabled="myForm.$invalid"
+            ng-click="addQuestion()"
+            ng-disabled="disableButton"
+          >
+            Ask
+          </button>
+        </form>
+      </div>
       <br />
       <ul ng-repeat="singlePost in allPosts | orderBy: 'created_at':true ">
         <li>
           <!-- component directive -->
           <post-component
-            data="singlePost"
-            all-posts="allPosts"
-            on-data-updated="handleDataFromChild(data)"
-          ></post-component>
+        
+          data="singlePost"
+          all-posts="allPosts"
+          on-data-updated="handleDataFromChild(data)"
+        ></post-component>
+        
+       
+        
         </li>
       </ul>
     </div>
