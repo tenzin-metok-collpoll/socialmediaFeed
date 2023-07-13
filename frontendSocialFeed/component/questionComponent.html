@@ -44,11 +44,34 @@
     <!-- options LIKE DISLIKE COMMENT SHARE -->
     <div class="row card-header">
           <div style="position: relative;">
-          <a class="nav-link hover" style="color: black"> Answers</a>
+          <a class="nav-link hover" ng-click="checkbox=true" style="color: black"> Answers</a>
           <div ng-show="loadinglike" class="allloader">
             <div class="spinner"></div>
           </div>
           </div>
+          <!-- check box for ask question -->
+          <div ng-show="checkbox">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+            <label class="form-check-label" for="inlineRadio1">Agree</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+            <label class="form-check-label" for="inlineRadio2">Disagree</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+            <label class="form-check-label" for="inlineRadio3">Storgly Agree</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+            <label class="form-check-label" for="inlineRadio3">Storgly Disagree</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+            <label class="form-check-label" for="inlineRadio3">Neutral</label>
+          </div>
+        </div>
      
         </div>
     </div>
