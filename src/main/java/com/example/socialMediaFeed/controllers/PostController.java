@@ -62,19 +62,21 @@ public class PostController {
 
     @PostMapping("/")
 
-    public ResponseEntity<?> createPost(@RequestBody(required = false) Post post) {
-        try {
+    public Post createPost(@RequestBody(required = false) Post post) {
+        // try {
             if (post == null) {
                 throw new IllegalArgumentException("Request body is missing.");
             }
-            ResponseEntity<?> response = postService.createPost(post);
+            Post response = postService.createPost(post);
             return response;
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+        // }
+        // } catch (IllegalArgumentException e) {
+        //     // return ResponseEntity.badRequest().body(e.getMessage());
+        // } catch (Exception e) {
+        //     e.printStackTrace();
+        //     // return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        // }
+        
     }
 
     @DeleteMapping("/{id}")

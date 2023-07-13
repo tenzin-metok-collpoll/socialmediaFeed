@@ -62,6 +62,23 @@ public class OptionController {
     }
   }
 
+    @PostMapping("/bulk")
+    @CrossOrigin(origins = "http://127.0.0.1:5500")
+  public ResponseEntity<?> createOptionInBulk(@RequestBody(required = false) List<Option> option) {
+    try {
+      if (option == null) {
+        throw new IllegalArgumentException("Request body is missing.");
+      }
+
+      ResponseEntity<?> response = optionService.createOptionInBulk(option);
+      return response;
+    } catch (IllegalArgumentException e) {
+      return ResponseEntity.badRequest().body(e.getMessage());
+    } catch (Exception e) {
+      e.printStackTrace();
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+  }
   @DeleteMapping("/{id}")
   public ResponseEntity<String> deleteOption(@PathVariable("id") int id) {
     if (id <= 0) {

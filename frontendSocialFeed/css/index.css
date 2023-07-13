@@ -111,6 +111,11 @@
       border: none;
       box-shadow: none;
     }
+    .form-check-input[disabled] {
+      color:#000 !important;
+      opacity: 1 !important;
+      pointer-events: none;
+    }
     .card {
       border-radius: 0.5rem !important;
     }

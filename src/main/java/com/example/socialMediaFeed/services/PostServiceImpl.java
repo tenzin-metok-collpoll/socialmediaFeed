@@ -115,13 +115,11 @@ public class PostServiceImpl implements PostService {
         });
         
         return posts;
-        
-
     }
 
     @Override
-    public ResponseEntity<CreatePostResponse> createPost(Post post) {
-        try {
+    public Post createPost(Post post) {
+        // try {
             // Set the timestamp value in UTC
             post.setPostedTime(Timestamp.from(Instant.now()));
             // Check required fields
@@ -133,18 +131,19 @@ public class PostServiceImpl implements PostService {
             }
 
             Post savedPost = postRepository.save(post);
-            CreatePostResponse response = new CreatePostResponse("Post saved successfully");
-            return ResponseEntity.ok(response);
-        } catch (IllegalArgumentException e) {
-            // Handle missing required fields
-            CreatePostResponse response = new CreatePostResponse(
-                    "Missing required fields: Description and user_name are required.");
-            return ResponseEntity.badRequest().body(response);
-        } catch (Exception e) {
-            // Handle other exceptions
-            CreatePostResponse response = new CreatePostResponse("An error occurred while creating the post.");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-        }
+            // Sytem.out.println("")
+            // CreatePostResponse response = new CreatePostResponse("Post saved successfully");
+            return savedPost;
+        // } catch (IllegalArgumentException e) {
+        //     // Handle missing required fields
+        //     CreatePostResponse response = new CreatePostResponse(
+        //             "Missing required fields: Description and user_name are required.");
+        //     // return ResponseEntity.badRequest().body(response);
+        // } catch (Exception e) {
+        //     // Handle other exceptions
+        //     CreatePostResponse response = new CreatePostResponse("An error occurred while creating the post.");
+        //     // return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        // }
     }
 
     @Override

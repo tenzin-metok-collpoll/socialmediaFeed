@@ -29,8 +29,9 @@ angular.module("myApp").controller("myCtr", [
   "$scope",
   "$http",
   "postService",
+  "optionService",
   '$routeParams',
-  function ($scope, $http, postService,$routeParams) {
+  function ($scope, $http, postService,optionService,$routeParams) {
     var vm = this;
     $scope.loading = false;
     $scope.loadingComments=false;
@@ -40,6 +41,8 @@ angular.module("myApp").controller("myCtr", [
     $scope.askQuestionMode=false;
     $scope.showfirstOption=false;
     $scope.id = 0;
+    $scope.isDiv1Clicked = false;
+    $scope.isDiv2Clicked = false;
     $scope.show = false;
     $scope.showPollOption = false;
     $scope.showOption2 = false;
@@ -135,7 +138,9 @@ angular.module("myApp").controller("myCtr", [
         })
         .catch(function (error) {
           console.error(error);
-        })
+        });
+      
+
       } else {
         alert("Application is offline. Please check your internet connection.");
       }
@@ -186,19 +191,79 @@ $scope.sendData = function() {
         description: $scope.story,
         type:"question",
       };
-     
+      //creating post with type question
       postService
         .createPost(post)
         .then(function (newPost) {
-          console.log("Post added successfully:", newPost);
-        
+          console.log("Post added successfully:", newPost.id);
           $scope.story = "";
           $scope.userName = "";
           getAllData();
+
+          if($scope.showfirstOption) {
+            if($scope.isDiv2Clicked){
+              $scope.selectedOption = [
+                {
+                  content : "True",
+                  questionId: newPost.id
+                },
+                {
+                  content : "False",
+                  questionId: newPost.id
+                }
+              ]
+            }
+            if($scope.isDiv1Clicked){
+              $scope.selectedOption = [
+              {
+                content : "Strongly Agree",
+                questionId: newPost.id
+              },
+              {
+                content : "Agree",
+                questionId: newPost.id
+              },
+              {
+                content : "Neutral",
+                questionId: newPost.id
+              },
+              {
+                content : "Disagree",
+                questionId: newPost.id
+              },
+              {
+                content : "Strongly Disagree",
+                questionId: newPost.id
+              }
+            ]
+            }
+            console.log("$scope.selectedOption",$scope.selectedOption);
+            optionService
+          .addOptionInBulk($scope.selectedOption)
+          .then(function (options) {
+            console.log('options: ', options);
+            console.log("Post added successfully:", newPost);
+          
+            $scope.story = "";
+            $scope.userName = "";
+            // getAllData();
+          })
+          .catch(function (error) {
+            console.error(error);
+          })
+        
+        
+          }
+          
+  
+          
         })
-        .catch(function (error) {
-          console.error(error);
-        })
+          .catch(function (error) {
+            console.error(error);
+          });
+
+
+          
       } else {
         alert("Application is offline. Please check your internet connection.");
       }
@@ -213,6 +278,7 @@ $scope.sendData = function() {
         .then(function (posts) {
           $scope.loading = false;
           $scope.allPosts = posts;
+          return posts;
         })
         .catch(function (error) {
           console.error("Error retrieving data:", error);

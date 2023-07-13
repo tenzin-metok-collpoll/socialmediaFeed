@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -37,6 +38,21 @@ public class OptionRepositoryImpl implements OptionRepository {
         jdbcTemplate.update(sql, option.getContent(),  option.getQuestionId());
         return option;
     }
+
+    @Override
+public List<Option> saveInBulk(List<Option> options) {
+    String sql = "INSERT INTO Options (content, question_id) VALUES (?, ?)";
+
+    List<Object[]> batchArgs = new ArrayList<>();
+    for (Option option : options) {
+        Object[] args = new Object[]{option.getContent(), option.getQuestionId()};
+        batchArgs.add(args);
+    }
+
+    jdbcTemplate.batchUpdate(sql, batchArgs);
+
+    return options;
+}
 
     @Override
     public Option update(Option option) {

@@ -51,6 +51,29 @@ public class OptionServiceImpl implements OptionService {
         }
     }
 
+       @Override
+    public ResponseEntity<CreateOptionResponse> createOptionInBulk(List<Option> option) {
+        try {
+            // Check required fields
+            // if (option.getContent() == null || option.getQuestionId() == null) {
+            //     throw new IllegalArgumentException("content, questionId are required fields.");
+            // }
+
+            List<Option> savedOption = optionRepository.saveInBulk(option);
+            CreateOptionResponse response = new CreateOptionResponse("Option saved successfully");
+            return ResponseEntity.ok(response);
+        } catch (IllegalArgumentException e) {
+            // Handle missing required fields
+            CreateOptionResponse response = new CreateOptionResponse(
+                    "Missing required fields: Description, user_name, and posted_time are required.");
+            return ResponseEntity.badRequest().body(response);
+        } catch (Exception e) {
+            // Handle other exceptions
+            CreateOptionResponse response = new CreateOptionResponse("An error occurred while creating the option.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
     @Override
     public Option updateOption(Option option) {
         return optionRepository.update(option);

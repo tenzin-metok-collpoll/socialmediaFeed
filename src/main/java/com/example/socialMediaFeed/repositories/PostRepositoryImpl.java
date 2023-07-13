@@ -5,9 +5,13 @@ import com.example.socialMediaFeed.models.LikeDislike;
 import com.example.socialMediaFeed.models.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import java.sql.Statement;
 
 import java.sql.Timestamp;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
@@ -55,7 +59,23 @@ public class PostRepositoryImpl implements PostRepository {
     @Override
     public Post save(Post post) {
         String sql = "INSERT INTO  Posts (user_name, description, posted_time, type) VALUES (?, ?, ?, ?)";
-        jdbcTemplate.update(sql, post.getUserName(), post.getDescription(), post.getPostedTime(), post.getType());
+         KeyHolder keyHolder = new GeneratedKeyHolder();
+    jdbcTemplate.update(connection -> {
+        PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        ps.setString(1, post.getUserName());
+        ps.setString(2, post.getDescription());
+        ps.setTimestamp(3, post.getPostedTime());
+        ps.setString(4, post.getType());
+        return ps;
+    }, keyHolder);
+
+    // Retrieve the generated ID
+    Number generatedId = keyHolder.getKey();
+    if (generatedId != null) {
+        post.setId(generatedId.intValue());
+    }
+    // System.out.println("++++++++++++++"+post);
+
         return post;
     }
 
