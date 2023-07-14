@@ -100,6 +100,11 @@ angular.module("myApp").controller("myCtr", [
       $scope.showSecondOption=false; 
       $scope.isDiv1Clicked =false; 
       $scope.isDiv2Clicked = false;
+      for (let i = 0; i <= $scope.options.length; i++) {
+        console.log("called cancel ");
+        $scope.cancelOption(i);
+      }
+      $scope.options.splice(0, 1);
     };
 
     // adding a new post in feed
@@ -142,8 +147,13 @@ $scope.addOption = function() {
 $scope.cancelOption = function(index) {
   $scope.options.splice(index, 1);
 };
-
-
+$scope.CancelPoll = function() {
+  for (let i = 0; i < $scope.options.length; i++) {
+    console.log("called cancel");
+    $scope.cancelOption(i);
+  }
+  $scope.options.splice(0, 1);
+};
     $scope.addQuestion = () => {
       if (navigator.onLine) {
         $scope.loading = true;
@@ -228,8 +238,8 @@ $scope.cancelOption = function(index) {
            
               $scope.newOption = [];
            
-              for (var i = 0; i < $scope.options.length; i++) {
-                var option = {
+              for (let i = 0; i < $scope.options.length; i++) {
+                let option = {
                   content: $scope.options[i].value,
                   questionId: newPost.id
                 };
@@ -256,8 +266,13 @@ $scope.cancelOption = function(index) {
               }
            
           
-          
-  
+              $scope.showSecondOption = false;
+              $scope.showfirstOption = false;
+              for (let i = 0; i <= $scope.options.length; i++) {
+                console.log("called cancel ");
+                $scope.cancelOption(i);
+              }
+              $scope.options.splice(0, 1);
           
         })
           .catch(function (error) {

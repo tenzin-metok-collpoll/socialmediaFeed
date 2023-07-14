@@ -316,10 +316,11 @@
                 </div>
                 <div
                   class="col-2"
-                  ng-click="showPollOption = false; showfirstOption = false; showSecondOption=false; isDiv1Clicked =false; isDiv2Clicked = false;"
+                  ng-click="showPollOption = false; showfirstOption = false; showSecondOption=false; isDiv1Clicked =false; isDiv2Clicked = false; CancelPoll()"
                 >
                   Cancel&nbsp;
                 </div>
+                
               </div>
               <div ng-show="showfirstOption && showPollOption">
                 <hr style="margin: 2px" />
@@ -454,12 +455,14 @@
                   </div>
                   <div>
                     <input
-                      class="optionInput"
-                      placeholder="Click to add option"
-                      type="button"
-                      ng-click="addOption()"
-                      ng-show="!showOption4"
-                    />
+      class="optionInput"
+      placeholder="Add Option"
+      value="Add Option"
+      type="button"
+      ng-click="addOption()"
+      ng-init="showOption4=true"
+      ng-show="showOption4"
+    />
                   </div>
                 </div>
               </div>
