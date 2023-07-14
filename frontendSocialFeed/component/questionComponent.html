@@ -52,7 +52,7 @@
             class="form-check-input"
             type="radio"
             name="inlineRadioOptions"
-            ng-click="addAnswer(singleOption.id,data.userName)"
+            ng-click="checkbox=false; showBar=true; addAnswer(singleOption.id,data.userName)"
             id="inlineRadio1"
             value="option1"
           />
@@ -60,6 +60,9 @@
         </div>
       </li>
     </ul> 
+    <div class="progress" ng-show="showBar" style="height: 1.3rem; margin-top: 0.5rem; width: 30rem" >
+      <div class="progress-bar" role="progressbar" style="width: 100%; background: #ade6ec; border: 1px solid #80808038; color:black" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"><span>{{pickedOption}} 100%</span></div>
+    </div>
   <br />
     <a ng-init="checkbox=false" ng-click="checkbox = !checkbox; getOptionsByQuestionId(data.id)" style="color: black; font-size: 13px;">
       <i class="fa fa-user" aria-hidden="true"></i> &nbsp;Be the first to poll</a
@@ -68,8 +71,8 @@
   <!-- options LIKE DISLIKE COMMENT SHARE -->
   <div class="row card-header">
     <div style="position: relative">
-      <a class="nav-link hover" ng-click="checkbox=true; getOptionsByQuestionId(data.id)" style="color: black">
-        Share</a
+      <a class="nav-link hover" ng-click="checkbox=true; getOptionsByQuestionId(data.id)" style="color: black; float:right">
+        <i class="fas fa-share"></i> &nbsp;Share</a
       >
       <div ng-show="loadinglike" class="allloader">
         <div class="spinner"></div>

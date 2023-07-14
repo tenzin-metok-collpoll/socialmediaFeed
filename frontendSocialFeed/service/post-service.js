@@ -156,7 +156,6 @@ angular.module("myApp").service("postService", [
         return $http
           .delete("http://localhost:8080/posts/" + postId)
           .then(function (response) {
-            console.log('response: ::::::::', response);
             if (response.status === 204) {
               console.log("Post deleted successfully");
               return response.data;
@@ -182,7 +181,7 @@ angular.module("myApp").service("postService", [
               alert("No response received from the server.", "error");
             } 
             else if (error.response === undefined ) {
-              alert("Cannot delete a Post having comments and Likes Dislikes", "error");
+              alert("Cannot delete a Post or question having comments, like dislikes, options", "error");
             }
             else {
               alert("An error occurred while making the request.", "error");

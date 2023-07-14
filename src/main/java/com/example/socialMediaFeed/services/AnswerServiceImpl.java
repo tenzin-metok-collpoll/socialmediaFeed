@@ -27,26 +27,27 @@ public class AnswerServiceImpl implements AnswerService {
         return answerRepository.findAll();
     }
      @Override
-    public ResponseEntity<CreateAnswerResponse> createAnswer(Answer answer) {
-        try {
+    public Answer createAnswer(Answer answer) {
+        // try {
             // Check required fields
+        
             if (answer.getUserName() == null || answer.getOptionId() == null) {
                 throw new IllegalArgumentException("username, OptionId are required fields.");
             }
-
             Answer savedAnswer = answerRepository.save(answer);
-            CreateAnswerResponse response = new CreateAnswerResponse("Answer saved successfully");
-            return ResponseEntity.ok(response);
-        } catch (IllegalArgumentException e) {
+            return savedAnswer;
+            // CreateAnswerResponse response = new CreateAnswerResponse("Answer saved successfully");
+            // return ResponseEntity.ok(response);
+        // } catch (IllegalArgumentException e) {
             // Handle missing required fields
-            CreateAnswerResponse response = new CreateAnswerResponse(
-                    "Missing required fields:  user_name, Optionid are required.");
-            return ResponseEntity.badRequest().body(response);
-        } catch (Exception e) {
+            // CreateAnswerResponse response = new CreateAnswerResponse(
+                    // "Missing required fields:  user_name, Optionid are required.");
+            // return ResponseEntity.badRequest().body(response);
+        // } catch (Exception e) {
             // Handle other exceptions
-            CreateAnswerResponse response = new CreateAnswerResponse("An error occurred while creating the option.");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-        }
+            // CreateAnswerResponse response = new CreateAnswerResponse("An error occurred while creating the option.");
+            // return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        // }
     }
 
     @Override

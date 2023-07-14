@@ -12,7 +12,7 @@ public interface AnswerService {
 
     List<Answer> getAllAnswer();
 
-     ResponseEntity<CreateAnswerResponse> createAnswer(Answer answer);
+    Answer createAnswer(Answer answer);
 
     Answer updateAnswer(Answer answer);
 

@@ -22,6 +22,7 @@ angular.module("myApp").directive("questionComponent", [
           function ($scope, postService, commentService, optionService, answerService) {
             $scope.options=[];
             $scope.checkbox=false;
+            $scope.showBar=false;
 
                //setID for modal pop up
           $scope.setId = function (singlePost) {
@@ -88,6 +89,8 @@ angular.module("myApp").directive("questionComponent", [
             };
 
             $scope.addAnswer = function(optionId, userName) {
+              $scope.checkbox=false; 
+              $scope.showBar=true;
 
               let answer = {
                   optionId: optionId,
@@ -98,8 +101,20 @@ angular.module("myApp").directive("questionComponent", [
                 .addAnswer(answer)
                 .then(function (newAnswer) {
                   console.log("Post added successfully:", newAnswer);
+
+                  if(newAnswer.optionId){
+                    optionService.getOptionsById(newAnswer.optionId)
+                    .then(function(newOption){
+                      console.log('newOption:::::::: ', newOption);
+                      $scope.pickedOption=newOption.content;
+                    })
+                    .catch(function (error) {
+                      console.error(error);
+                    });
+                  }
+
                   // fetchComment();
-                  $scope.onDataUpdated({ data: newAnswer });
+                  // $scope.onDataUpdated({ data: newAnswer });
                 })
                 .catch(function (error) {
                   console.error(error);

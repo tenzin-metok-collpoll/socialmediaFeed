@@ -42,20 +42,20 @@ public class AnswerController {
     }
   }
   @PostMapping("/")
-  public ResponseEntity<?> createAnswer(@RequestBody(required = false) Answer answer) {
+  public Answer createAnswer(@RequestBody(required = false) Answer answer) {
 
-    try {
-      if (answer == null) {
-        throw new IllegalArgumentException("Request body is missing.");
-      }
-      ResponseEntity<?> response = answerService.createAnswer(answer);
+    // try {
+    //   if (answer == null) {
+    //     throw new IllegalArgumentException("Request body is missing.");
+    //   }
+      Answer response = answerService.createAnswer(answer);
       return response;
-    } catch (IllegalArgumentException e) {
-      return ResponseEntity.badRequest().body(e.getMessage());
-    } catch (Exception e) {
-      e.printStackTrace();
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-    }
+    // } catch (IllegalArgumentException e) {
+      // return ResponseEntity.badRequest().body(e.getMessage());
+    // } catch (Exception e) {
+      // e.printStackTrace();
+      // return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    // }
   }
   @DeleteMapping("/{id}")
   public ResponseEntity<String> deleteAnswer(@PathVariable("id") int id) {
