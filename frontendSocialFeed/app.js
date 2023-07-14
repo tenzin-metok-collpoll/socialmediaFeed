@@ -154,6 +154,23 @@ $scope.CancelPoll = function() {
   }
   $scope.options.splice(0, 1);
 };
+$scope.addAnswer = function(optionId, userName) {
+  let answer = {
+      optionId: optionId,
+      userName: userName
+    };
+    console.log("answer",answer);
+  
+    $http.post('http://localhost:8080/answer/', answer)
+      .then(function(response) {
+        // Handle the response if needed
+        console.log('Answer added successfully');
+      })
+      .catch(function(error) {
+        // Handle errors
+        console.log('Error:', error);
+      });
+  };
     $scope.addQuestion = () => {
       if (navigator.onLine) {
         $scope.loading = true;
