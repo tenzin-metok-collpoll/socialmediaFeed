@@ -95,6 +95,11 @@ angular.module("myApp").controller("myCtr", [
       $scope.show = false;
       $scope.story = "";
       $scope.userName = "";
+      $scope.showPollOption = false;
+      $scope.showfirstOption = false; 
+      $scope.showSecondOption=false; 
+      $scope.isDiv1Clicked =false; 
+      $scope.isDiv2Clicked = false;
     };
 
     // adding a new post in feed
@@ -144,6 +149,11 @@ $scope.cancelOption = function(index) {
         $scope.loading = true;
       $scope.show = false;
       $scope.askquestion=false;
+      $scope.showPollOption = false;
+      $scope.showfirstOption = false; 
+      $scope.showSecondOption=false; 
+      $scope.isDiv1Clicked =false; 
+      $scope.isDiv2Clicked = false;
       const post = {
         userName: $scope.userName,
         description: $scope.story,

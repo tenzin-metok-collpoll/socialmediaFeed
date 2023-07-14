@@ -48,6 +48,7 @@ angular.module("myApp").directive("postComponent", [
                 let updatedPost = {
                   userName: data.userName,
                   description: $scope.editedContent,
+                  type: "post"
                 };
                 //update a post
                 postService

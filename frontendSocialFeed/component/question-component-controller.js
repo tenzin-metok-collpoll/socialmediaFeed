@@ -22,6 +22,12 @@ angular.module("myApp").directive("questionComponent", [
             $scope.options=[];
             $scope.checkbox=false;
 
+               //setID for modal pop up
+          $scope.setId = function (singlePost) {
+            $scope.modalData = { value: singlePost };
+            $(`#editModal${singlePost.id}`).modal("show");
+          };
+
 
             //update the post
             $scope.saveChanges = function (data) {
@@ -34,6 +40,7 @@ angular.module("myApp").directive("questionComponent", [
                   let updatedPost = {
                     userName: data.userName,
                     description: $scope.editedContent,
+                    type: "question"
                   };
                   //update a post
                   postService
@@ -82,7 +89,7 @@ angular.module("myApp").directive("questionComponent", [
           
 
             $scope.getOptionsByQuestionId = function (id) {
-              $scope.checkbox=true;
+              // $scope.checkbox=true;
               console.log("data and id",id)
               if (navigator.onLine) {
                 $scope.loading = true;
