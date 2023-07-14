@@ -37,7 +37,7 @@ public class AnswerRepositoryImpl implements AnswerRepository {
     }
     @Override
     public Answer save(Answer answer) {
-        String sql = "INSERT INTO Answer (user_name, option_id) VALUES (?, ?)";
+        String sql = "INSERT INTO Answers (user_name, option_id) VALUES (?, ?)";
         jdbcTemplate.update(sql, answer.getUserName() ,answer.getOptionId());
         return answer;
     }

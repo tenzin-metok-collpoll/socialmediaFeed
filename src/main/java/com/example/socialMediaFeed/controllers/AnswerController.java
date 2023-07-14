@@ -1,6 +1,5 @@
 package com.example.socialMediaFeed.controllers;
 import com.example.socialMediaFeed.models.Answer;
-import com.example.socialMediaFeed.models.Option;
 import com.example.socialMediaFeed.services.AnswerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 @RestController
-@RequestMapping("/answer")
+@RequestMapping("/answers")
 @CrossOrigin(origins = "http://127.0.0.1:5500")
 public class AnswerController {
     
@@ -44,11 +43,11 @@ public class AnswerController {
   }
   @PostMapping("/")
   public ResponseEntity<?> createAnswer(@RequestBody(required = false) Answer answer) {
+
     try {
       if (answer == null) {
         throw new IllegalArgumentException("Request body is missing.");
       }
-
       ResponseEntity<?> response = answerService.createAnswer(answer);
       return response;
     } catch (IllegalArgumentException e) {

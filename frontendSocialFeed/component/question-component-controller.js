@@ -17,8 +17,9 @@ angular.module("myApp").directive("questionComponent", [
           "postService",
           "commentService",
           "optionService",
+          "answerService",
           "likedislikeService",
-          function ($scope, postService, commentService, optionService) {
+          function ($scope, postService, commentService, optionService, answerService) {
             $scope.options=[];
             $scope.checkbox=false;
 
@@ -86,6 +87,24 @@ angular.module("myApp").directive("questionComponent", [
               }
             };
 
+            $scope.addAnswer = function(optionId, userName) {
+
+              let answer = {
+                  optionId: optionId,
+                  userName: userName
+                };
+              
+                answerService
+                .addAnswer(answer)
+                .then(function (newAnswer) {
+                  console.log("Post added successfully:", newAnswer);
+                  // fetchComment();
+                  $scope.onDataUpdated({ data: newAnswer });
+                })
+                .catch(function (error) {
+                  console.error(error);
+                });
+              };
           
 
             $scope.getOptionsByQuestionId = function (id) {
