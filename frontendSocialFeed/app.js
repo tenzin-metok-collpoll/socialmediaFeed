@@ -66,24 +66,7 @@ angular.module("myApp").controller("myCtr", [
       getAllData();
     };
 
-    // $scope.parseAndAssignComments = function(post) {
-    //   post.comments = parseComments(post.comments);
-    // };
-
-    // function parseComments(commentsArray) {
-    //   if (Array.isArray(commentsArray)) {
-    //     return commentsArray.map(function(commentString) {
-    //        parts = commentString.split(',');
-    //       return {
-    //         text: parts[0],
-    //         id: parts[1],
-    //         editMode: false
-    //       };
-    //     });
-    //   } else {
-    //     return [];
-    //   }
-    // }
+    
     $scope.addOption = function() {
       if (!$scope.showOption2) {
         $scope.showOption2 = true;
@@ -154,32 +137,7 @@ $scope.addOption = function() {
 $scope.cancelOption = function(index) {
   $scope.options.splice(index, 1);
 };
-$scope.sendData = function() {
-  // Create an array to store the options
-  var options = [];
 
-  // Iterate over each option and create an object with content and questionId
-  for (var i = 0; i < $scope.options.length; i++) {
-    var option = {
-      content: $scope.options[i].value,
-      questionId: 1
-    };
-   
-  
-
-  // Make the API call with options
-  // Replace the API_ENDPOINT with your actual API endpoint URL
-  $http.post("http://localhost:8080/options/", option)
-    .then(function(response) {
-      // API call success
-      console.log('Data sent to API successfully');
-    })
-    .catch(function(error) {
-      // API call error
-      console.error('Error sending data to API:', error);
-    });
-  }
-};
 
     $scope.addQuestion = () => {
       if (navigator.onLine) {
@@ -254,6 +212,40 @@ $scope.sendData = function() {
         
         
           }
+          else if($scope.showSecondOption){
+            
+             
+           
+              $scope.newOption = [];
+           
+              for (var i = 0; i < $scope.options.length; i++) {
+                var option = {
+                  content: $scope.options[i].value,
+                  questionId: newPost.id
+                };
+                $scope.newOption.push(option);
+              }
+               
+              
+            
+            
+              console.log("$scope.newOption",$scope.newOption);
+              optionService
+            .addOptionInBulk($scope.newOption)
+            .then(function (options) {
+              console.log('options: ', options);
+              console.log("Options added successfully:", newPost);
+            
+              $scope.story = "";
+              $scope.userName = "";
+              // getAllData();
+            })
+            .catch(function (error) {
+              console.error(error);
+            })
+              }
+           
+          
           
   
           

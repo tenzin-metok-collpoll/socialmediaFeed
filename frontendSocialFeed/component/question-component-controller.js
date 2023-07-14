@@ -83,6 +83,7 @@ angular.module("myApp").directive("questionComponent", [
 
             $scope.getOptionsByQuestionId = function (id) {
               $scope.checkbox=true;
+              console.log("data and id",id)
               if (navigator.onLine) {
                 $scope.loading = true;
                 optionService

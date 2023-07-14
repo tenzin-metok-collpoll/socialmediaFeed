@@ -284,7 +284,6 @@
               class="addPollBtn"
               ng-mouseenter="hover = true"
               ng-mouseleave="hover = false"
-              
               style="
                 color: #6c757d;
                 padding-left: 1rem;
@@ -325,11 +324,11 @@
               <div ng-show="showfirstOption && showPollOption">
                 <hr style="margin: 2px" />
                 <div
-                style="padding-left: 1rem"
-                ng-class="{blue: isDiv2Clicked}"
-                ng-mouseenter="!isDiv1Clicked && (hover = true)"
-                ng-mouseleave="!isDiv1Clicked && (hover = false)"
-                ng-click="isDiv2Clicked = true; isDiv1Clicked = false; hover = false;"
+                  style="padding-left: 1rem"
+                  ng-class="{blue: isDiv2Clicked}"
+                  ng-mouseenter="!isDiv1Clicked && (hover = true)"
+                  ng-mouseleave="!isDiv1Clicked && (hover = false)"
+                  ng-click="isDiv2Clicked = true; isDiv1Clicked = false; hover = false;"
                 >
                   <div class="form-check form-check-inline">
                     <input
@@ -359,11 +358,11 @@
                   </div>
                 </div>
                 <div
-                style="padding-left: 1rem"
-                ng-class="{blue: isDiv1Clicked}"
-                ng-mouseenter="!isDiv2Clicked && (hover = true)"
-                ng-mouseleave="!isDiv2Clicked && (hover = false)"
-                ng-click="isDiv1Clicked = true; isDiv2Clicked = false; hover = false;"
+                  style="padding-left: 1rem"
+                  ng-class="{blue: isDiv1Clicked}"
+                  ng-mouseenter="!isDiv2Clicked && (hover = true)"
+                  ng-mouseleave="!isDiv2Clicked && (hover = false)"
+                  ng-click="isDiv1Clicked = true; isDiv2Clicked = false; hover = false;"
                 >
                   <div class="form-check form-check-inline">
                     <input
@@ -399,7 +398,6 @@
                       id="inlineRadio3"
                       value="option3"
                       disabled
-
                     />
                     <label class="form-check-label" for="inlineRadio3"
                       >Neutral</label
@@ -440,18 +438,31 @@
                 </div>
                 <div style="padding-left: 2rem">
                   <div ng-repeat="option in options track by $index">
-                    <input class="optionInput" placeholder="Option {{$index + 1}}" type="text" ng-model="option.value" />
-                    <button class="cancelOptionBtn" ng-click="cancelOption($index)" style="border:none;margin-left:16rem">
+                    <input
+                      class="optionInput"
+                      placeholder="Option {{$index + 1}}"
+                      type="text"
+                      ng-model="option.value"
+                    />
+                    <button
+                      class="cancelOptionBtn"
+                      ng-click="cancelOption($index)"
+                      style="border: none; margin-left: 16rem"
+                    >
                       <i class="fas fa-times"></i>
                     </button>
                   </div>
                   <div>
-                    <input class="optionInput" placeholder="Click to add option" type="button" ng-click="addOption()" ng-show="!showOption4" />
-                    <button class="btn postBtn" ng-click="sendData()" style="margin-top:2rem;">Send Data</button>
+                    <input
+                      class="optionInput"
+                      placeholder="Click to add option"
+                      type="button"
+                      ng-click="addOption()"
+                      ng-show="!showOption4"
+                    />
                   </div>
                 </div>
               </div>
-              
             </div>
           </div>
           <button type="button" class="btn postBtn" ng-click="CancelFeed()">

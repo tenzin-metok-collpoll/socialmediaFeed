@@ -88,6 +88,7 @@ public class OptionController {
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
   }
+  
   @DeleteMapping("/{id}")
   public ResponseEntity<String> deleteOption(@PathVariable("id") int id) {
     if (id <= 0) {

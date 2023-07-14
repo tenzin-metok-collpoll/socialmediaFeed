@@ -16,6 +16,7 @@ public interface OptionService {
 
     ResponseEntity<CreateOptionResponse> createOption(Option option);
 ResponseEntity<CreateOptionResponse> createOptionInBulk(List<Option> options);
+
     Option updateOption(Option comment);
 
     void deleteOption(int id);
