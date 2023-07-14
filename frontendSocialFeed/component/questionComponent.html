@@ -41,10 +41,11 @@
     </div>
     <div class="col-3 posted" style="text-align: right;">{{ data.postedTime | timeAgo }}</div>
     </div>
-    <ul ng-show="checkbox"> 
+    <ul ng-show="checkbox" style="margin-top: 1rem"> 
       <li
         class="list-option"
-        ng-repeat="singleOption in options | orderBy: 'created_at':true"
+        style="font-size: 14px;"
+        ng-repeat="singleOption in options"
       >
         <div class="form-check form-check-inline">
           <input
@@ -58,16 +59,10 @@
         </div>
       </li>
     </ul> 
-    <a class="nav-link hover" ng-init="checkbox=false" ng-click="checkbox = !checkbox; getOptionsByQuestionId(data.id)" style="color: black">
+  <br />
+    <a ng-init="checkbox=false" ng-click="checkbox = !checkbox; getOptionsByQuestionId(data.id)" style="color: black; font-size: 13px;">
       <i class="fa fa-user" aria-hidden="true"></i> &nbsp;Be the first to poll</a
     >
-    <!-- <input
-      id="contentInput"
-      class="card-text"
-      ng-show="editMode"
-      ng-model="editedContent"
-      type="text"
-    /> -->
   </div>
   <!-- options LIKE DISLIKE COMMENT SHARE -->
   <div class="row card-header">

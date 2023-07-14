@@ -159,11 +159,7 @@ $scope.CancelPoll = function() {
         $scope.loading = true;
       $scope.show = false;
       $scope.askquestion=false;
-      $scope.showPollOption = false;
-      $scope.showfirstOption = false; 
-      $scope.showSecondOption=false; 
-      $scope.isDiv1Clicked =false; 
-      $scope.isDiv2Clicked = false;
+
       const post = {
         userName: $scope.userName,
         description: $scope.story,
@@ -224,6 +220,11 @@ $scope.CancelPoll = function() {
           
             $scope.story = "";
             $scope.userName = "";
+            $scope.showPollOption = false;
+            $scope.showfirstOption = false; 
+            $scope.showSecondOption=false; 
+            $scope.isDiv1Clicked =false; 
+            $scope.isDiv2Clicked = false;
             // getAllData();
           })
           .catch(function (error) {

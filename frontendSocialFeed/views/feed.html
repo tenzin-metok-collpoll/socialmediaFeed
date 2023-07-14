@@ -185,7 +185,10 @@
     </div>
     <div class="col-6 main">
       <div class="row">
-        <div class="col-6 actionBlock hover" ng-click="askquestion = true; show=false;">
+        <div
+          class="col-6 actionBlock hover"
+          ng-click="askquestion = true; show=false;"
+        >
           <button
             type="button"
             style="border-radius: 3rem; height: 4rem; width: 70%"
@@ -197,7 +200,10 @@
             <i class="fa fa-plus pr-2" aria-hidden="true"></i>&nbsp;Ask Quesion
           </button>
         </div>
-        <div class="col-6 actionBlock hover" ng-click="show=true; askquestion = false;">
+        <div
+          class="col-6 actionBlock hover"
+          ng-click="show=true; askquestion = false;"
+        >
           <button
             type="button"
             style="border-radius: 3rem; height: 4rem; width: 70%"
@@ -320,7 +326,6 @@
                 >
                   Cancel&nbsp;
                 </div>
-                
               </div>
               <div ng-show="showfirstOption && showPollOption">
                 <hr style="margin: 2px" />
@@ -455,14 +460,15 @@
                   </div>
                   <div>
                     <input
-      class="optionInput"
-      placeholder="Add Option"
-      value="Add Option"
-      type="button"
-      ng-click="addOption()"
-      ng-init="showOption4=true"
-      ng-show="showOption4"
-    />
+                      class="optionInput"
+                      placeholder="Add Option"
+                      value="Click to add Option"
+                      type="button"
+                      ng-click="addOption()"
+                      ng-init="showOption4=true"
+                      ng-show="showOption4"
+                      style="line-height:normal"
+                    />
                   </div>
                 </div>
               </div>
