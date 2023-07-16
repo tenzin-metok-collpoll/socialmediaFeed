@@ -41,15 +41,18 @@ public class PostRepositoryImpl implements PostRepository {
     @Override
     public String getPostsWithLikeDislikeCount() {
    String sqlQuery =  "SELECT p.*, " +
-                "ld.type as liDiType, " +
-                "ld.id as liDi, " +
-                "c.id as comment_id, " +
-                "c.user_name as commented_by, " +
-                "c.description as comment, " +
-                "c.time_stamp as comment_timestamp " +
-                "FROM Posts p " +
-                "LEFT JOIN Comments c ON p.id = c.post_id " +
-                "LEFT JOIN like_and_dislike ld ON ld.post_id = p.id";
+   "ld.type as liDiType, " +
+   "ld.id as liDi, " +
+   "c.id as comment_id, " +
+   "c.user_name as commented_by, " +
+   "c.description as comment, " +
+   "c.time_stamp as comment_timestamp, " +
+   "o.id as option_id, " +
+   "o.content " +
+   "FROM Posts p " +
+   "LEFT JOIN Comments c ON p.id = c.post_id " +
+   "LEFT JOIN Options o ON p.id = o.question_id " +
+   "LEFT JOIN like_and_dislike ld ON ld.post_id = p.id";
 
         return sqlQuery;
     }

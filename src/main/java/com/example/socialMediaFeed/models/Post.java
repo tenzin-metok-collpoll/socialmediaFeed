@@ -29,6 +29,8 @@ public class Post {
     private Long dislikeCounts;
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> comments;
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<Option> options;
 
     public Post(Integer id, String userName, String description, Timestamp postedTime, String type) {
         this.id = id;
@@ -40,6 +42,10 @@ public class Post {
 
     public void setComments(Map<Integer, Comment> comments) {
         this.comments = new ArrayList<>(comments.values());
+    }
+
+    public void setOptions(Map<Integer, Option> options) {
+        this.options = new ArrayList<>(options.values());
     }
 
     @Override

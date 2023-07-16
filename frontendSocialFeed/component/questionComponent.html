@@ -1,9 +1,9 @@
 <div class="row card custom-card">
-  <div class="card-header row">
+  <div class="card-header1 row">
     <div class="col-2">
       <img
         class="image"
-        src="img/question.jpeg"
+        src="img/Question-Mark.png"
         style="border-radius: 2rem"
         alt="not found"
       />
@@ -36,16 +36,18 @@
   <!-- FEED CONTENT -->
   <div class="card-body">
     <div class="row">
-    <div class="col-9" id="content" class="card-text" ng-show="!editMode">
-      {{data.description}}
+      <div class="col-9" id="content" class="card-text" ng-show="!editMode">
+        {{data.description}}
+      </div>
+      <div class="col-3 posted" style="text-align: right">
+        {{ data.postedTime | timeAgo }}
+      </div>
     </div>
-    <div class="col-3 posted" style="text-align: right;">{{ data.postedTime | timeAgo }}</div>
-    </div>
-    <ul ng-show="checkbox" style="margin-top: 1rem"> 
+    <ul style="margin-top: 1rem">
       <li
         class="list-option"
-        style="font-size: 14px;"
-        ng-repeat="singleOption in options"
+        style="font-size: 14px"
+        ng-repeat="singleOption in data.options"
       >
         <div class="form-check form-check-inline">
           <input
@@ -56,33 +58,37 @@
             id="inlineRadio1"
             value="option1"
           />
-          <label class="form-check-label" for="inlineRadio1">{{singleOption.content}}</label>
+          <label class="form-check-label" for="inlineRadio1"
+            >{{singleOption.content}}</label
+          >
         </div>
       </li>
-    </ul> 
+    </ul>
     <div class="progress" ng-show="showBar" style="height: 1.3rem; margin-top: 0.5rem; width: 30rem" >
       <div class="progress-bar" role="progressbar" style="width: 100%; background: #ade6ec; border: 1px solid #80808038; color:black" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"><span>{{pickedOption}} 100%</span></div>
     </div>
-  <br />
+    <!-- <br />
     <a ng-init="checkbox=false" ng-click="checkbox = !checkbox; getOptionsByQuestionId(data.id)" style="color: black; font-size: 13px;">
       <i class="fa fa-user" aria-hidden="true"></i> &nbsp;Be the first to poll</a
-    >
+    > -->
   </div>
   <!-- options LIKE DISLIKE COMMENT SHARE -->
-  <div class="row card-header">
+  <div class="row card-header1">
     <div style="position: relative">
-      <a class="nav-link hover" ng-click="checkbox=true; getOptionsByQuestionId(data.id)" style="color: black; float:right">
+      <a
+        class="nav-link hover"
+        ng-click="checkbox=true; getOptionsByQuestionId(data.id)"
+        style="color: black; float: right"
+      >
         <i class="fas fa-share"></i> &nbsp;Share</a
       >
       <div ng-show="loadinglike" class="allloader">
         <div class="spinner"></div>
       </div>
+    </div>
+  </div>
+  <!-- check box for ask question -->
 
-    </div>
-    </div>
-    <!-- check box for ask question -->
-      
-  
   <!--Edit modal pop up  -->
   <div
     class="modal fade"

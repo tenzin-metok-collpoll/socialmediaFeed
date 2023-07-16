@@ -48,7 +48,7 @@ angular.module("myApp").directive("postComponent", [
                 let updatedPost = {
                   userName: data.userName,
                   description: $scope.editedContent,
-                  type: "post"
+                  type: "post",
                 };
                 //update a post
                 postService
@@ -78,10 +78,10 @@ angular.module("myApp").directive("postComponent", [
               postService
                 .deletePost(singlePost.id)
                 .then(function (res) {
-                  if(res==='') $scope.onDataUpdated({ data: singlePost.id });
+                  if (res === "") $scope.onDataUpdated({ data: singlePost.id });
                   // Handle the successful deletion
                   console.log("sdfgdgdfgdfgdf");
-                  
+
                   // fetchPost();
                 })
                 .catch(function (error) {
@@ -101,8 +101,7 @@ angular.module("myApp").directive("postComponent", [
           //add comments
           $scope.addComment = (singlePost) => {
             if (navigator.onLine) {
-          
-    $scope.loadingComments=true;
+              $scope.loadingComments = true;
               console.log("singlePost: ", singlePost);
               $scope.showCommentInput = false;
               if (singlePost.val !== "") {
@@ -140,7 +139,7 @@ angular.module("myApp").directive("postComponent", [
           $scope.deleteComment = (singleComment) => {
             console.log("singleComment: ", singleComment.id);
             if (navigator.onLine) {
-              $scope.loadingDelete=true;
+              $scope.loadingDelete = true;
               console.log("singleComment: ", singleComment);
               commentService
                 .deleteComment(singleComment.id)
@@ -170,7 +169,7 @@ angular.module("myApp").directive("postComponent", [
           $scope.Update = (singleComment, singlePost) => {
             console.log("$scope.editedComment", $scope.formData.editedComment);
             if (navigator.onLine) {
-              $scope.loadingComments=true;
+              $scope.loadingComments = true;
               singleComment.editMode = false;
               const updatedComment = {
                 description: $scope.formData.editedComment,
@@ -221,7 +220,7 @@ angular.module("myApp").directive("postComponent", [
           // increment likes
           $scope.incrementLike = (singlePost) => {
             if (navigator.onLine) {
-              $scope.loadinglike=true;
+              $scope.loadinglike = true;
               const newlike = {
                 userName: singlePost.userName,
                 type: "like",
@@ -252,7 +251,7 @@ angular.module("myApp").directive("postComponent", [
           //increment dislike
           $scope.decrementLike = (singlePost) => {
             if (navigator.onLine) {
-              $scope.loadingDislike=true;
+              $scope.loadingDislike = true;
               const newDislike = {
                 userName: singlePost.userName,
                 type: "dislike",

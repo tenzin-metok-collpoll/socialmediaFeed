@@ -121,9 +121,19 @@
     }
    
     .card-header{
+      background-color: rgb(58 204 237 / 18%) !important;
       width:100%;
       margin-left: 0.1px !important;
     }
+    .card-header1 {
+    padding: 0.5rem 1rem;
+    margin-bottom: 0;
+    background-color: rgb(222 152 239 / 28%) !important;
+      width:100%;
+      margin-left: 0.1px !important;
+    border-bottom: 1px solid rgba(0,0,0,.125);
+    }
+
     .side1 {
       margin-top: 17px;
     }
@@ -389,12 +399,16 @@
   background: linear-gradient(to right, #373b44, #4286f4) !important;
   color: #fff;
 }
-.askBtn {
+.postBtnn{
     color: #414142;
     box-shadow: 5px 8px 12px 3px #938989;
-    background: #ade6ec !important;
+    background: #78e0eb !important;
 }
-
+.askBtn{
+color: #414142;
+box-shadow: 5px 8px 12px 3px #938989;
+background: #e8a5f3e3 !important;
+}
 .l-bg-green-dark {
   margin-top:1rem;
   background: linear-gradient(to right, #0a504a, #38ef7d) !important;

@@ -21,6 +21,10 @@ public class Option {
     // @JoinColumn(name = "postId")
     // private Post post;
     // @Column(insertable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "questionId")
+    private Post post;
+    @Column(insertable = false, updatable = false)
     private Integer questionId;
 
     public Option(Integer id, String content, Integer questionId) {
