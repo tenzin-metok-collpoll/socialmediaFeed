@@ -49,7 +49,11 @@ angular.module("myApp").controller("myCtr", [
     $scope.showOption3 = false;
     $scope.showOption4 = false;
     $scope.askquestion = false;
+    $scope.isFirstOptionSelected = false;
+$scope.isSecondOptionSelected = false;
+
     $scope.showSecondOption = false;
+    
     $scope.allPosts = [];
     $scope.count = 0;
     $scope.temp;
@@ -171,6 +175,7 @@ angular.module("myApp").controller("myCtr", [
             // getAllData();
 
             if ($scope.showfirstOption) {
+              $scope.isFirstOptionSelected = false;
               if ($scope.isDiv2Clicked) {
                 $scope.selectedOption = [
                   {
@@ -228,13 +233,15 @@ angular.module("myApp").controller("myCtr", [
                 });
             } else if ($scope.showSecondOption) {
               $scope.newOption = [];
-
+              $scope.isSecondOptionSelected = false;
               for (let i = 0; i < $scope.options.length; i++) {
-                let option = {
-                  content: $scope.options[i].value,
-                  questionId: newPost.id,
-                };
-                $scope.newOption.push(option);
+                if ($scope.options[i].value.trim() !== "") {
+                  let option = {
+                    content: $scope.options[i].value,
+                    questionId: newPost.id,
+                  };
+                  $scope.newOption.push(option);
+                }
               }
 
               console.log("$scope.newOption", $scope.newOption);

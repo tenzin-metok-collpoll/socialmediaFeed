@@ -335,7 +335,7 @@
                   ng-class="{blue: isDiv2Clicked}"
                   ng-mouseenter="!isDiv1Clicked && (hover = true)"
                   ng-mouseleave="!isDiv1Clicked && (hover = false)"
-                  ng-click="isDiv2Clicked = true; isDiv1Clicked = false; hover = false;"
+                  ng-click="isDiv2Clicked = true; isDiv1Clicked = false; hover = false; isFirstOptionSelected = true; isSecondOptionSelected = false;"
                 >
                   <div class="form-check form-check-inline">
                     <input
@@ -369,7 +369,7 @@
                   ng-class="{blue: isDiv1Clicked}"
                   ng-mouseenter="!isDiv2Clicked && (hover = true)"
                   ng-mouseleave="!isDiv2Clicked && (hover = false)"
-                  ng-click="isDiv1Clicked = true; isDiv2Clicked = false; hover = false;"
+                  ng-click="isDiv1Clicked = true; isDiv2Clicked = false; hover = false; isFirstOptionSelected = false; isSecondOptionSelected = true;"
                 >
                   <div class="form-check form-check-inline">
                     <input
@@ -481,7 +481,7 @@
           <button
             type="button"
             class="btn postBtn"
-            ng-disabled="myForm.$invalid"
+            ng-disabled="myForm.$invalid || !(isFirstOptionSelected || isSecondOptionSelected)"
             ng-click="addQuestion()"
             ng-disabled="disableButton"
           >
