@@ -59,8 +59,11 @@
             value="option1"
           />
           <label class="form-check-label" for="inlineRadio1"
-            >{{singleOption.content}}</label
+            > {{singleOption.content}} </label
           >
+         
+          <span ng-if="singleOption.newOptionCount" class="optionCountShow">People Agree {{singleOption.newOptionCount}}</span>
+       
         </div>
       </li>
     </ul>

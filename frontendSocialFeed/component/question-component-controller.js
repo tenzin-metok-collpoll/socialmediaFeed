@@ -92,10 +92,14 @@ angular.module("myApp").directive("questionComponent", [
               );
             }
           };
+             // Inside your controller or wherever you define the 'data' object
+// $scope.data.options.forEach(function (singleOption) {
+//   singleOption.newOptionCount = 0; // Initialize the count to zero for each option
+// });
 
           $scope.addAnswer = function (optionId, userName) {
             $scope.checkbox = false;
-            $scope.showBar = true;
+            // $scope.showBar = true;
 
             let answer = {
               optionId: optionId,
@@ -110,9 +114,17 @@ angular.module("myApp").directive("questionComponent", [
                 if (newAnswer.optionId) {
                   answerService
                     .getAnswersByOptionId(newAnswer.optionId)
-                    .then(function (newOption) {
-                      console.log('newOption:::::::::::: ', newOption);
-                      $scope.pickedOption = newOption.content;
+                    .then(function (newOptionCount) {
+                      console.log('newOption:::::::::::: ', newOptionCount);
+                      // $scope.data.options.forEach(function (singleOption) {
+                      //   singleOption.newOptionCount = newOptionCount; // Initialize the count to zero for each option
+                      // });
+                      // $scope.pickedOption = newOption.content;
+                      const optionToUpdate = $scope.data.options.find(option => option.id === newAnswer.optionId);
+                      console.log("optiontoupd",optionToUpdate);
+            if (optionToUpdate) {
+              optionToUpdate.newOptionCount = newOptionCount; // Update the count
+            }
                     })
                     .catch(function (error) {
                       console.error(error);

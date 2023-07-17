@@ -50,6 +50,9 @@
         border: #000;
         padding-left: 1rem;
     }
+    .optionCountShow{
+      margin-left:17rem;
+    }
     .logoImg {
       width:4rem;
       height:3rem;
