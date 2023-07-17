@@ -108,9 +108,10 @@ angular.module("myApp").directive("questionComponent", [
                 console.log("Post added successfully:", newAnswer);
 
                 if (newAnswer.optionId) {
-                  optionService
-                    .getOptionsById(newAnswer.optionId)
+                  answerService
+                    .getAnswersByOptionId(newAnswer.optionId)
                     .then(function (newOption) {
+                      console.log('newOption:::::::::::: ', newOption);
                       $scope.pickedOption = newOption.content;
                     })
                     .catch(function (error) {
@@ -135,7 +136,7 @@ angular.module("myApp").directive("questionComponent", [
                 .getOptionsByQuestionId(id)
                 .then(function (res) {
                   $scope.options = res;
-                  console.log("res: ", res);
+                  console.log("res::::::::::::::::: ", res);
 
                   // $scope.onDataUpdated({ data: id });
                   // Handle the successful deletion

@@ -1,5 +1,7 @@
 package com.example.socialMediaFeed.repositories;
 import com.example.socialMediaFeed.models.Answer;
+import com.example.socialMediaFeed.models.Option;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -16,11 +18,19 @@ public class AnswerRepositoryImpl implements AnswerRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    @Override
-    public Answer findById(int id) {
-        String sql = "SELECT * FROM Answer WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, new Object[] { id }, this::mapRowToUser);
+    // @Override
+    // public Answer findById(int id) {
+    //     String sql = "SELECT * FROM Answer WHERE id = ?";
+    //     return jdbcTemplate.queryForObject(sql, new Object[] { id }, this::mapRowToUser);
 
+    // }
+
+     @Override
+    public Answer[] findById(int id) {
+        String sql = "SELECT * FROM Answers WHERE option_id = ?";
+        List<Answer> answerList = jdbcTemplate.query(sql, new Object[]{id}, this::mapRowToUser);
+    Answer[] answers = answerList.toArray(new Answer[answerList.size()]);
+    return answers;
     }
 
     @Override

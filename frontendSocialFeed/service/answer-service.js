@@ -34,7 +34,19 @@ angular.module("myApp").service("answerService", [
               }
             });
         },
-        
+        getAnswersByOptionId: function (id) {
+          return $http
+            .get("http://localhost:8080/answers/"+ id, { cache: false })
+            .then(function (response) {
+              if (response.status === 200) {
+                console.log("Get all options successful.");
+                return response.data;
+              }
+              else {
+                throw new Error("Failed to delete options");
+              }
+            })
+          }
       };
     },
   ]);

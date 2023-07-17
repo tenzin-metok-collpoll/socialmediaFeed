@@ -27,19 +27,19 @@ public class AnswerController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<?> getAnswerById(@PathVariable int id) {
-    if (id <= 0) {
-      // Return invalid ID response
-      return ResponseEntity.badRequest().body("Invalid ID");
-    }
+  public Integer getAnswersByOptionId(@PathVariable int id) {
+    // if (id <= 0) {
+    //   // Return invalid ID response
+    //   return ResponseEntity.badRequest().body("Invalid ID");
+    // }
 
-    try {
-      Answer answer= answerService.getAnswerById(id);
-      return ResponseEntity.ok(answer);
-    } catch (Exception e) {
-      // Handle the exception when the post is not found
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Post not found");
-    }
+    // try {
+      Answer[] answer= answerService.getAnswersByOptionId(id);
+      return answer.length;
+    // } catch (Exception e) {
+    //   // Handle the exception when the post is not found
+    //   return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Post not found");
+    // }
   }
   @PostMapping("/")
   public Answer createAnswer(@RequestBody(required = false) Answer answer) {
@@ -57,22 +57,22 @@ public class AnswerController {
       // return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     // }
   }
-  @DeleteMapping("/{id}")
-  public ResponseEntity<String> deleteAnswer(@PathVariable("id") int id) {
-    if (id <= 0) {
-      // Return invalid ID response
-      return ResponseEntity.badRequest().body("Invalid ID");
-    }
-    try {
-      answerService.deleteAnswer(id);
-      return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Comment with ID " + id + " deleted successfully.");
-    } catch (IllegalArgumentException e) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-    } catch (Exception e) {
-      e.printStackTrace();
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while deleting the post.");
-    }
-  }
+  // @DeleteMapping("/{id}")
+  // public ResponseEntity<String> deleteAnswer(@PathVariable("id") int id) {
+  //   if (id <= 0) {
+  //     // Return invalid ID response
+  //     return ResponseEntity.badRequest().body("Invalid ID");
+  //   }
+  //   try {
+  //     answerService.deleteAnswer(id);
+  //     return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Comment with ID " + id + " deleted successfully.");
+  //   } catch (IllegalArgumentException e) {
+  //     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+  //   } catch (Exception e) {
+  //     e.printStackTrace();
+  //     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while deleting the post.");
+  //   }
+  // }
 
   @PutMapping("/{id}")
   public ResponseEntity<Answer> updateAnswer(@RequestBody Answer answer, @PathVariable("id") int id) {

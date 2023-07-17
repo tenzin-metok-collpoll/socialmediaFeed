@@ -8,7 +8,7 @@ import com.example.socialMediaFeed.models.Answer;
 
 
 public interface AnswerService {
-     Answer getAnswerById(int id);
+    Answer[] getAnswersByOptionId(int id);
 
     List<Answer> getAllAnswer();
 
@@ -16,6 +16,6 @@ public interface AnswerService {
 
     Answer updateAnswer(Answer answer);
 
-    void deleteAnswer(int id);
+    // void deleteAnswer(int id);
 }
 

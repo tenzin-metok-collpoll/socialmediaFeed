@@ -18,7 +18,7 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public Answer getAnswerById(int id) {
+    public Answer[] getAnswersByOptionId(int id) {
         return answerRepository.findById(id);
     }
 
@@ -56,19 +56,19 @@ public class AnswerServiceImpl implements AnswerService {
         return answerRepository.update(answer);
     }
 
-    @Override
-    public void deleteAnswer(int id) {
-        try {
-            Answer existingAnswer = answerRepository.findById(id);
-            if (existingAnswer == null) {
-                throw new IllegalArgumentException("Comment with ID " + id + " does not exist.");
-            }
-            answerRepository.delete(id);
-        } catch (EmptyResultDataAccessException e) {
-            throw new IllegalArgumentException("Comment with ID " + id + " does not exist.");
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
-        }
-    }
+    // @Override
+    // public void deleteAnswer(int id) {
+    //     try {
+    //         Answer existingAnswer = answerRepository.findById(id);
+    //         if (existingAnswer == null) {
+    //             throw new IllegalArgumentException("Comment with ID " + id + " does not exist.");
+    //         }
+    //         answerRepository.delete(id);
+    //     } catch (EmptyResultDataAccessException e) {
+    //         throw new IllegalArgumentException("Comment with ID " + id + " does not exist.");
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //         throw e;
+    //     }
+    // }
 }
