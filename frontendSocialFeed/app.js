@@ -49,6 +49,7 @@ angular.module("myApp").controller("myCtr", [
     $scope.showOption3 = false;
     $scope.showOption4 = false;
     $scope.askquestion = false;
+    $scope.addposts = false;
     $scope.isFirstOptionSelected = false;
 $scope.isSecondOptionSelected = false;
 
@@ -112,7 +113,7 @@ $scope.isSecondOptionSelected = false;
     $scope.addToFeed = () => {
       if (navigator.onLine) {
         $scope.loading = true;
-        $scope.show = false;
+        
         $scope.askquestion = false;
         const post = {
           userName: $scope.userName,
@@ -125,9 +126,13 @@ $scope.isSecondOptionSelected = false;
           .createPost(post)
           .then(function (newPost) {
             console.log("Post added successfully:", newPost);
-
+            if(newPost){
+            $scope.show = false;
             $scope.story = "";
             $scope.userName = "";
+          }
+
+           
             getAllData();
           })
           .catch(function (error) {

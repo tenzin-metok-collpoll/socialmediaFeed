@@ -93,10 +93,10 @@ angular.module("myApp").service("postService", [
           .post("http://localhost:8080/posts/", postData)
 
           .then(function (response) {
-            console.log('response:::: ', response);
+            // console.log('response:::: ', response);
             if (response.status === 200) {
               console.log("Post created successfully");
-              return response.data;
+              return(response.data);
             }
             else {
               throw new Error("Failed to delete post");
