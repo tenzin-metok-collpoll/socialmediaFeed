@@ -147,9 +147,9 @@ public class PostServiceImpl implements PostService {
     public Post createPost(Post post) {
         // try {
             // Set the timestamp value in UTC
-        //     if(true){
-        //     throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found."); 
-        // }
+            if(true){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found."); 
+        }
             post.setPostedTime(Timestamp.from(Instant.now()));
             // Check required fields
             if (post.getDescription() == " " || post.getUserName() == " ") {

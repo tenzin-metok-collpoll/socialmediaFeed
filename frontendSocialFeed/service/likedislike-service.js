@@ -1,7 +1,11 @@
 angular.module("myApp").service("likedislikeService", [
-  "$http",
-  function ($http) {
+  "$http","$rootScope",
+  function ($http,$rootScope) {
     return {
+      showErrorDiv: function () {
+        showError = true;
+        $rootScope.$broadcast("showErrorDivEvent");
+      },
       getAlllikeDislike: function () {
         return $http
           .get("http://localhost:8080/likeDislike/", { cache: false })
@@ -20,7 +24,7 @@ angular.module("myApp").service("likedislikeService", [
             return response.data; // Return the response if needed
           })
           .catch(function (error) {
-            throw error;
+            $rootScope.$emit("showErrorDivEvent");
           });
       },
       addDislike: function (dislike) {
@@ -30,7 +34,7 @@ angular.module("myApp").service("likedislikeService", [
             return response.data; // Return the response if needed
           })
           .catch(function (error) {
-            throw error;
+            $rootScope.$emit("showErrorDivEvent");
           });
       },
     };

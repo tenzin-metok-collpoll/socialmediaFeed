@@ -79,7 +79,9 @@ $scope.isSecondOptionSelected = false;
     };
     $rootScope.$on("showErrorDivEvent", function () {
       console.log("inside the event");
-      vm.showErrorDiv = true; // Update the showErrorDiv variable to true
+      $scope.showErrorDiv=true;
+      var errorDiv = document.getElementById("errorDiv");
+      errorDiv.style.display = "block"; 
     });
 
     $scope.addOption = function () {
@@ -149,10 +151,15 @@ $scope.isSecondOptionSelected = false;
             getAllData();
           })
           .catch(function (error) {
-            console.error(error);
+            $rootScope.$on("showErrorDivEvent", function () {
+              console.log("inside the event");
+              $scope.showErrorDiv=true;
+              var errorDiv = document.getElementById("errorDiv");
+              errorDiv.style.display = "block"; 
+            });
           });
       } else {
-        $scope.showError = true;
+        //showErrorDiv();
       }
     };
     $scope.options = [];
@@ -307,16 +314,26 @@ $scope.isSecondOptionSelected = false;
             $scope.options.splice(0, 1);
           })
           .catch(function (error) {
-            showErrorDiv();
+            $rootScope.$on("showErrorDivEvent", function () {
+              console.log("inside the event");
+              $scope.showErrorDiv=true;
+              var errorDiv = document.getElementById("errorDiv");
+              errorDiv.style.display = "block"; 
+            });
           });
       } else {
-        showErrorDiv();
+        $rootScope.$on("showErrorDivEvent", function () {
+          console.log("inside the event");
+          $scope.showErrorDiv=true;
+          var errorDiv = document.getElementById("errorDiv");
+          errorDiv.style.display = "block"; 
+        });
       }
     };
 
     function getAllData() {
       if (navigator.onLine) {
-        $scope.loading = true;
+        // $scope.loading = true;
         postService
           .getAllData()
           .then(function (posts) {
@@ -325,10 +342,20 @@ $scope.isSecondOptionSelected = false;
             return posts;
           })
           .catch(function (error) {
-            console.error("Error retrieving data:", error);
+            $rootScope.$on("showErrorDivEvent", function () {
+              console.log("inside the event");
+              $scope.showErrorDiv=true;
+              var errorDiv = document.getElementById("errorDiv");
+              errorDiv.style.display = "block"; 
+            });
           });
       } else {
-        $scope.showError = true;
+        $rootScope.$on("showErrorDivEvent", function () {
+          console.log("inside the event");
+          $scope.showErrorDiv=true;
+          var errorDiv = document.getElementById("errorDiv");
+          errorDiv.style.display = "block"; 
+        });
       }
     }
     function showErrorDiv() {

@@ -51,17 +51,7 @@ angular.module("myApp").service("postService", [
           }
         })
         .catch(function (error) {
-          if (error.response) {
-            if (error.response.status === 404) {
-              alert("Data not found.", "error");
-            } else {
-              alert("An error occurred while fetching post.", "error");
-            }
-          } else if (error.request) {
-            alert("No response received from the server.", "error");
-          } else {
-            alert("An error occurred while making the request.", "error");
-          }
+          $rootScope.$emit("showErrorDivEvent");
         });
       },
        getPostById: function () {
@@ -77,22 +67,7 @@ angular.module("myApp").service("postService", [
             }
           })
           .catch(function (error) {
-            if (error.response) {
-              if (error.status === 400) {
-                // Bad Request: Data sent is incorrect or not in the expected format
-                alert("Bad Request: Invalid data format");
-              }
-      
-              if (error.response.status === 404) {
-                alert("post not found.", "error");
-              } else {
-                alert("An error occurred while fetching post.", "error");
-              }
-            } else if (error.request) {
-              alert("No response received from the server.", "error");
-            } else {
-              alert("An error occurred while making the request.", "error");
-            }
+            $rootScope.$emit("showErrorDivEvent");
           });
       },
       createPost: function (postData) {
@@ -129,21 +104,7 @@ angular.module("myApp").service("postService", [
             }
           })
           .catch(function (error) {
-            if (error.response) {
-              if (error.status === 400) {
-                // Bad Request: Data sent is incorrect or not in the expected format
-                alert("Bad Request: Invalid data format");
-              }
-              if (error.response.status === 404) {
-                alert("post not found.", "error");
-              } else {
-                alert("An error occurred while fetching post.", "error");
-              }
-            } else if (error.request) {
-              alert("No response received from the server.", "error");
-            } else {
-              alert("An error occurred while making the request.", "error");
-            }
+            $rootScope.$emit("showErrorDivEvent");
           });
       },
       deletePost: function (postId) {
@@ -161,26 +122,7 @@ angular.module("myApp").service("postService", [
           })
           .catch(function (error) {
             console.log('error: ', error.response);
-            if (error.response) {
-              if (error.status === 400) {
-                // Bad Request: Data sent is incorrect or not in the expected format
-                alert("Bad Request: Invalid data format");
-              }
-              if (error.response.status === 404) {
-                alert("post not found.", "error");
-              } 
-              else {
-                alert("An error occurred while fetching post.", "error");
-              }
-            } else if (error.request) {
-              alert("No response received from the server.", "error");
-            } 
-            else if (error.response === undefined ) {
-              alert("Cannot delete a Post or question having comments, like dislikes, options", "error");
-            }
-            else {
-              alert("An error occurred while making the request.", "error");
-            }
+            $rootScope.$emit("showErrorDivEvent");
           });
       },
     };

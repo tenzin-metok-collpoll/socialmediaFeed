@@ -1,7 +1,11 @@
 angular.module("myApp").service("optionService", [
-    "$http",
-    function ($http) {
+    "$http","$rootScope",
+    function ($http,$rootScope) {
       return {
+        showErrorDiv: function () {
+          showError = true;
+          $rootScope.$broadcast("showErrorDivEvent");
+        },
         getAllOption: function () {
           return $http
             .get("http://localhost:8080/options/", { cache: false })
@@ -15,18 +19,7 @@ angular.module("myApp").service("optionService", [
               }
             })
             .catch(function (error) {
-              if (error.response) {
-                if (error.response.status === 404) {
-                  alert("options not found.", "error");
-                } else {
-                  alert("An error occurred while fetching options.", "error");
-                }
-              } else if (error.request) {
-                alert("No response received from the server.", "error");
-              } else {
-                alert("An error occurred while making the request.", "error");
-              }
-              throw error;
+              $rootScope.$emit("showErrorDivEvent");
             });
         },
         getOptionsById: function (id) {
@@ -43,18 +36,7 @@ angular.module("myApp").service("optionService", [
               }
             })
             .catch(function (error) {
-              if (error.response) {
-                if (error.response.status === 404) {
-                  alert("options not found.", "error");
-                } else {
-                  alert("An error occurred while fetching options.", "error");
-                }
-              } else if (error.request) {
-                alert("No response received from the server.", "error");
-              } else {
-                alert("An error occurred while making the request.", "error");
-              }
-              throw error;
+              $rootScope.$emit("showErrorDivEvent");
             });
         },
   
@@ -72,18 +54,20 @@ angular.module("myApp").service("optionService", [
               }
             })
             .catch(function (error) {
-              if (error.response) {
-                if (error.response.status === 404) {
-                  alert("options not found.", "error");
-                } else {
-                  alert("An error occurred while fetching options.", "error");
-                }
-              } else if (error.request) {
-                alert("No response received from the server.", "error");
-              } else {
-                alert("An error occurred while making the request.", "error");
-              }
-              throw error;
+              // if (error.response) {
+              //   if (error.response.status === 404) {
+              //     alert("options not found.", "error");
+              //   } else {
+              //     alert("An error occurred while fetching options.", "error");
+              //   }
+              // } else if (error.request) {
+              //   alert("No response received from the server.", "error");
+              // } else {
+              //   alert("An error occurred while making the request.", "error");
+              // }
+              // throw error;
+              $rootScope.$emit("showErrorDivEvent");
+
             });
         },
   
@@ -101,22 +85,7 @@ angular.module("myApp").service("optionService", [
               }
             })
             .catch(function (error) {
-              if (error.response) {
-                if (error.status === 400) {
-                  // Bad Request: Data sent is incorrect or not in the expected format
-                  alert("Bad Request: Invalid data format");
-                }
-  
-                if (error.response.status === 404) {
-                  alert("options not found.", "error");
-                } else {
-                  alert("An error occurred while fetching options.", "error");
-                }
-              } else if (error.request) {
-                alert("No response received from the server.", "error");
-              } else {
-                alert("An error occurred while making the request.", "error");
-              }
+              $rootScope.$emit("showErrorDivEvent");
             });
         },
         

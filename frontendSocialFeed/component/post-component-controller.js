@@ -17,12 +17,14 @@ angular.module("myApp").directive("postComponent", [
         "postService",
         "commentService",
         "likedislikeService",
-        function ($scope, postService, commentService, likedislikeService) {
+        "$rootScope",
+        function ($scope, postService, commentService, likedislikeService,$rootScope) {
           $scope.commentArr = [];
           $scope.newComment = {};
           $scope.likeArr = [];
           $scope.newLike = {};
           $scope.likeCounter = 0;
+          $scope.showErrorDiv=false;
           $scope.dislikeCounter = 0;
           $scope.formData = {
             editedComment: "",
@@ -61,13 +63,21 @@ angular.module("myApp").directive("postComponent", [
                     $scope.editMode = false;
                   })
                   .catch(function (error) {
-                    console.error(error);
+                    $rootScope.$on("showErrorDivEvent", function () {
+                      console.log("inside the event");
+                      $scope.showErrorDiv=true;
+                      var errorDiv = document.getElementById("errorDiv");
+                      errorDiv.style.display = "block"; 
+                    });
                   });
               }
             } else {
-              alert(
-                "Application is offline. Please check your internet connection."
-              );
+              $rootScope.$on("showErrorDivEvent", function () {
+                console.log("inside the event");
+                $scope.showErrorDiv=true;
+                var errorDiv = document.getElementById("errorDiv");
+                errorDiv.style.display = "block"; 
+              });
             }
           };
 
@@ -80,17 +90,33 @@ angular.module("myApp").directive("postComponent", [
                 .then(function (res) {
                   if (res === "") $scope.onDataUpdated({ data: singlePost.id });
                   // Handle the successful deletion
-                  console.log("sdfgdgdfgdfgdf");
+                  console.log("sdfgdgdfgdfgdf.............ojkkkkkkkkkkkkkkkkkkkkk");
 
                   // fetchPost();
                 })
                 .catch(function (error) {
-                  console.error("Failed to delete post:", error);
+                  $rootScope.$on("showErrorDivEvent", function () {
+                    console.log("inside the event delete feed");
+                    $scope.showErrorDiv=true;
+                    var errorDiv = document.getElementById("errorDiv");
+                    errorDiv.style.display = "block"; 
+                    setTimeout(function() {
+                      errorDiv.style.display = "none";
+                      $scope.showErrorDiv = false;
+                    }, 2000); 
+                  });
                 });
             } else {
-              alert(
-                "Application is offline. Please check your internet connection."
-              );
+              $rootScope.$on("showErrorDivEvent", function () {
+                console.log("inside the event delete feed");
+                $scope.showErrorDiv=true;
+                var errorDiv = document.getElementById("errorDiv");
+                errorDiv.style.display = "block"; 
+                setTimeout(function() {
+                  errorDiv.style.display = "none";
+                  $scope.showErrorDiv = false;
+                }, 2000); 
+              });
             }
           };
 
@@ -119,13 +145,21 @@ angular.module("myApp").directive("postComponent", [
                     singlePost.val = "";
                   })
                   .catch(function (error) {
-                    console.error(error);
+                    $rootScope.$on("showErrorDivEvent", function () {
+                      console.log("inside the event");
+                      $scope.showErrorDiv=true;
+                      var errorDiv = document.getElementById("errorDiv");
+                      errorDiv.style.display = "block"; 
+                    });
                   });
               }
             } else {
-              alert(
-                "Application is offline. Please check your internet connection."
-              );
+              $rootScope.$on("showErrorDivEvent", function () {
+                console.log("inside the event");
+                $scope.showErrorDiv=true;
+                var errorDiv = document.getElementById("errorDiv");
+                errorDiv.style.display = "block"; 
+              });
             }
           };
 
@@ -150,12 +184,20 @@ angular.module("myApp").directive("postComponent", [
                   $scope.formData.editMode = false;
                 })
                 .catch(function (error) {
-                  console.error("Failed to comment post:", error);
+                  $rootScope.$on("showErrorDivEvent", function () {
+                    console.log("inside the event");
+                    $scope.showErrorDiv=true;
+                    var errorDiv = document.getElementById("errorDiv");
+                    errorDiv.style.display = "block"; 
+                  });
                 });
             } else {
-              alert(
-                "Application is offline. Please check your internet connection."
-              );
+              $rootScope.$on("showErrorDivEvent", function () {
+                console.log("inside the event");
+                $scope.showErrorDiv=true;
+                var errorDiv = document.getElementById("errorDiv");
+                errorDiv.style.display = "block"; 
+              });
             }
           };
 
@@ -185,12 +227,20 @@ angular.module("myApp").directive("postComponent", [
                   $scope.onDataUpdated({ data: singleComment.id });
                 })
                 .catch(function (error) {
-                  console.error(error);
+                  $rootScope.$on("showErrorDivEvent", function () {
+                    console.log("inside the event");
+                    $scope.showErrorDiv=true;
+                    var errorDiv = document.getElementById("errorDiv");
+                    errorDiv.style.display = "block"; 
+                  });
                 });
             } else {
-              alert(
-                "Application is offline. Please check your internet connection."
-              );
+              $rootScope.$on("showErrorDivEvent", function () {
+                console.log("inside the event");
+                $scope.showErrorDiv=true;
+                var errorDiv = document.getElementById("errorDiv");
+                errorDiv.style.display = "block"; 
+              });
             }
           };
 
@@ -213,7 +263,12 @@ angular.module("myApp").directive("postComponent", [
                 $scope.likeArr = likeDislike;
               })
               .catch(function (error) {
-                console.error(error);
+                $rootScope.$on("showErrorDivEvent", function () {
+                  console.log("inside the event");
+                  $scope.showErrorDiv=true;
+                  var errorDiv = document.getElementById("errorDiv");
+                  errorDiv.style.display = "block"; 
+                });
               });
           }
 
@@ -239,12 +294,20 @@ angular.module("myApp").directive("postComponent", [
                   singlePost.val = "";
                 })
                 .catch(function (error) {
-                  console.error(error);
+                  $rootScope.$on("showErrorDivEvent", function () {
+                    console.log("inside the event");
+                    $scope.showErrorDiv=true;
+                    var errorDiv = document.getElementById("errorDiv");
+                    errorDiv.style.display = "block"; 
+                  });
                 });
             } else {
-              alert(
-                "Application is offline. Please check your internet connection."
-              );
+              $rootScope.$on("showErrorDivEvent", function () {
+                console.log("inside the event");
+                $scope.showErrorDiv=true;
+                var errorDiv = document.getElementById("errorDiv");
+                errorDiv.style.display = "block"; 
+              });
             }
           };
 
@@ -271,12 +334,20 @@ angular.module("myApp").directive("postComponent", [
                   singlePost.val = "";
                 })
                 .catch(function (error) {
-                  console.error(error);
+                  $rootScope.$on("showErrorDivEvent", function () {
+                    console.log("inside the event");
+                    $scope.showErrorDiv=true;
+                    var errorDiv = document.getElementById("errorDiv");
+                    errorDiv.style.display = "block"; 
+                  });
                 });
             } else {
-              alert(
-                "Application is offline. Please check your internet connection."
-              );
+              $rootScope.$on("showErrorDivEvent", function () {
+                console.log("inside the event");
+                $scope.showErrorDiv=true;
+                var errorDiv = document.getElementById("errorDiv");
+                errorDiv.style.display = "block"; 
+              });
             }
           };
 

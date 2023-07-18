@@ -19,12 +19,14 @@ angular.module("myApp").directive("questionComponent", [
         "optionService",
         "answerService",
         "likedislikeService",
+        "$rootScope",
         function (
           $scope,
           postService,
           commentService,
           optionService,
-          answerService
+          answerService,
+          $rootScope,
         ) {
           $scope.options = [];
           $scope.checkbox = false;
@@ -84,12 +86,28 @@ angular.module("myApp").directive("questionComponent", [
                   // fetchPost();
                 })
                 .catch(function (error) {
-                  console.error("Failed to delete post:", error);
+                  $rootScope.$on("showErrorDivEvent", function () {
+                    console.log("inside the event delete feed");
+                    $scope.showErrorDiv=true;
+                    var errorDiv = document.getElementById("errorDiv");
+                    errorDiv.style.display = "block"; 
+                    setTimeout(function() {
+                      errorDiv.style.display = "none";
+                      $scope.showErrorDiv = false;
+                    }, 2000); 
+                  });
                 });
             } else {
-              alert(
-                "Application is offline. Please check your internet connection."
-              );
+              $rootScope.$on("showErrorDivEvent", function () {
+                console.log("inside the event delete feed");
+                $scope.showErrorDiv=true;
+                var errorDiv = document.getElementById("errorDiv");
+                errorDiv.style.display = "block"; 
+                setTimeout(function() {
+                  errorDiv.style.display = "none";
+                  $scope.showErrorDiv = false;
+                }, 2000); 
+              });
             }
           };
              // Inside your controller or wherever you define the 'data' object
