@@ -1,8 +1,15 @@
 angular.module("myApp").service("postService", [
   "$http",
-  function ($http) {
+  "$rootScope",
+  function ($http,$rootScope) {
+    var showError = false; 
+    var service = this;
     return {
-
+     
+      showErrorDiv: function () {
+        showError = true;
+        $rootScope.$broadcast("showErrorDivEvent");
+      },
       getAllPosts: function () {
         return $http
           .get("http://localhost:8080/posts/", { cache: false })
@@ -102,23 +109,11 @@ angular.module("myApp").service("postService", [
               throw new Error("Failed to delete post");
             }
           })
-          .catch(function (error) {
-            if (error.response) {
-              if (error.status === 400) {
-                // Bad Request: Data sent is incorrect or not in the expected format
-                alert("Bad Request: Invalid data format");
-              }
-              if (error.response.status === 404) {
-                alert("post not found.", "error");
-              } 
-              else {
-                alert("An error occurred while fetching post.", "error");
-              }
-            } else if (error.request) {
-              alert("No response received from the server.", "error");
-            } else {
-              alert("An error occurred while making the request.", "error");
-            }
+          .catch((error) => {
+            // Display the error div instead of the alert
+            $rootScope.$emit("showErrorDivEvent");
+
+            // Handle other error scenarios if needed
           });
       },
       updatePost: function (postId, postData) {

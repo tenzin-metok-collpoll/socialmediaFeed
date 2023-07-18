@@ -310,14 +310,14 @@
                 <div
                   class="col-5 with-vertical-line"
                   style="text-align: center"
-                  ng-click="showfirstOption=true; showSecondOption=false;"
+                  ng-click="showfirstOption=true; showSecondOption=false;  CancelPoll()"
                 >
                   Choose answer options&nbsp;<i class="fa fa-angle-down"></i>
                 </div>
                 <div
                   class="col-5"
                   style="text-align: center"
-                  ng-click="showSecondOption=true; showfirstOption = false;"
+                  ng-click="showSecondOption=true; showfirstOption = false; isFirstOptionSelected = true; isSecondOptionSelected = true; isDiv1Clicked =false;isDiv2Clicked=false"
                 >
                   Create your own options&nbsp;<i class="fa fa-angle-down"></i>
                 </div>
@@ -597,4 +597,7 @@
       </div>
     </div>
   </div>
+  <div id="errorDiv"  ng-show="showErrorDiv" style="display: block; position: fixed; bottom: 0; left: 0; width: 100%; background-color: rgb(98, 98, 124); color: white; text-align: center; padding: 10px; width:200px; margin-left:1000px;">
+    Something went wrong
+</div>
 </div>

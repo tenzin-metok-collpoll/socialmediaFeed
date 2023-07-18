@@ -31,8 +31,14 @@ angular.module("myApp").controller("myCtr", [
   "postService",
   "optionService",
   "$routeParams",
-  function ($scope, $http, postService, optionService, $routeParams) {
+  "$rootScope",
+  function ($scope, $http, postService, optionService, $routeParams,$rootScope) {
     var vm = this;
+
+    // ... (existing code)
+
+    vm.showErrorDiv = false; // Initialize the showErrorDiv variable
+
     $scope.loading = false;
     $scope.loadingComments = false;
     $scope.loadingDelete = false;
@@ -48,6 +54,7 @@ angular.module("myApp").controller("myCtr", [
     $scope.showOption2 = false;
     $scope.showOption3 = false;
     $scope.showOption4 = false;
+    $scope.showErrorDiv = false;
     $scope.askquestion = false;
     $scope.addposts = false;
     $scope.isFirstOptionSelected = false;
@@ -70,6 +77,10 @@ $scope.isSecondOptionSelected = false;
       console.log("Data received from child:", data);
       getAllData();
     };
+    $rootScope.$on("showErrorDivEvent", function () {
+      console.log("inside the event");
+      vm.showErrorDiv = true; // Update the showErrorDiv variable to true
+    });
 
     $scope.addOption = function () {
       if (!$scope.showOption2) {
@@ -107,6 +118,8 @@ $scope.isSecondOptionSelected = false;
         $scope.cancelOption(i);
       }
       $scope.options.splice(0, 1);
+      var errorDiv = document.getElementById("errorDiv");
+      errorDiv.style.display = "none";
     };
 
     // adding a new post in feed
@@ -139,13 +152,28 @@ $scope.isSecondOptionSelected = false;
             console.error(error);
           });
       } else {
-        alert("Application is offline. Please check your internet connection.");
+        $scope.showError = true;
       }
     };
     $scope.options = [];
 
+    $scope.hasTextInPreviousOption = function (index) {
+      if (index === 0) {
+        return true; // For the first option, always return true
+      } else {
+        const prevOption = $scope.options[index - 1];
+        return prevOption && prevOption.value.trim() !== "";
+      }
+    };
+
+    // Updated addOption function
     $scope.addOption = function () {
-      $scope.options.push({ value: "" });
+      if ($scope.hasTextInPreviousOption($scope.options.length )) {
+        $scope.options.push({ value: "" });
+      } else {
+        console.log("length",$scope.options.length - 1);
+        alert("Please enter text in the previous option before adding a new option.");
+      }
     };
 
     $scope.cancelOption = function (index) {
@@ -234,10 +262,15 @@ $scope.isSecondOptionSelected = false;
                   getAllData();
                 })
                 .catch(function (error) {
-                  console.error(error);
+                 
+                  $scope.showError = true;
                 });
             } else if ($scope.showSecondOption) {
               $scope.newOption = [];
+              $scope.isSecondOptionSelected=false;
+              $scope.isFirstOptionSelected=false;
+              $scope.isDiv2Clicked=false;
+              $scope.isDiv1Clicked=false;
               $scope.isSecondOptionSelected = false;
               for (let i = 0; i < $scope.options.length; i++) {
                 if ($scope.options[i].value.trim() !== "") {
@@ -274,10 +307,10 @@ $scope.isSecondOptionSelected = false;
             $scope.options.splice(0, 1);
           })
           .catch(function (error) {
-            console.error(error);
+            showErrorDiv();
           });
       } else {
-        alert("Application is offline. Please check your internet connection.");
+        showErrorDiv();
       }
     };
 
@@ -295,8 +328,13 @@ $scope.isSecondOptionSelected = false;
             console.error("Error retrieving data:", error);
           });
       } else {
-        alert("Application is offline. Please check your internet connection.");
+        $scope.showError = true;
       }
     }
+    function showErrorDiv() {
+      $scope.showErrorDiv=true;
+      var errorDiv = document.getElementById("errorDiv");
+      errorDiv.style.display = "block";
+  }
   },
 ]);
