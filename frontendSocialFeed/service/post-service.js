@@ -51,7 +51,8 @@ angular.module("myApp").service("postService", [
           }
         })
         .catch(function (error) {
-          $rootScope.$emit("showErrorDivEvent");
+          // $rootScope.$emit("showErrorDivEvent");
+          throw new Error("Failed to getAll post");
         });
       },
        getPostById: function () {

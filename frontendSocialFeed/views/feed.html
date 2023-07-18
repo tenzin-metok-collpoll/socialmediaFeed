@@ -490,8 +490,11 @@
         </form>
       </div>
       <br />
+
+      <div ng-if="allPosts.length == 0" style="background-color: white; height: 50rem; text-align: center; padding-top: 10rem;"><h1>Something went wrong!!</h1>
+      <h5>Error while getting all the datas.</h5></div>
       
-      <ul ng-repeat="singlePost in allPosts | orderBy: 'created_at':true ">
+      <ul ng-repeat="singlePost in allPosts | orderBy: ['-postedTime', 'id']">
         <!-- {{singlePost.type}} -->
         <li ng-if="singlePost.type=='post'">
           <!-- component directive -->

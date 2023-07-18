@@ -127,7 +127,7 @@ $scope.isSecondOptionSelected = false;
     // adding a new post in feed
     $scope.addToFeed = () => {
       if (navigator.onLine) {
-        $scope.loading = true;
+       $scope.loading = true;
         
         $scope.askquestion = false;
         const post = {
@@ -209,9 +209,9 @@ $scope.isSecondOptionSelected = false;
         postService
           .createPost(post)
           .then(function (newPost) {
-            console.log("Post added successfully:", newPost.id);
+            console.log("Question added successfully:", newPost.id);
             $scope.story = "";
-            $scope.userName = "";
+            $scope.userName = "";   
             // getAllData();
 
             if ($scope.showfirstOption) {

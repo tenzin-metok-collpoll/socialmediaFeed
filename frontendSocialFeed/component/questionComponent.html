@@ -62,7 +62,7 @@
             > {{singleOption.content}} </label
           >
          
-          <span ng-if="singleOption.newOptionCount && showOption" class="optionCountShow">Agree by you and {{singleOption.newOptionCount}} other</span>
+          <span ng-if="singleOption.newOptionCount && showOption" class="optionCountShow">Agreed by you and {{singleOption.newOptionCount}} others</span>
        
         </div>
       </li>
@@ -79,10 +79,12 @@
   <div class="row card-header1">
     <div style="position: relative">
       <a
+      href="#!/share?userName={{data.userName}}&description={{data.description}} & postedTime={{data.postedTime}}"
         class="nav-link hover"
         ng-click="checkbox=true; getOptionsByQuestionId(data.id)"
         style="color: black; float: right"
       >
+      
         <i class="fas fa-share"></i> &nbsp;Share</a
       >
       <div ng-show="loadinglike" class="allloader">

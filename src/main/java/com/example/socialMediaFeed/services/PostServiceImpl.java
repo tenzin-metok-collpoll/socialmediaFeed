@@ -53,7 +53,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<Post> getAllPostsWithData() {
-        
+       
         String sqlQuery = postRepository.getPostsWithLikeDislikeCount();
         List<Post> posts = jdbcTemplate.query(sqlQuery, (rs) -> {
             Map<Integer, Post> postMap = new HashMap<>();
@@ -145,11 +145,6 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post createPost(Post post) {
-        // try {
-            // Set the timestamp value in UTC
-            if(true){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found."); 
-        }
             post.setPostedTime(Timestamp.from(Instant.now()));
             // Check required fields
             if (post.getDescription() == " " || post.getUserName() == " ") {

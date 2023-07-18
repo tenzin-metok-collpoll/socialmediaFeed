@@ -42,7 +42,7 @@ angular.module("myApp").directive("postComponent", [
           //update the post
           $scope.saveChanges = function (data) {
             if (navigator.onLine) {
-              $scope.loading = true;
+               $scope.loading = true;
               console.log("data: ", data);
               if ($scope.editedContent === undefined) {
                 $scope.editMode = false;
@@ -84,15 +84,11 @@ angular.module("myApp").directive("postComponent", [
           // delete a post
           $scope.deleteFeed = function (singlePost) {
             if (navigator.onLine) {
-              $scope.loading = true;
+              // $scope.loading = true;
               postService
                 .deletePost(singlePost.id)
                 .then(function (res) {
                   if (res === "") $scope.onDataUpdated({ data: singlePost.id });
-                  // Handle the successful deletion
-                  console.log("sdfgdgdfgdfgdf.............ojkkkkkkkkkkkkkkkkkkkkk");
-
-                  // fetchPost();
                 })
                 .catch(function (error) {
                   $rootScope.$on("showErrorDivEvent", function () {
