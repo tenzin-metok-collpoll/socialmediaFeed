@@ -145,6 +145,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post createPost(Post post) {
+        
             post.setPostedTime(Timestamp.from(Instant.now()));
             // Check required fields
             if (post.getDescription() == " " || post.getUserName() == " ") {

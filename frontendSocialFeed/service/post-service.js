@@ -82,7 +82,8 @@ angular.module("myApp").service("postService", [
               return(response.data);
             }
             else {
-              throw new Error("Failed to delete post");
+              $rootScope.$emit("showErrorDivEvent");
+
             }
           })
           .catch((error) => {

@@ -97,6 +97,7 @@ angular.module("myApp").directive("postComponent", [
                     var errorDiv = document.getElementById("errorDiv");
                     errorDiv.style.display = "block"; 
                     setTimeout(function() {
+                      console.log("inside the div of delete fedd in settimeout")
                       errorDiv.style.display = "none";
                       $scope.showErrorDiv = false;
                     }, 2000); 
@@ -185,6 +186,10 @@ angular.module("myApp").directive("postComponent", [
                     $scope.showErrorDiv=true;
                     var errorDiv = document.getElementById("errorDiv");
                     errorDiv.style.display = "block"; 
+                    setTimeout(function() {
+                      errorDiv.style.display = "none";
+                      $scope.showErrorDiv = false;
+                    }, 2000); 
                   });
                 });
             } else {
@@ -193,6 +198,10 @@ angular.module("myApp").directive("postComponent", [
                 $scope.showErrorDiv=true;
                 var errorDiv = document.getElementById("errorDiv");
                 errorDiv.style.display = "block"; 
+                setTimeout(function() {
+                  errorDiv.style.display = "none";
+                  $scope.showErrorDiv = false;
+                }, 2000); 
               });
             }
           };
@@ -260,7 +269,7 @@ angular.module("myApp").directive("postComponent", [
               })
               .catch(function (error) {
                 $rootScope.$on("showErrorDivEvent", function () {
-                  console.log("inside the event");
+                  console.log("inside the event like and dislike");
                   $scope.showErrorDiv=true;
                   var errorDiv = document.getElementById("errorDiv");
                   errorDiv.style.display = "block"; 
@@ -291,7 +300,7 @@ angular.module("myApp").directive("postComponent", [
                 })
                 .catch(function (error) {
                   $rootScope.$on("showErrorDivEvent", function () {
-                    console.log("inside the event");
+                    console.log("inside the event like and dislike");
                     $scope.showErrorDiv=true;
                     var errorDiv = document.getElementById("errorDiv");
                     errorDiv.style.display = "block"; 
@@ -299,7 +308,7 @@ angular.module("myApp").directive("postComponent", [
                 });
             } else {
               $rootScope.$on("showErrorDivEvent", function () {
-                console.log("inside the event");
+                console.log("inside the event like and dislike");
                 $scope.showErrorDiv=true;
                 var errorDiv = document.getElementById("errorDiv");
                 errorDiv.style.display = "block"; 

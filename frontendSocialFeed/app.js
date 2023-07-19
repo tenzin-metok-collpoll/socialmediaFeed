@@ -78,10 +78,14 @@ $scope.isSecondOptionSelected = false;
       getAllData();
     };
     $rootScope.$on("showErrorDivEvent", function () {
-      console.log("inside the event");
+      console.log("inside the event of rhaul");
       $scope.showErrorDiv=true;
       var errorDiv = document.getElementById("errorDiv");
       errorDiv.style.display = "block"; 
+      setTimeout(function() {
+        errorDiv.style.display = "none";
+        $scope.showErrorDiv = false;
+      }, 5000); 
     });
 
     $scope.addOption = function () {
@@ -127,8 +131,8 @@ $scope.isSecondOptionSelected = false;
     // adding a new post in feed
     $scope.addToFeed = () => {
       if (navigator.onLine) {
-       $scope.loading = true;
-        
+      //  $scope.loading = true;
+      $scope.loadinglike = true;
         $scope.askquestion = false;
         const post = {
           userName: $scope.userName,
@@ -145,6 +149,7 @@ $scope.isSecondOptionSelected = false;
             $scope.show = false;
             $scope.story = "";
             $scope.userName = "";
+            $scope.loadinglike = false;
           }
 
            
@@ -161,6 +166,7 @@ $scope.isSecondOptionSelected = false;
       } else {
         //showErrorDiv();
       }
+     
     };
     $scope.options = [];
 

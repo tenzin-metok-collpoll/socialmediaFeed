@@ -214,6 +214,9 @@
           >
             <i class="fa fa-plus pr-2" aria-hidden="true"></i>&nbsp;Add a Post
           </button>
+          <div ng-show="loadingDislike" class="allloader">
+            <div class="spinner"></div>
+          </div>
         </div>
       </div>
       <!-- div for post added contain -->
@@ -245,15 +248,22 @@
           <button type="button" class="btn postBtn" ng-click="CancelFeed()">
             Cancel
           </button>
+           <div class="postBtn" style="position:relative; display: flex; align-items: center; justify-content: center";>
           <button
             type="button"
             class="btn postBtn"
             ng-disabled="myForm.$invalid"
             ng-click="addToFeed()"
             ng-disabled="disableButton"
+            style="display:flex; align-items: center; justify-content: center";
           >
             Post
           </button>
+          <div ng-show="loadinglike" class="allloader">
+            <div class="spinner"></div>
+          </div>
+        </div>
+        
         </form>
       </div>
       <!-- div for ask question  -->
