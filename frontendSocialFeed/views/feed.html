@@ -199,9 +199,6 @@
           >
             <i class="fa fa-question-circle fa-lg" aria-hidden="true"></i
             >&nbsp;Ask Quesion
-            <div ng-show="loading2" class="small-loader">
-              <div class="spinner"></div>
-            </div>
           </button>
         </div>
         <div
@@ -216,10 +213,7 @@
             ng-mouseenter="hover1 = true"
             ng-mouseleave="hover1 = false"
           >
-            <i class="fa fa-plus pr-2" aria-hidden="true"></i>&nbsp;Add a Post
-            <div ng-show="loading1" class="small-loader">
-              <div class="spinner"></div>
-            </div>
+            <i class="fa fa-plus pr-2" aria-hidden="true"></i>&nbsp;Add a Post 
           </button>
         </div>
       </div>
@@ -252,15 +246,17 @@
           <button type="button" class="btn postBtn" ng-click="CancelFeed()">
             Cancel
           </button>
-          <!-- <div class="postBtn" style="position:relative; display: flex; align-items: center; justify-content: center";> -->
           <button
             type="button"
             class="btn postBtn"
-            ng-disabled="myForm.$invalid"
+            ng-disabled="myForm.$invalid || disableButton"
             ng-click="addToFeed()"
-            ng-disabled="disableButton"
           >
+          
             Post
+            <div ng-show="loading1" class="small-loader">
+              <div class="spinner"></div>
+            </div>
           </button>
           <!-- </div> -->
         </form>
@@ -340,7 +336,7 @@
               <div ng-show="showfirstOption && showPollOption">
                 <hr style="margin: 2px" />
                 <div
-                  style="padding-left: 1rem"
+                  style="padding-left: 1rem; padding-top: 5px;"
                   ng-class="{blue: isDiv2Clicked}"
                   ng-mouseenter="!isDiv1Clicked && (hover = true)"
                   ng-mouseleave="!isDiv1Clicked && (hover = false)"
@@ -375,7 +371,7 @@
                   </div>
                 </div>
                 <div
-                  style="padding-left: 1rem"
+                  style="padding-left: 1rem; padding-top: 5px;"
                   ng-class="{blue: isDiv1Clicked}"
                   ng-mouseenter="!isDiv2Clicked && (hover = true)"
                   ng-mouseleave="!isDiv2Clicked && (hover = false)"
@@ -492,11 +488,13 @@
           <button
             type="button"
             class="btn postBtn"
-            ng-disabled="myForm.$invalid || !(isFirstOptionSelected || isSecondOptionSelected)"
+            ng-disabled="myForm.$invalid || !(isFirstOptionSelected || isSecondOptionSelected) || disableButton"
             ng-click="addQuestion()"
-            ng-disabled="disableButton"
           >
             Ask
+            <div ng-show="loading2" class="small-loader">
+              <div class="spinner"></div>
+            </div>
           </button>
         </form>
       </div>
@@ -514,6 +512,74 @@
         <h1>Something went wrong!!</h1>
         <h5>Error while getting all the datas.</h5>
       </div>
+
+      <main1 ng-show="isloading">
+        <ul class="o-vertical-spacing o-vertical-spacing--l">
+          <li class="blog-post o-media">
+            <div class="o-media__figure">
+              <span class="skeleton-box" style="width:100px;height:80px;"></span>
+            </div>
+            <div class="o-media__body">
+              <div class="o-vertical-spacing">
+                <h3 class="blog-post__headline">
+                  <span class="skeleton-box" style="width:55%;"></span>
+                </h3>
+                <p>
+                  <span class="skeleton-box" style="width:80%;"></span>
+                  <span class="skeleton-box" style="width:90%;"></span>
+                  <span class="skeleton-box" style="width:83%;"></span>
+                  <span class="skeleton-box" style="width:80%;"></span>
+                </p>
+                <div class="blog-post__meta">
+                  <span class="skeleton-box" style="width:70px;"></span>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="blog-post o-media">
+            <div class="o-media__figure">
+              <span class="skeleton-box" style="width:100px;height:80px;"></span>
+            </div>
+            <div class="o-media__body">
+              <div class="o-vertical-spacing">
+                <h3 class="blog-post__headline">
+                  <span class="skeleton-box" style="width:55%;"></span>
+                </h3>
+                <p>
+                  <span class="skeleton-box" style="width:80%;"></span>
+                  <span class="skeleton-box" style="width:90%;"></span>
+                  <span class="skeleton-box" style="width:83%;"></span>
+                  <span class="skeleton-box" style="width:80%;"></span>
+                </p>
+                <div class="blog-post__meta">
+                  <span class="skeleton-box" style="width:70px;"></span>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="blog-post o-media">
+            <div class="o-media__figure">
+              <span class="skeleton-box" style="width:100px;height:80px;"></span>
+            </div>
+            <div class="o-media__body">
+              <div class="o-vertical-spacing">
+                <h3 class="blog-post__headline">
+                  <span class="skeleton-box" style="width:55%;"></span>
+                </h3>
+                <p>
+                  <span class="skeleton-box" style="width:80%;"></span>
+                  <span class="skeleton-box" style="width:90%;"></span>
+                  <span class="skeleton-box" style="width:83%;"></span>
+                  <span class="skeleton-box" style="width:80%;"></span>
+                </p>
+                <div class="blog-post__meta">
+                  <span class="skeleton-box" style="width:70px;"></span>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </main1>
 
       <ul ng-repeat="singlePost in allPosts | orderBy: ['-postedTime', 'id']">
         <!-- {{singlePost.type}} -->

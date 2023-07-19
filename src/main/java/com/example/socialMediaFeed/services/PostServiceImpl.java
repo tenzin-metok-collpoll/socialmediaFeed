@@ -53,6 +53,9 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<Post> getAllPostsWithData() {
+        // if(true){
+        //       throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found.");
+        // }
         String sqlQuery = postRepository.getPostsWithLikeDislikeCount();
         List<Post> posts = jdbcTemplate.query(sqlQuery, (rs) -> {
             Map<Integer, Post> postMap = new HashMap<>();

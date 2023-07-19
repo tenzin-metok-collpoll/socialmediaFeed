@@ -45,8 +45,10 @@ angular.module("myApp").controller("myCtr", [
     // ... (existing code)
 
     vm.showErrorDiv = false; // Initialize the showErrorDiv variable
+    $scope.disableButton=false;
+    $scope.disableButton1=false;
 
-    $scope.loading1 = false;
+    $scope.loading1 = false; 
     $scope.gettingError = false;
     $scope.loading2 = false;
     $scope.loadingComments = false;
@@ -68,9 +70,7 @@ angular.module("myApp").controller("myCtr", [
     $scope.addposts = false;
     $scope.isFirstOptionSelected = false;
     $scope.isSecondOptionSelected = false;
-
     $scope.showSecondOption = false;
-
     $scope.allPosts = [];
     $scope.count = 0;
     $scope.temp;
@@ -140,6 +140,7 @@ angular.module("myApp").controller("myCtr", [
     // adding a new post in feed
     $scope.addToFeed = () => {
       if (navigator.onLine) {
+        $scope.disableButton=true;
         $scope.loading1 = true;
         $scope.askquestion = false;
         const post = {
@@ -210,8 +211,8 @@ angular.module("myApp").controller("myCtr", [
 
     $scope.addQuestion = () => {
       if (navigator.onLine) {
+        $scope.disableButton2=true;
         $scope.loading2 = true;
-        $scope.show = false;
         $scope.askquestion = false;
 
         const post = {
@@ -351,6 +352,8 @@ angular.module("myApp").controller("myCtr", [
 
     function getAllData() {
       if (navigator.onLine) {
+        $scope.disableButton=false;
+        $scope.disableButton2=false;
         // $scope.loading = true;
         postService
           .getAllData()
