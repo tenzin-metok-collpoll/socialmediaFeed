@@ -1,5 +1,5 @@
 <div class="contentM" ng-app="myApp" ng-controller="myCtr">
-  <div ng-show="loading">
+  <!-- <div ng-show="loading">
     <div class="loader">
       <div class="spinner"></div>
     </div>
@@ -8,7 +8,7 @@
     <div class="loader">
       <div class="spinner"></div>
     </div>
-  </div>
+  </div> -->
   <div class="row gap"></div>
   <div class="row">
     <div class="col-3 sidebar-first">
@@ -197,7 +197,11 @@
             ng-mouseenter="hover1 = true"
             ng-mouseleave="hover1 = false"
           >
-          <i class="fa fa-question-circle fa-lg" aria-hidden="true"></i>&nbsp;Ask Quesion
+            <i class="fa fa-question-circle fa-lg" aria-hidden="true"></i
+            >&nbsp;Ask Quesion
+            <div ng-show="loading2" class="small-loader">
+              <div class="spinner"></div>
+            </div>
           </button>
         </div>
         <div
@@ -213,14 +217,14 @@
             ng-mouseleave="hover1 = false"
           >
             <i class="fa fa-plus pr-2" aria-hidden="true"></i>&nbsp;Add a Post
+            <div ng-show="loading1" class="small-loader">
+              <div class="spinner"></div>
+            </div>
           </button>
-          <div ng-show="loadingDislike" class="allloader">
-            <div class="spinner"></div>
-          </div>
         </div>
       </div>
       <!-- div for post added contain -->
-      
+
       <div
         class="row"
         ng-show="show"
@@ -248,22 +252,17 @@
           <button type="button" class="btn postBtn" ng-click="CancelFeed()">
             Cancel
           </button>
-           <div class="postBtn" style="position:relative; display: flex; align-items: center; justify-content: center";>
+          <!-- <div class="postBtn" style="position:relative; display: flex; align-items: center; justify-content: center";> -->
           <button
             type="button"
             class="btn postBtn"
             ng-disabled="myForm.$invalid"
             ng-click="addToFeed()"
             ng-disabled="disableButton"
-            style="display:flex; align-items: center; justify-content: center";
           >
             Post
           </button>
-          <div ng-show="loadinglike" class="allloader">
-            <div class="spinner"></div>
-          </div>
-        </div>
-        
+          <!-- </div> -->
         </form>
       </div>
       <!-- div for ask question  -->
@@ -347,6 +346,7 @@
                   ng-mouseleave="!isDiv1Clicked && (hover = false)"
                   ng-click="isDiv2Clicked = true; isDiv1Clicked = false; hover = false; isFirstOptionSelected = true; isSecondOptionSelected = false;"
                 >
+                  1 . &nbsp;&nbsp;
                   <div class="form-check form-check-inline">
                     <input
                       class="form-check-input"
@@ -381,6 +381,7 @@
                   ng-mouseleave="!isDiv2Clicked && (hover = false)"
                   ng-click="isDiv1Clicked = true; isDiv2Clicked = false; hover = false; isFirstOptionSelected = false; isSecondOptionSelected = true;"
                 >
+                  2 . &nbsp;&nbsp;
                   <div class="form-check form-check-inline">
                     <input
                       class="form-check-input"
@@ -478,7 +479,7 @@
                       ng-click="addOption()"
                       ng-init="showOption4=true"
                       ng-show="showOption4"
-                      style="line-height:normal"
+                      style="line-height: normal"
                     />
                   </div>
                 </div>
@@ -501,9 +502,19 @@
       </div>
       <br />
 
-      <div ng-if="allPosts.length == 0" style="background-color: white; height: 50rem; text-align: center; padding-top: 10rem;"><h1>Something went wrong!!</h1>
-      <h5>Error while getting all the datas.</h5></div>
-      
+      <div
+        ng-show="gettingError"
+        style="
+          background-color: white;
+          height: 50rem;
+          text-align: center;
+          padding-top: 10rem;
+        "
+      >
+        <h1>Something went wrong!!</h1>
+        <h5>Error while getting all the datas.</h5>
+      </div>
+
       <ul ng-repeat="singlePost in allPosts | orderBy: ['-postedTime', 'id']">
         <!-- {{singlePost.type}} -->
         <li ng-if="singlePost.type=='post'">
@@ -611,7 +622,23 @@
       </div>
     </div>
   </div>
-  <div id="errorDiv"  ng-show="showErrorDiv" style="display: block; position: fixed; bottom: 0; left: 0; width: 100%; background-color: rgb(98, 98, 124); color: white; text-align: center; padding: 10px; width:200px; margin-left:1000px;">
+  <div
+    id="errorDiv"
+    ng-show="showErrorDiv"
+    style="
+      display: block;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: rgb(98, 98, 124);
+      color: white;
+      text-align: center;
+      padding: 10px;
+      width: 200px;
+      margin-left: 1000px;
+    "
+  >
     Something went wrong
-</div>
+  </div>
 </div>

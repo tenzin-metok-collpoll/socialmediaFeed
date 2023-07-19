@@ -18,13 +18,19 @@ angular.module("myApp").directive("postComponent", [
         "commentService",
         "likedislikeService",
         "$rootScope",
-        function ($scope, postService, commentService, likedislikeService,$rootScope) {
+        function (
+          $scope,
+          postService,
+          commentService,
+          likedislikeService,
+          $rootScope
+        ) {
           $scope.commentArr = [];
           $scope.newComment = {};
           $scope.likeArr = [];
           $scope.newLike = {};
           $scope.likeCounter = 0;
-          $scope.showErrorDiv=false;
+          $scope.showErrorDiv = false;
           $scope.dislikeCounter = 0;
           $scope.formData = {
             editedComment: "",
@@ -42,7 +48,7 @@ angular.module("myApp").directive("postComponent", [
           //update the post
           $scope.saveChanges = function (data) {
             if (navigator.onLine) {
-               $scope.loading = true;
+              $scope.loading = true;
               console.log("data: ", data);
               if ($scope.editedContent === undefined) {
                 $scope.editMode = false;
@@ -65,18 +71,18 @@ angular.module("myApp").directive("postComponent", [
                   .catch(function (error) {
                     $rootScope.$on("showErrorDivEvent", function () {
                       console.log("inside the event");
-                      $scope.showErrorDiv=true;
+                      $scope.showErrorDiv = true;
                       var errorDiv = document.getElementById("errorDiv");
-                      errorDiv.style.display = "block"; 
+                      errorDiv.style.display = "block";
                     });
                   });
               }
             } else {
               $rootScope.$on("showErrorDivEvent", function () {
                 console.log("inside the event");
-                $scope.showErrorDiv=true;
+                $scope.showErrorDiv = true;
                 var errorDiv = document.getElementById("errorDiv");
-                errorDiv.style.display = "block"; 
+                errorDiv.style.display = "block";
               });
             }
           };
@@ -93,26 +99,28 @@ angular.module("myApp").directive("postComponent", [
                 .catch(function (error) {
                   $rootScope.$on("showErrorDivEvent", function () {
                     console.log("inside the event delete feed");
-                    $scope.showErrorDiv=true;
+                    $scope.showErrorDiv = true;
                     var errorDiv = document.getElementById("errorDiv");
-                    errorDiv.style.display = "block"; 
-                    setTimeout(function() {
-                      console.log("inside the div of delete fedd in settimeout")
+                    errorDiv.style.display = "block";
+                    setTimeout(function () {
+                      console.log(
+                        "inside the div of delete fedd in settimeout"
+                      );
                       errorDiv.style.display = "none";
                       $scope.showErrorDiv = false;
-                    }, 2000); 
+                    }, 2000);
                   });
                 });
             } else {
               $rootScope.$on("showErrorDivEvent", function () {
                 console.log("inside the event delete feed");
-                $scope.showErrorDiv=true;
+                $scope.showErrorDiv = true;
                 var errorDiv = document.getElementById("errorDiv");
-                errorDiv.style.display = "block"; 
-                setTimeout(function() {
+                errorDiv.style.display = "block";
+                setTimeout(function () {
                   errorDiv.style.display = "none";
                   $scope.showErrorDiv = false;
-                }, 2000); 
+                }, 2000);
               });
             }
           };
@@ -144,18 +152,18 @@ angular.module("myApp").directive("postComponent", [
                   .catch(function (error) {
                     $rootScope.$on("showErrorDivEvent", function () {
                       console.log("inside the event");
-                      $scope.showErrorDiv=true;
+                      $scope.showErrorDiv = true;
                       var errorDiv = document.getElementById("errorDiv");
-                      errorDiv.style.display = "block"; 
+                      errorDiv.style.display = "block";
                     });
                   });
               }
             } else {
               $rootScope.$on("showErrorDivEvent", function () {
                 console.log("inside the event");
-                $scope.showErrorDiv=true;
+                $scope.showErrorDiv = true;
                 var errorDiv = document.getElementById("errorDiv");
-                errorDiv.style.display = "block"; 
+                errorDiv.style.display = "block";
               });
             }
           };
@@ -183,25 +191,25 @@ angular.module("myApp").directive("postComponent", [
                 .catch(function (error) {
                   $rootScope.$on("showErrorDivEvent", function () {
                     console.log("inside the event");
-                    $scope.showErrorDiv=true;
+                    $scope.showErrorDiv = true;
                     var errorDiv = document.getElementById("errorDiv");
-                    errorDiv.style.display = "block"; 
-                    setTimeout(function() {
+                    errorDiv.style.display = "block";
+                    setTimeout(function () {
                       errorDiv.style.display = "none";
                       $scope.showErrorDiv = false;
-                    }, 2000); 
+                    }, 2000);
                   });
                 });
             } else {
               $rootScope.$on("showErrorDivEvent", function () {
                 console.log("inside the event");
-                $scope.showErrorDiv=true;
+                $scope.showErrorDiv = true;
                 var errorDiv = document.getElementById("errorDiv");
-                errorDiv.style.display = "block"; 
-                setTimeout(function() {
+                errorDiv.style.display = "block";
+                setTimeout(function () {
                   errorDiv.style.display = "none";
                   $scope.showErrorDiv = false;
-                }, 2000); 
+                }, 2000);
               });
             }
           };
@@ -234,17 +242,17 @@ angular.module("myApp").directive("postComponent", [
                 .catch(function (error) {
                   $rootScope.$on("showErrorDivEvent", function () {
                     console.log("inside the event");
-                    $scope.showErrorDiv=true;
+                    $scope.showErrorDiv = true;
                     var errorDiv = document.getElementById("errorDiv");
-                    errorDiv.style.display = "block"; 
+                    errorDiv.style.display = "block";
                   });
                 });
             } else {
               $rootScope.$on("showErrorDivEvent", function () {
                 console.log("inside the event");
-                $scope.showErrorDiv=true;
+                $scope.showErrorDiv = true;
                 var errorDiv = document.getElementById("errorDiv");
-                errorDiv.style.display = "block"; 
+                errorDiv.style.display = "block";
               });
             }
           };
@@ -270,9 +278,9 @@ angular.module("myApp").directive("postComponent", [
               .catch(function (error) {
                 $rootScope.$on("showErrorDivEvent", function () {
                   console.log("inside the event like and dislike");
-                  $scope.showErrorDiv=true;
+                  $scope.showErrorDiv = true;
                   var errorDiv = document.getElementById("errorDiv");
-                  errorDiv.style.display = "block"; 
+                  errorDiv.style.display = "block";
                 });
               });
           }
@@ -301,17 +309,17 @@ angular.module("myApp").directive("postComponent", [
                 .catch(function (error) {
                   $rootScope.$on("showErrorDivEvent", function () {
                     console.log("inside the event like and dislike");
-                    $scope.showErrorDiv=true;
+                    $scope.showErrorDiv = true;
                     var errorDiv = document.getElementById("errorDiv");
-                    errorDiv.style.display = "block"; 
+                    errorDiv.style.display = "block";
                   });
                 });
             } else {
               $rootScope.$on("showErrorDivEvent", function () {
                 console.log("inside the event like and dislike");
-                $scope.showErrorDiv=true;
+                $scope.showErrorDiv = true;
                 var errorDiv = document.getElementById("errorDiv");
-                errorDiv.style.display = "block"; 
+                errorDiv.style.display = "block";
               });
             }
           };
@@ -341,17 +349,17 @@ angular.module("myApp").directive("postComponent", [
                 .catch(function (error) {
                   $rootScope.$on("showErrorDivEvent", function () {
                     console.log("inside the event");
-                    $scope.showErrorDiv=true;
+                    $scope.showErrorDiv = true;
                     var errorDiv = document.getElementById("errorDiv");
-                    errorDiv.style.display = "block"; 
+                    errorDiv.style.display = "block";
                   });
                 });
             } else {
               $rootScope.$on("showErrorDivEvent", function () {
                 console.log("inside the event");
-                $scope.showErrorDiv=true;
+                $scope.showErrorDiv = true;
                 var errorDiv = document.getElementById("errorDiv");
-                errorDiv.style.display = "block"; 
+                errorDiv.style.display = "block";
               });
             }
           };

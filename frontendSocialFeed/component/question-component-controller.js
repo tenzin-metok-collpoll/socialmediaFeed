@@ -26,7 +26,7 @@ angular.module("myApp").directive("questionComponent", [
           commentService,
           optionService,
           answerService,
-          $rootScope,
+          $rootScope
         ) {
           $scope.options = [];
           $scope.checkbox = false;
@@ -88,33 +88,29 @@ angular.module("myApp").directive("questionComponent", [
                 .catch(function (error) {
                   $rootScope.$on("showErrorDivEvent", function () {
                     console.log("inside the event delete feed");
-                    $scope.showErrorDiv=true;
+                    $scope.showErrorDiv = true;
                     var errorDiv = document.getElementById("errorDiv");
-                    errorDiv.style.display = "block"; 
-                    setTimeout(function() {
+                    errorDiv.style.display = "block";
+                    setTimeout(function () {
                       errorDiv.style.display = "none";
                       $scope.showErrorDiv = false;
-                    }, 2000); 
+                    }, 2000);
                   });
                 });
             } else {
               $rootScope.$on("showErrorDivEvent", function () {
                 console.log("inside the event delete feed");
-                $scope.showErrorDiv=true;
+                $scope.showErrorDiv = true;
                 var errorDiv = document.getElementById("errorDiv");
-                errorDiv.style.display = "block"; 
-                setTimeout(function() {
+                errorDiv.style.display = "block";
+                setTimeout(function () {
                   errorDiv.style.display = "none";
                   $scope.showErrorDiv = false;
-                }, 2000); 
+                }, 2000);
               });
             }
           };
-             // Inside your controller or wherever you define the 'data' object
-// $scope.data.options.forEach(function (singleOption) {
-//   singleOption.newOptionCount = 0; // Initialize the count to zero for each option
-// });   
-$scope.selectedOptions = {};
+          $scope.selectedOptions = {};
           $scope.addAnswer = function (optionId, userName) {
             $scope.checkbox = false;
             // $scope.showBar = true;
@@ -133,28 +129,22 @@ $scope.selectedOptions = {};
                   answerService
                     .getAnswersByOptionId(newAnswer.optionId)
                     .then(function (newOptionCount) {
-                      console.log('newOption:::::::::::: ', newOptionCount);
-                      // $scope.data.options.forEach(function (singleOption) {
-                      //   singleOption.newOptionCount = newOptionCount; // Initialize the count to zero for each option
-                      // });
-                      // $scope.pickedOption = newOption.content;
                       $scope.data.options.forEach(function (option) {
                         option.newOptionCount = null;
                       });
-                      const optionToUpdate = $scope.data.options.find(option => option.id === newAnswer.optionId);
-                      console.log("optiontoupd",optionToUpdate);
-            if (optionToUpdate) {
-              $scope.showOption=true;
-              optionToUpdate.newOptionCount = newOptionCount; // Update the count
-            }
+                      const optionToUpdate = $scope.data.options.find(
+                        (option) => option.id === newAnswer.optionId
+                      );
+                      console.log("optiontoupd", optionToUpdate);
+                      if (optionToUpdate) {
+                        $scope.showOption = true;
+                        optionToUpdate.newOptionCount = newOptionCount; // Update the count
+                      }
                     })
                     .catch(function (error) {
                       console.error(error);
                     });
                 }
-
-                // fetchComment();
-                // $scope.onDataUpdated({ data: newAnswer });
               })
               .catch(function (error) {
                 console.error(error);
@@ -170,13 +160,8 @@ $scope.selectedOptions = {};
                 .getOptionsByQuestionId(id)
                 .then(function (res) {
                   $scope.options = res;
-                  console.log("res::::::::::::::::: ", res);
-
-                  // $scope.onDataUpdated({ data: id });
                   // Handle the successful deletion
                   console.log("get option successfully");
-
-                  // fetchPost();
                 })
                 .catch(function (error) {
                   console.error("Failed to get option:", error);

@@ -58,33 +58,49 @@
             id="inlineRadio1"
             value="option1"
           />
-          <label class="form-check-label" for="inlineRadio1"
-            > {{singleOption.content}} </label
+          <label class="form-check-label" for="inlineRadio1"></label>
+            {{singleOption.content}}
+          </label>
+
+          <span
+            ng-if="singleOption.newOptionCount && showOption"
+            class="optionCountShow"
+            >Agreed by you and {{singleOption.newOptionCount}} others</span
           >
-         
-          <span ng-if="singleOption.newOptionCount && showOption" class="optionCountShow">Agreed by you and {{singleOption.newOptionCount}} others</span>
-       
         </div>
       </li>
     </ul>
-    <div class="progress" ng-show="showBar" style="height: 1.3rem; margin-top: 0.5rem; width: 30rem" >
-      <div class="progress-bar" role="progressbar" style="width: 100%; background: #ade6ec; border: 1px solid #80808038; color:black" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"><span>{{pickedOption}} 100%</span></div>
+    <div
+      class="progress"
+      ng-show="showBar"
+      style="height: 1.3rem; margin-top: 0.5rem; width: 30rem"
+    >
+      <div
+        class="progress-bar"
+        role="progressbar"
+        style="
+          width: 100%;
+          background: #ade6ec;
+          border: 1px solid #80808038;
+          color: black;
+        "
+        aria-valuenow="100"
+        aria-valuemin="0"
+        aria-valuemax="100"
+      >
+        <span>{{pickedOption}} 100%</span>
+      </div>
     </div>
-    <!-- <br />
-    <a ng-init="checkbox=false" ng-click="checkbox = !checkbox; getOptionsByQuestionId(data.id)" style="color: black; font-size: 13px;">
-      <i class="fa fa-user" aria-hidden="true"></i> &nbsp;Be the first to poll</a
-    > -->
   </div>
   <!-- options LIKE DISLIKE COMMENT SHARE -->
   <div class="row card-header1">
     <div style="position: relative">
       <a
-      href="#!/share?userName={{data.userName}}&description={{data.description}} & postedTime={{data.postedTime}}"
+        href="#!/share?userName={{data.userName}}&description={{data.description}} & postedTime={{data.postedTime}}"
         class="nav-link hover"
         ng-click="checkbox=true; getOptionsByQuestionId(data.id)"
         style="color: black; float: right"
       >
-      
         <i class="fas fa-share"></i> &nbsp;Share</a
       >
       <div ng-show="loadinglike" class="allloader">

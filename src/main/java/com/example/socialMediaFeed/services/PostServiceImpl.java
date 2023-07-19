@@ -53,7 +53,6 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<Post> getAllPostsWithData() {
-       
         String sqlQuery = postRepository.getPostsWithLikeDislikeCount();
         List<Post> posts = jdbcTemplate.query(sqlQuery, (rs) -> {
             Map<Integer, Post> postMap = new HashMap<>();
@@ -76,12 +75,6 @@ public class PostServiceImpl implements PostService {
                     post.setDislikeCounts(0L);
                     post.setComments(new HashMap<>());
                     post.setOptions(new HashMap<>());
-    
-                    // // Initialize options for question posts
-                    // if (type.equals("question")) {
-                    //     post.setOptions(new ArrayList<>());
-                    // }
-    
                     postMap.put(postId, post);
                 }
     
