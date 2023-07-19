@@ -47,6 +47,7 @@ angular.module("myApp").controller("myCtr", [
     vm.showErrorDiv = false; // Initialize the showErrorDiv variable
     $scope.disableButton=false;
     $scope.disableButton1=false;
+    $scope.isloading=true;
 
     $scope.loading1 = false; 
     $scope.gettingError = false;
@@ -352,12 +353,14 @@ angular.module("myApp").controller("myCtr", [
 
     function getAllData() {
       if (navigator.onLine) {
+        // $scope.isloading=true;
         $scope.disableButton=false;
         $scope.disableButton2=false;
         // $scope.loading = true;
         postService
           .getAllData()
           .then(function (posts) {
+            $scope.isloading=false;
             $scope.allPosts = posts;
             return posts;
           })
