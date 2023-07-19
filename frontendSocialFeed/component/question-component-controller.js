@@ -114,7 +114,8 @@ angular.module("myApp").directive("questionComponent", [
           $scope.addAnswer = function (optionId, userName) {
             $scope.checkbox = false;
             // $scope.showBar = true;
-
+            $scope.showOption = false;
+            $scope.showOption1=false;
             let answer = {
               optionId: optionId,
               userName: userName,
@@ -124,7 +125,7 @@ angular.module("myApp").directive("questionComponent", [
               .addAnswer(answer)
               .then(function (newAnswer) {
                 console.log("Post added successfully:", newAnswer);
-
+             
                 if (newAnswer.optionId) {
                   answerService
                     .getAnswersByOptionId(newAnswer.optionId)
@@ -136,9 +137,15 @@ angular.module("myApp").directive("questionComponent", [
                         (option) => option.id === newAnswer.optionId
                       );
                       console.log("optiontoupd", optionToUpdate);
-                      if (optionToUpdate) {
+                      if (newOptionCount==1) {
+                        console.log("option",optionToUpdate.newOptionCount);
                         $scope.showOption = true;
                         optionToUpdate.newOptionCount = newOptionCount; // Update the count
+                      }
+                      else{
+                        $scope.showOption1 = true;
+                        console.log("option",newOptionCount);
+                        optionToUpdate.newOptionCount = newOptionCount;
                       }
                     })
                     .catch(function (error) {

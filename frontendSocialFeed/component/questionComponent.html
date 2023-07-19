@@ -65,8 +65,19 @@
           <span
             ng-if="singleOption.newOptionCount && showOption"
             class="optionCountShow"
-            >Agreed by you and {{singleOption.newOptionCount}} others</span
-          >
+            >Agreed by you  
+            
+            
+            
+        </span>
+        <span
+        ng-if="singleOption.newOptionCount && showOption1"
+        class="optionCountShow"
+        >Agreed by you and {{singleOption.newOptionCount-1}} others
+      </span>
+      
+          
+          
         </div>
       </li>
     </ul>
