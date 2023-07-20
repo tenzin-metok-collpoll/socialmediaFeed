@@ -25,7 +25,7 @@ public class AnswerRepositoryImpl implements AnswerRepository {
 
      @Override
     public Answer[] findById(int id) {
-        String sql = "SELECT * FROM Answer WHERE option_id = ?";
+        String sql = "SELECT * FROM Answers WHERE option_id = ?";
         List<Answer> answerList = jdbcTemplate.query(sql, new Object[]{id}, this::mapRowToUser);
     Answer[] answers = answerList.toArray(new Answer[answerList.size()]);
     return answers;
@@ -33,25 +33,25 @@ public class AnswerRepositoryImpl implements AnswerRepository {
 
     @Override
     public List<Answer> findAll() {
-        String sql = "SELECT * FROM Answer";
+        String sql = "SELECT * FROM Answers";
         return jdbcTemplate.query(sql, this::mapRowToUser);
     }
      @Override
     public Answer update(Answer answer) {
-        String sql = "UPDATE Answer SET user_name = ?, option_id = ?";
+        String sql = "UPDATE Answers SET user_name = ?, option_id = ?";
         jdbcTemplate.update(sql, answer.getUserName(), answer.getOptionId());
 
         return answer;
     }
     @Override
     public Answer save(Answer answer) {
-        String sql = "INSERT INTO Answer (user_name, option_id) VALUES (?, ?)";
+        String sql = "INSERT INTO Answers (user_name, option_id) VALUES (?, ?)";
         jdbcTemplate.update(sql, answer.getUserName() ,answer.getOptionId());
         return answer;
     }
     @Override
     public int delete(int id) {
-        String sql = "DELETE FROM Answer WHERE id = ?";
+        String sql = "DELETE FROM Answers WHERE id = ?";
         int rowsAffected = jdbcTemplate.update(sql, id);
 
         if (rowsAffected == 0) {

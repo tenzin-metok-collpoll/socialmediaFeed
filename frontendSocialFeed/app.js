@@ -101,15 +101,9 @@ angular.module("myApp").controller("myCtr", [
       }, 5000);
     });
 
-    $scope.addOption = function () {
-      if (!$scope.showOption2) {
-        $scope.showOption2 = true;
-      } else if (!$scope.showOption3) {
-        $scope.showOption3 = true;
-      } else if (!$scope.showOption4) {
-        $scope.showOption4 = true;
-      }
-    };
+    // $scope.addOption = function () {
+     
+    // };
     
 
     $scope.Edit = () => {
@@ -194,14 +188,29 @@ angular.module("myApp").controller("myCtr", [
     };
     
     // Updated addOption function
-    $scope.addOption = function () {
+    $scope.addOption  = function () {
+      if (!$scope.showOption2) {
+        $scope.showOption2 = true;
+      } else if (!$scope.showOption3) {
+        $scope.showOption3 = true;
+      } else if (!$scope.showOption4) {
+        $scope.showOption4 = true;
+      }
       if ($scope.hasTextInPreviousOption($scope.options.length)) {
         $scope.options.push({ value: "" });
       } else {
         // If the last option is empty, show the error message only for that option
         $scope.options[$scope.options.length - 1].showErrorMessage = true;
       }
-      $scope.enableButton = $scope.options.filter((option) => option.value.trim() !== "").length >=1;
+     
+      // $scope.val = $scope.options;
+      //  console.log('$scope.val: ', $scope.val);
+      if($scope.options.length>1){
+        $scope.enableButton=true;
+      }
+      else 
+      $scope.enableButton=false;
+    
     };
     
     // Function to show the error message for each option
@@ -215,13 +224,20 @@ angular.module("myApp").controller("myCtr", [
     
     $scope.cancelOption = function (index) {
       $scope.options.splice(index, 1);
+      if($scope.options.length>1){
+        $scope.enableButton=true;
+      }
+      else 
+      $scope.enableButton=false;
     };
     $scope.CancelPoll = function () {
       for (let i = 0; i < $scope.options.length; i++) {
         console.log("called cancel");
         $scope.cancelOption(i);
       }
+
       $scope.options.splice(0, 1);
+
     };
 
     $scope.addQuestion = () => {

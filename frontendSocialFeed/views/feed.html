@@ -492,15 +492,8 @@
           <button
             type="button"
             class="btn postBtn"
-            ng-disabled="myForm.$invalid || !(isFirstOptionSelected || isSecondOptionSelected)|| !enableButton "
-           
+            ng-disabled="myForm.$invalid || (!(isDiv1Clicked || isDiv2Clicked) && !enableButton) "
 
-
-
-
-
-            
-            
             ng-click="addQuestion()"
           >
             Ask
@@ -615,8 +608,6 @@
         </li>
       </ul>
     </main>
-
-
 
       <ul  ng-repeat="singlePost in allPosts | orderBy: ['-postedTime', 'id']">
         <!-- {{singlePost.type}} -->
