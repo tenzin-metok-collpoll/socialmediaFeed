@@ -458,6 +458,9 @@
                       type="text"
                       ng-model="option.value"
                     />
+                    <div class="error-message" ng-show="showErrorMessage($index)" style="color:red">
+                      This field is required.
+                    </div>
                     <button
                       class="cancelOptionBtn"
                       ng-click="cancelOption($index)"
@@ -479,6 +482,7 @@
                     />
                   </div>
                 </div>
+                
               </div>
             </div>
           </div>
@@ -488,7 +492,15 @@
           <button
             type="button"
             class="btn postBtn"
-            ng-disabled="myForm.$invalid || !(isFirstOptionSelected || isSecondOptionSelected) || disableButton"
+            ng-disabled="myForm.$invalid || !(isFirstOptionSelected || isSecondOptionSelected)|| !enableButton "
+           
+
+
+
+
+
+            
+            
             ng-click="addQuestion()"
           >
             Ask

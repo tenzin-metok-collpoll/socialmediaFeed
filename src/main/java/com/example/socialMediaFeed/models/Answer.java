@@ -13,7 +13,7 @@ import lombok.Setter;
 
 
 @Entity
-@Table(name = "Answers")
+@Table(name = "Answer")
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 @Getter
 @Setter

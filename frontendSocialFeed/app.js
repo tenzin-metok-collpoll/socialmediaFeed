@@ -57,6 +57,7 @@ angular.module("myApp").controller("myCtr", [
     $scope.loadingDislike = false;
     $scope.loadinglike = false;
     $scope.askQuestionMode = false;
+    $scope.enableButton = false;
     $scope.showfirstOption = false;
     $scope.id = 0;
     $scope.isDiv1Clicked = false;
@@ -72,11 +73,13 @@ angular.module("myApp").controller("myCtr", [
     $scope.isFirstOptionSelected = false;
     $scope.isSecondOptionSelected = false;
     $scope.showSecondOption = false;
+    $scope.showErrorMessage=false;
     $scope.allPosts = [];
     $scope.count = 0;
     $scope.temp;
     $scope.editMode = false;
     $scope.editModes = false;
+    $scope.enableButton = false;
     $scope.newComment = ""; // Initialize the new comment input
     $scope.showCommentInput = false; // Set initial state to show the comment input field
     $scope.userName = $routeParams.userName;
@@ -107,6 +110,7 @@ angular.module("myApp").controller("myCtr", [
         $scope.showOption4 = true;
       }
     };
+    
 
     $scope.Edit = () => {
       if ($scope.editMode) {
@@ -129,13 +133,15 @@ angular.module("myApp").controller("myCtr", [
       $scope.showSecondOption = false;
       $scope.isDiv1Clicked = false;
       $scope.isDiv2Clicked = false;
+     
       for (let i = 0; i <= $scope.options.length; i++) {
         console.log("called cancel ");
+        $scope.options[i].showErrorMessage = false;
         $scope.cancelOption(i);
       }
       $scope.options.splice(0, 1);
-      var errorDiv = document.getElementById("errorDiv");
-      errorDiv.style.display = "none";
+      $scope.options[0].showErrorMessage = false;
+    
     };
 
     // adding a new post in feed
@@ -186,19 +192,27 @@ angular.module("myApp").controller("myCtr", [
         return prevOption && prevOption.value.trim() !== "";
       }
     };
-
+    
     // Updated addOption function
     $scope.addOption = function () {
       if ($scope.hasTextInPreviousOption($scope.options.length)) {
         $scope.options.push({ value: "" });
       } else {
-        console.log("length", $scope.options.length - 1);
-        alert(
-          "Please enter text in the previous option before adding a new option."
-        );
+        // If the last option is empty, show the error message only for that option
+        $scope.options[$scope.options.length - 1].showErrorMessage = true;
       }
+      $scope.enableButton = $scope.options.filter((option) => option.value.trim() !== "").length >=1;
     };
-
+    
+    // Function to show the error message for each option
+    $scope.showErrorMessage = function (index) {
+      if (index === $scope.options.length - 1) {
+        // Show the error message only for the last option
+        return $scope.options[index].showErrorMessage;
+      }
+      return false;
+    };
+    
     $scope.cancelOption = function (index) {
       $scope.options.splice(index, 1);
     };
@@ -233,7 +247,9 @@ angular.module("myApp").controller("myCtr", [
             // getAllData();
 
             if ($scope.showfirstOption) {
+              
               $scope.isFirstOptionSelected = false;
+              $scope.enableButton=true;
               if ($scope.isDiv2Clicked) {
                 $scope.selectedOption = [
                   {
@@ -306,7 +322,13 @@ angular.module("myApp").controller("myCtr", [
                   $scope.newOption.push(option);
                 }
               }
-
+              if($scope.newOption.length<=1){
+                $scope.options.splice(0, 1);
+                alert("cannot added single option");
+                console.log("cannot added single option");
+              
+                return;
+              }
               console.log("$scope.newOption", $scope.newOption);
               optionService
                 .addOptionInBulk($scope.newOption)
