@@ -1,4 +1,4 @@
-angular.module("myApp", ["ngRoute"]).config([
+angular.module("myApp", ["ngRoute","ngAnimate"]).config([
   "$routeProvider",
   function ($routeProvider) {
     $routeProvider
@@ -24,6 +24,39 @@ angular.module("myApp", ["ngRoute"]).config([
       });
   },
 ]);
+
+// lottie.directive.js
+angular.module('myApp') // Replace 'yourAppModule' with the name of your AngularJS app module
+  .directive('lottiePlayer', function() {
+    return {
+      restrict: 'E',
+      scope: {
+        src: '@',       // Source URL of the Lottie JSON file
+        background: '@', // Background color of the Lottie player
+        speed: '@',     // Speed of the animation
+        loop: '@',      // Looping behavior
+        controls: '@',  // Display controls
+        autoplay: '@',  // Autoplay behavior
+        direction: '@', // Animation direction
+        mode: '@'       // Animation mode
+      },
+      link: function(scope, element) {
+        // Initialize the Lottie player
+        const lottiePlayer = document.createElement('lottie-player');
+        lottiePlayer.setAttribute('src', scope.src);
+        lottiePlayer.setAttribute('background', scope.background);
+        lottiePlayer.setAttribute('speed', scope.speed);
+        lottiePlayer.style.width = '100%';
+        lottiePlayer.style.height = '100%';
+        // lottiePlayer.setAttribute('mode', 'static'); // Set mode to "static" to remove controls and looping
+
+
+        // Append the player to the directive element
+        element.append(lottiePlayer);
+      }
+    };
+  });
+
 
 angular.module("myApp").controller("myCtr", [
   "$scope",

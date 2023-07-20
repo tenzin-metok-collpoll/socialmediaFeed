@@ -1,29 +1,33 @@
-<div class="contentM" ng-app="myApp" ng-controller="myCtr">
-  <!-- <div ng-show="loading">
-    <div class="loader">
-      <div class="spinner"></div>
-    </div>
-  </div>
-  <div ng-show="loading">
-    <div class="loader">
-      <div class="spinner"></div>
-    </div>
-  </div> -->
+<div class="contentM" ng-app="myApp" ng-controller="myCtr" ng-animate>
   <div class="row gap"></div>
+  
   <div class="row">
     <div class="col-3 sidebar-first">
+      
       <div class="card side1 text-center">
         <div class="card-block">
+         
           <div class="user-image">
-            <img
+            <!-- <img
               src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
               class="rounded-circle img-fluid"
               style="width: 150px"
               alt="User-Profile-Image"
-            />
+            /> -->
+            <lottie-player
+            src="https://lottie.host/ad6e8a87-e4a8-471c-a782-ad8338bc8258/8cLpoh5tPB.json"
+            background="#FFFFFF"
+            speed="1"
+            style="width: 150px; height: 150px; margin-left: 5.5rem; margin-top: 1rem;"
+             loop="true"
+            
+            autoplay="true"
+           
+            mode="normal"
+          ></lottie-player>
           </div>
           <h6 class="f-w-600 m-t-25 m-b-10">Alessa Robert</h6>
-          <p class="text-muted">Active | Male | Born 23.05.1992</p>
+          <p class="text-muted">Active | Female | Born 23.05.1992</p>
           <hr style="color: #ade6ec; height: 3px" />
           <p class="text-muted m-t-15">Activity Level: 87%</p>
           <ul class="list-unstyled activity-leval">
@@ -221,7 +225,7 @@
 
       <div
         class="row"
-        ng-show="show"
+        ng-hide="!show"
         style="width: 100%; margin-left: 0.5rem; margin-right: 1rem"
       >
         <form class="textBox" name="myForm" novalidate>
@@ -635,9 +639,13 @@
     >
       <div class="card notification-card">
         <div>
-          <h4 style="text-align: center; padding-top: 15px">
-            Recent Notification
-          </h4>
+          
+        <h4 style="text-align: center; padding-top: 15px">
+          Recent Notification
+      
+        </h4>
+        
+          
         </div>
         <hr style="color: #ade6ec; height: 3px" />
         <div class="card-body notification-card">
@@ -691,11 +699,9 @@
           background: linear-gradient(transparent, rgba(134, 225, 241, 0.3));
         "
       >
-        <img
-          src="https://www.freepnglogos.com/uploads/notebook-png/download-laptop-notebook-png-image-png-image-pngimg-2.png"
-          class="card-img-top"
-          alt="..."
-        />
+      <lottie-player src="https://lottie.host/ca69f75d-018e-4f70-98ed-96e6f2cc1a24/9C1yrXIQ1O.json" speed="1" style="width: 300px; height: 300px" loop="true"         
+      autoplay="true"
+      mode="normal" ></lottie-player>
         <div class="card-body">
           <div class="clearfix mb-3">
             <span class="float-start badge rounded-pill bg-primary"
@@ -713,6 +719,7 @@
             <a href="#" class="btn btn-warning">Check offer</a>
           </div>
         </div>
+        
       </div>
     </div>
   </div>
