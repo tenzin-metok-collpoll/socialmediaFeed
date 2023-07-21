@@ -94,7 +94,8 @@ angular.module("myApp").directive("postComponent", [
               postService
                 .deletePost(singlePost.id)
                 .then(function (res) {
-                  if (res === "") $scope.onDataUpdated({ data: singlePost.id });
+                  if (res === "") {$scope.onDataUpdated({ data: singlePost.id });}
+                  
                 })
                 .catch(function (error) {
                   $rootScope.$on("showErrorDivEvent", function () {

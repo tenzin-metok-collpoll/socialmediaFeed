@@ -102,6 +102,8 @@ angular.module("myApp").controller("myCtr", [
     $scope.showOption4 = false;
     $scope.showErrorDiv = false;
     $scope.askquestion = false;
+    $scope.showAddComment=false;
+    $scope.showDelete=false;
     $scope.addposts = false;
     $scope.isFirstOptionSelected = false;
     $scope.isSecondOptionSelected = false;
@@ -133,11 +135,33 @@ angular.module("myApp").controller("myCtr", [
         $scope.showErrorDiv = false;
       }, 5000);
     });
+    $rootScope.$on("showErrorDivEvent2", function () {
+      console.log("inside the event of rhaul");
+      $scope.showDelete = true;
+      var errorDiv = document.getElementById("showDelete");
+      errorDiv.style.display = "block";
+      setTimeout(function () {
+        errorDiv.style.display = "none";
+        $scope.showErrorDiv = false;
+      }, 2000);
+    });
+    $rootScope.$on("showAddComment", function () {
+      console.log("inside the event of rhaul");
+      $scope.showAddComment = true;
+      var errorDiv = document.getElementById("showAddComment");
+      errorDiv.style.display = "block";
+      setTimeout(function () {
+        errorDiv.style.display = "none";
+        $scope.showAddComment  = false;
+      }, 2000);
+    });
 
     // $scope.addOption = function () {
      
     // };
-    
+    $scope.showEmoji = false;
+
+   
 
     $scope.Edit = () => {
       if ($scope.editMode) {
@@ -173,6 +197,15 @@ angular.module("myApp").controller("myCtr", [
 
     // adding a new post in feed
     $scope.addToFeed = () => {
+      $scope.showEmoji = true;
+      var Showemoji = document.getElementById("showEmoji");
+      Showemoji.style.display = "block";
+      // Hide the emoji after 3 seconds (you can adjust the duration as needed)
+      setTimeout(function () {
+        Showemoji.style.display = "none";
+        $scope.showEmoji = true;
+      }, 2000);
+  //   });
       if (navigator.onLine) {
         $scope.disableButton=true;
         $scope.loading1 = true;
@@ -274,6 +307,14 @@ angular.module("myApp").controller("myCtr", [
     };
 
     $scope.addQuestion = () => {
+      $scope.showEmoji1 = true;
+      var Showemoji = document.getElementById("showEmoji1");
+      Showemoji.style.display = "block";
+      // Hide the emoji after 3 seconds (you can adjust the duration as needed)
+      setTimeout(function () {
+        Showemoji.style.display = "none";
+        $scope.showEmoji = true;
+      }, 2000);
       if (navigator.onLine) {
         $scope.disableButton2=true;
         $scope.loading2 = true;

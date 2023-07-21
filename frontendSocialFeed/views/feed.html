@@ -247,6 +247,7 @@
             required
             style="box-shadow: none"
           ></textarea>
+          <!-- <div ng-show="showEmoji">&#x1F389; Congratulations on your first post! &#x1F389;</div> -->
           <button type="button" class="btn postBtn" ng-click="CancelFeed()">
             Cancel
           </button>
@@ -254,13 +255,14 @@
             type="button"
             class="btn postBtn"
             ng-disabled="myForm.$invalid || disableButton"
-            ng-click="addToFeed()"
+            ng-click="addToFeed();postMessage()"
           >
           
             Post
             <div ng-show="loading1" class="small-loader">
               <div class="spinner"></div>
             </div>
+          
           </button>
           <!-- </div> -->
         </form>
@@ -633,8 +635,7 @@
         </li>
       </ul>
     </div>
-    <div
-      class="col sidebar-second"
+    <div class="col sidebar-second"
       style="margin-top: 3.5rem; margin-right: 1rem"
     >
       <div class="card notification-card">
@@ -723,6 +724,18 @@
       </div>
     </div>
   </div>
+  <div ng-show="showEmoji" id="showEmoji"  class="showEmoji"
+>Post added Suceesfully</div>
+<div ng-show="showEmoji1" id="showEmoji1"  class="showEmoji"
+>Question asked Suceesfully</div>
+<div ng-show="showDelete" id="showDelete"  class="showEmoji" style="background-color:red"
+>Post Deleted Suceesfully</div>
+<div ng-show="showAddComment" id="showAddComment"  class="showEmoji"
+>Comment Added Suceesfully</div>
+
+
+
+
   <div
     id="errorDiv"
     ng-show="showErrorDiv"
@@ -732,7 +745,7 @@
       bottom: 0;
       left: 0;
       width: 100%;
-      background-color: rgb(98, 98, 124);
+      background-color: rgb(224, 64, 64);
       color: white;
       text-align: center;
       padding: 10px;
@@ -742,4 +755,5 @@
   >
     Something went wrong
   </div>
+  
 </div>

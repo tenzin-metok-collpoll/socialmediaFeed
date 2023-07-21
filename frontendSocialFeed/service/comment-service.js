@@ -1,6 +1,7 @@
 angular.module("myApp").service("commentService", [
   "$http",
-  function ($http) {
+  "$rootScope",
+  function ($http, $rootScope) {
     return {
       getAllComments: function () {
         return $http
@@ -36,6 +37,7 @@ angular.module("myApp").service("commentService", [
           .then(function (response) {
             if (response.status === 200) {
               console.log("Comments added successfully.");
+              $rootScope.$emit("showAddComment");
               return response.data;
             }
             else {

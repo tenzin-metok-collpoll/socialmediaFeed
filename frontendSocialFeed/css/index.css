@@ -454,6 +454,7 @@ background: #e8a5f3e3 !important;
 .notification-card .card-body div {
   animation: fadeUp 0.5s ease-in-out;
 }
+.showEmoji{
 
 .notification-card .card-body div img {
   border-radius: 50%;
@@ -462,7 +463,23 @@ background: #e8a5f3e3 !important;
 .notification-card .card-body div:nth-child(n+2) {
   margin-top: 1rem;
 } */
-
+.showEmoji{
+  display: block;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgb(89, 146, 86);
+  color: white;
+  text-align: center;
+  padding: 10px;
+  padding-left:2px;
+  padding-right:2px;
+  width: 280px;
+  border-radius:3px;
+  margin-left: 900px;
+ margin-bottom:8px;
+}
 
 .center-div-share {
   display: flex;

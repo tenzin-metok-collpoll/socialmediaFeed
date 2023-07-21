@@ -116,6 +116,7 @@ angular.module("myApp").service("postService", [
           .then(function (response) {
             if (response.status === 204) {
               console.log("Post deleted successfully");
+              $rootScope.$emit("showErrorDivEvent2");
               return response.data;
             }
             else {
