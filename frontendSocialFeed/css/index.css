@@ -115,7 +115,7 @@
       border: none;
       box-shadow: none;
       animation-name: zoomFadeIn;
-      animation-duration: 2s; /* Duration of the animation */
+      animation-duration: 1s; /* Duration of the animation */
       animation-delay: 0s; /* Delay before the animation starts */
       animation-timing-function: ease; /* Timing function (e.g., ease, linear, ease-in-out) */
       animation-fill-mode: forwards;
